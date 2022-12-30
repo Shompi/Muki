@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../types/index";
-import { GetRoles } from "./subcommandHandlers/roles-get.js";
-import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove.js";
+import { GetRoles } from "./subcommandHandlers/roles-get";
+import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove";
 export default {
 	data: new SlashCommandBuilder()
 		.setName("roles")

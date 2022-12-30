@@ -26,7 +26,7 @@ const Muki = new CustomClient()
 
 // Load event files
 async function main() {
-	const EventFiles = await readdir("src/events").then(files => files.filter(file => file.endsWith(".js")))
+	const EventFiles = await readdir("src/events").then(files => files.filter(file => file.endsWith(".ts")))
 
 	for (const EventFile of EventFiles) {
 		const event: any = (await import("./events/" + EventFile)).default
@@ -43,7 +43,7 @@ async function main() {
 	// Load commands into the client
 
 	Muki.commands = new Collection();
-	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".js")));
+	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".ts")));
 
 	for (const CommandFile of CommandFiles) {
 		const command: SlashCommand = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default
