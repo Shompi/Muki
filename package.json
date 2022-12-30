@@ -6,8 +6,10 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
+    "jsstart": "node src/index.js",
+    "tsstart": "ts-node src/index.ts",
     "deploy": "node deploy/deploy-commands.cjs"
+
   },
   "author": "ShompiFlen",
   "license": "ISC",
