@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ChannelType, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "muki";
+import { SlashCommand } from "../../types/index";
 
 export default {
 	data: new SlashCommandBuilder()

@@ -1,5 +1,6 @@
 import { ButtonBuilder, ButtonStyle } from "discord.js"
-import { Category } from "muki"
+import { Category } from "../../../../types/index"
+
 
 export function CreateButtons(categories?: Category[]) {
 

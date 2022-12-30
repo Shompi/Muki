@@ -1,5 +1,5 @@
 import { ActivityType, Client, Events } from "discord.js";
-import { ReadyEvent } from "muki";
+import { ReadyEvent } from "../types/index";
 import { EarthquakeMonitor } from "./utils/earthquakes.js";
 
 export default {

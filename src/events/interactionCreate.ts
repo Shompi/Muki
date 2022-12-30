@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { InteractionCreateFile } from "muki";
+import { InteractionCreateFile } from "../types/index";
 
 export default {
 	name: Events.InteractionCreate,

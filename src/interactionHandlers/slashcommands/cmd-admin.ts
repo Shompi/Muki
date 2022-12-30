@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "muki";
+import { SlashCommand } from "../../types/index";
 import AdminAutoRoles from "./subcommandHandlers/admin-roles.js";
 
 
