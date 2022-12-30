@@ -2,8 +2,8 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteracti
 import Keyv from "keyv";
 import { Category, DatabaseRole } from "../../../types/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton";
-const RolesDatabase = new Keyv("sqlite://db/roles.sqlite")
-const CategoriesDatabase = new Keyv("sqlite://db/roles-categories.sqlite")
+const RolesDatabase = new Keyv("sqlite://./db/roles.sqlite")
+const CategoriesDatabase = new Keyv("sqlite://./db/roles-categories.sqlite")
 /**
  * @description This is the command to **set** the roles that members are able to self add
  */
