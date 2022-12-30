@@ -2,7 +2,6 @@
   "name": "muki",
   "version": "1.0.0",
   "description": "the og exiliados secretary",
-  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
