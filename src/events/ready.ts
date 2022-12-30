@@ -1,6 +1,6 @@
 import { ActivityType, Client, Events } from "discord.js";
 import { ReadyEvent } from "../types/index";
-import { EarthquakeMonitor } from "./utils/earthquakes.js";
+import { EarthquakeMonitor } from "./utils/earthquakes";
 
 export default {
 	name: Events.ClientReady,
