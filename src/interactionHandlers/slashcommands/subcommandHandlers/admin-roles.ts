@@ -7,7 +7,7 @@ const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite"
 /**
  * @description This is the command to **set** the roles that members are able to self add
  */
-export default async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
+export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 
 	/* Prompt the user to choose a category, the category can be an existing one or a new one */
 
