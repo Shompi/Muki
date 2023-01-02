@@ -8,7 +8,7 @@
     "js-start": "node src/index.js",
     "ts-start": "ts-node src/index.ts",
     "deploy": "node deploy/deploy-commands.cjs",
-		"buildcommands": "tsc src/interactionHandlers/slashcommands/*"
+		"build-commands": "tsc"
 
   },
   "author": "ShompiFlen",
