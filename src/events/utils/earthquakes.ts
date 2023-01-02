@@ -11,13 +11,13 @@ interface EartquakeInfo {
 	FechaUpdate: string
 }
 
-let oldEartquake: EartquakeInfo;
+let oldEarthquake: EartquakeInfo;
 
 async function EarthquakeMonitor(client: Client) {
 	console.log("Getting earthquakes...")
 	const newEarthquake = await getEarthquakes().catch((error) => console.error(error))
 
-	if (!newEarthquake) return undefined
+	if (!newEarthquake) return
 
 	const channel = client.channels.cache.get("541007291718172683") as TextChannel
 
@@ -39,13 +39,13 @@ async function getEarthquakes() {
 
 	const list: EartquakeInfo[] = await request(APIURL).then((r) => r.body.json())
 
-	if (!list || list.length === 0) return;
+	if (!list[0] || list.length === 0) return;
 
 	const lastEarthquake = list[0]
 
-	if (lastEarthquake.Fecha === oldEartquake?.Fecha) return null
+	if (lastEarthquake.Fecha === oldEarthquake?.Fecha) return null
 
-	oldEartquake = lastEarthquake;
+	oldEarthquake = lastEarthquake;
 
 	if (parseFloat(lastEarthquake.Magnitud) >= 5.5) {
 		const embed = new EmbedBuilder()
