@@ -20,8 +20,6 @@ export default {
 			type: ActivityType.Watching
 		})
 
-		console.log("Initialized.")
-
 		this.earthquakeMonitor(client)
 		this.changeProfilePicture(client)
 	},
