@@ -12,7 +12,8 @@ interface EventFile {
 }
 
 interface ReadyEvent extends EventFile {
-	earthquakeMonitor: (c: Client) => Promise<unknown>
+	earthquakeMonitor: (c: Client) => Promise<unknown>,
+	changeProfilePicture: (c: Client) => Promise<unknown>
 }
 
 type SlashCommand = {
