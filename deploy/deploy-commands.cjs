@@ -6,7 +6,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
 
 const globalCommands = [];
-const commandFiles = readdirSync('js').filter(file => file.endsWith('.js') && (file.startsWith('cmd-') || file.startsWith('ctx-')));
+const commandFiles = readdirSync('js/interactionHandlers/slashcommands').filter(file => file.endsWith('.js') && (file.startsWith('cmd-') || file.startsWith('ctx-')));
 
 
 
@@ -16,7 +16,7 @@ async function registerCommands() {
 
 	for (const file of commandFiles) {
 
-		const command = await import(`../js/${file}`);
+		const command = await import(`../js/interactionHandlers/slashcommands/${file}`);
 
 		console.log('Command loaded:', command.data.name.toUpperCase());
 

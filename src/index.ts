@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Client, Collection } from "discord.js"
+import { Client, Collection, GuildTextBasedChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
-import { SlashCommand } from "./types/index"
+import { MessageCommand, SlashCommand } from "./types/index"
 
-class CustomClient extends Client {
+class MukiClient extends Client {
 	constructor() {
 		super({
 			intents: [
@@ -18,11 +18,15 @@ class CustomClient extends Client {
 			]
 		})
 		/* The commands collection of this bot */
-		this.commands = new Collection();
+		this.commands = new Collection()
+	}
+
+	get suggestion_channel(): GuildTextBasedChannel {
+		return this.channels.cache.get("1062586957567377448") as GuildTextBasedChannel
 	}
 }
 
-const Muki = new CustomClient()
+const Muki = new MukiClient()
 
 // Load event files
 async function main() {
@@ -40,16 +44,26 @@ async function main() {
 		console.log("EVENT FILE LOADED:", event.name);
 	}
 
+	Muki.commands = new Collection();
+	Muki.messageCommands = new Collection();
 	// Load commands into the client
 
-	Muki.commands = new Collection();
 	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".ts")));
 
 	for (const CommandFile of CommandFiles) {
 		const command: SlashCommand = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default
 
 		Muki.commands.set(command.data.name, command)
+	}
 
+	/** Load message commands into the client */
+
+	const MessageCommandFiles = await readdir("src/messageCommands")
+
+	for (const CommandFile of MessageCommandFiles) {
+		const command: MessageCommand = await import(`./messageCommands/${CommandFile}`)
+
+		Muki.messageCommands.set(command.name, command)
 	}
 	Muki.login(process.env.BOT_TOKEN)
 }

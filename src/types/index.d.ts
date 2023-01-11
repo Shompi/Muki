@@ -1,4 +1,5 @@
-import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, CommandInteraction, PermissionsBitField, SlashCommandBuilder } from "discord.js"
+import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, CommandInteraction, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "discord.js"
+
 type InteractionCreateFile = {
 	name: string
 	once: boolean
@@ -35,8 +36,16 @@ interface Category {
 	emoji?: string
 }
 
+interface MessageCommand {
+	name: string,
+	ownerOnly?: boolean,
+	execute: (m: Message, args?: Array<string>) => Promise<unknown>
+}
+
 declare module "discord.js" {
 	interface Client {
 		commands: Collection<string, SlashCommand>
+		messageCommands: Collection<string, MessageCommand>
+		get suggestion_channel(): GuildTextBasedChannel | undefined
 	}
 }

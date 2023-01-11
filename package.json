@@ -5,11 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "js-start": "node src/index.js",
-    "ts-start": "ts-node src/index.ts",
+    "start": "ts-node src/index.ts",
     "deploy": "node deploy/deploy-commands.cjs",
-		"build-commands": "tsc"
-
+    "build-commands": "tsc"
   },
   "author": "ShompiFlen",
   "license": "ISC",
@@ -17,7 +15,8 @@
     "@keyv/sqlite": "^3.6.4",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
-    "keyv": "^4.5.2"
+    "keyv": "^4.5.2",
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "typescript": "^4.9.4"
