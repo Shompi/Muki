@@ -1,8 +1,6 @@
 {
   "include": [
-		"src/interactionHandlers/slashcommands/*",
-		"src/messageCommands/*",
-		"src/events/*"
+		"src/interactionHandlers/slashcommands"
 	],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

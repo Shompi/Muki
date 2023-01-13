@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ChannelType, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ChannelType, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../types/index";
 
 export = {
@@ -6,11 +6,9 @@ export = {
 		.setName("test")
 		.setDescription("Comando de prueba"),
 	async execute(interaction) {
-		const channels = (await interaction.guild.channels.fetch()).filter(c => ![ChannelType.GuildCategory, ChannelType.GuildVoice].includes(c!.type))
 
-		console.log(channels.map(channel => ({ name: channel?.name, type: channel?.type })))
+		return await interaction.reply({ content: 'Hey!' })
 
-		return await interaction.reply("Yo!")
 	},
 
 
