@@ -1,6 +1,6 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../types/index";
-import { AdminAutoRoles } from "./subcommandHandlers/admin-roles";
+import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
+import { SlashCommand } from "../../types/index"
+import { AdminAutoRoles } from "./subcommandHandlers/admin-roles"
 
 
 export = {
@@ -17,12 +17,13 @@ export = {
 		),
 	async execute(i) {
 
-		const subcommand = i.options.getSubcommand();
+		const subcommand = i.options.getSubcommand()
 
 		switch (subcommand) {
 			case "roles":
-				AdminAutoRoles(i)
+				await AdminAutoRoles(i)
+				break
 		}
 
 	}
-} as SlashCommand;
+} as SlashCommand

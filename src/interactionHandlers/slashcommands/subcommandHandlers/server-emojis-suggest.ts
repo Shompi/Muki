@@ -1,10 +1,12 @@
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, Colors, EmbedBuilder } from "discord.js";
+import { MukiClient } from "../../../types";
 
 export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	await interaction.deferReply({ ephemeral: true })
+	const client = interaction.client as MukiClient
 
-	const SuggestionsChannel = interaction.client.suggestion_channel
+	const SuggestionsChannel = client.suggestion_channel
 
 	if (!SuggestionsChannel)
 		return await interaction.editReply({ content: 'No hay canal de sugerencias habilitado en este servidor, por favor intentalo más tarde.' })
@@ -25,7 +27,9 @@ export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction
 		.setComponents([AcceptButton, RejectButton])
 
 
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const Imagen = interaction.options.getAttachment('imagen')!
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const Nombre = interaction.options.getString('nombre')!.replace(/\s+/g, "_").toLowerCase()
 	if (!Imagen.contentType)
 		return await interaction.editReply({ content: 'No pude comprobar el tipo de este archivo, por favor asegurate de subir una imagen válida, con extension **jpg, jpeg, png o gif**.' })

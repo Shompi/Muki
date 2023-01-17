@@ -12,7 +12,11 @@ for (const filename of ImageFiles) {
 export async function ChangeProfilePicture(client: Client) {
 
 	/** Chose a random file */
-	const ImagePath = ImageCollection.random()!
+	const ImagePath = ImageCollection.random()
 
-	return await client.user?.setAvatar(ImagePath)
+	if (!ImagePath) return
+
+	await client.user?.setAvatar(ImagePath)
+
+	return
 }

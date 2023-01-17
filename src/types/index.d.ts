@@ -1,51 +1,48 @@
-import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, CommandInteraction, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "discord.js"
+import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
 
-type InteractionCreateFile = {
+export type InteractionCreateFile = {
 	name: string
 	once: boolean
-	async execute(i: BaseInteraction): Promise<unknown>
+	execute(i: BaseInteraction): Promise<unknown>
 };
 
-interface EventFile {
+export interface EventFile {
+	[K: string]: unknown
 	name: string
 	once: boolean
-	async execute(...e: unknown): Promise<unknown>
+	execute(...e: unknown[]): Promise<unknown>
 }
 
-interface ReadyEvent extends EventFile {
-	earthquakeMonitor: (c: Client) => Promise<unknown>,
-	changeProfilePicture: (c: Client) => Promise<unknown>
+export interface ReadyEvent extends EventFile {
+	earthquakeMonitor: (c: Client) => unknown
+	changeProfilePicture: (c: Client) => unknown
 }
-
-type SlashCommand = {
-	data: SlashCommandBuilder
-	permissions?: PermissionsBitField
-	async execute(i: ChatInputCommandInteraction<"cached">): Promise<unknown>
-}
-
-interface DatabaseRole {
+export interface DatabaseRole {
 	category: {
 		name: string
 		emoji: string
 	}
 	roles: string[]
 }
-
-interface Category {
+export interface Category {
 	name: string
 	emoji?: string
 }
 
-interface MessageCommand {
+export type SlashCommand = {
+	data: SlashCommandBuilder
+	permissions?: PermissionsBitField
+	execute(i: ChatInputCommandInteraction<"cached">): Promise<unknown>
+}
+
+export interface MessageCommand {
 	name: string,
 	ownerOnly?: boolean,
 	execute: (m: Message, args?: Array<string>) => Promise<unknown>
 }
-
-declare module "discord.js" {
-	interface Client {
-		commands: Collection<string, SlashCommand>
-		messageCommands: Collection<string, MessageCommand>
-		get suggestion_channel(): GuildTextBasedChannel | undefined
-	}
+export interface MukiClient extends Client {
+	commands: Collection<string, SlashCommand>
+	messageCommands: Collection<string, MessageCommand>
+	get suggestion_channel(): GuildTextBasedChannel
 }
+

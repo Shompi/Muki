@@ -27,7 +27,7 @@ export = {
 
 		if (subcommand === 'añadir')
 			return await GetRoles(i)
-		
+
 		if (subcommand === 'quitar')
 			return await RemoveSelfRoles(i)
 

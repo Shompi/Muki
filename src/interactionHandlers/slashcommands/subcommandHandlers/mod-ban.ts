@@ -3,6 +3,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 export async function BanMember(interaction: ChatInputCommandInteraction<"cached">) {
 
 	const args = {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		target: interaction.options.getUser('user')!,
 		secondsToDeleteMessages: interaction.options.getInteger('dias') ?? undefined,
 		reason: interaction.options.getString('razon') ?? undefined

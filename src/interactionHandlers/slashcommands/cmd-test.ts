@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ChannelType, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../types/index";
 
 export = {

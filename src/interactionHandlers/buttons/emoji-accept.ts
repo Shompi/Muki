@@ -16,6 +16,7 @@ export async function AcceptEmojiSuggestion(i: ButtonInteraction<"cached">) {
 	})
 
 	return await i.guild.emojis.create({
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		attachment: i.message.attachments.first()!.url,
 		name: i.message.content.split(" ")[1],
 		reason: `Sugerido por ${i.message.content.split(" ")[0]}`

@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv"
 dotenv.config()
 import { Client, Collection, GuildTextBasedChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
-import { MessageCommand, SlashCommand } from "./types/index"
+import { EventFile, MessageCommand, SlashCommand } from "./types/index"
 
 class MukiClient extends Client {
+	commands: Collection<string, SlashCommand>
+	messageCommands: Collection<string, MessageCommand>
+
 	constructor() {
 		super({
 			intents: [
@@ -19,6 +25,7 @@ class MukiClient extends Client {
 		})
 		/* The commands collection of this bot */
 		this.commands = new Collection()
+		this.messageCommands = new Collection()
 	}
 
 	get suggestion_channel(): GuildTextBasedChannel {
@@ -33,11 +40,13 @@ async function main() {
 	const EventFiles = await readdir("src/events").then(files => files.filter(file => file.endsWith(".ts")))
 
 	for (const EventFile of EventFiles) {
-		const event: any = (await import("./events/" + EventFile)).default
+		const event = (await import("./events/" + EventFile)).default as EventFile
 
 		if (event.once) {
+			//@ts-ignore
 			Muki.once(event.name, (...args) => event.execute(...args))
 		} else {
+			//@ts-ignore
 			Muki.on(event.name, (...args) => event.execute(...args))
 		}
 
@@ -51,7 +60,7 @@ async function main() {
 	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".ts")));
 
 	for (const CommandFile of CommandFiles) {
-		const command: SlashCommand = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default
+		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommand
 
 		Muki.commands.set(command.data.name, command)
 	}
@@ -61,11 +70,11 @@ async function main() {
 	const MessageCommandFiles = await readdir("src/messageCommands")
 
 	for (const CommandFile of MessageCommandFiles) {
-		const command: MessageCommand = await import(`./messageCommands/${CommandFile}`)
+		const command = await import(`./messageCommands/${CommandFile}`) as MessageCommand
 
 		Muki.messageCommands.set(command.name, command)
 	}
-	Muki.login(process.env.BOT_TOKEN)
+	await Muki.login(process.env.BOT_TOKEN)
 }
 
-main();
+void main();

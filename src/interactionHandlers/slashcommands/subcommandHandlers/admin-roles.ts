@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import Keyv from "keyv";
-import { Category, DatabaseRole } from "../../../types/index";
+import type { Category, DatabaseRole } from "../../../types/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton";
 const RolesDatabase = new Keyv({ uri: "sqlite://db/roles.sqlite", namespace: "roles" })
 const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite", namespace: 'categories' })
@@ -11,7 +11,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 
 	/* Prompt the user to choose a category, the category can be an existing one or a new one */
 
-	const dbCategories: Category[] = await CategoriesDatabase.get(i.guildId) ?? []
+	const dbCategories = (await CategoriesDatabase.get(i.guildId) ?? []) as Category[]
 
 	const RoleCategoriesRow = new ActionRowBuilder<ButtonBuilder>()
 		.setComponents(
@@ -125,7 +125,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 				dispose: true
 			})
 
-			const dbRoles: DatabaseRole[] = await RolesDatabase.get(i.guildId) ?? []
+			const dbRoles = (await RolesDatabase.get(i.guildId) ?? []) as DatabaseRole[]
 
 			dbRoles.push({ category: { name: CategoryName, emoji: CategoryEmoji ?? "" }, roles: SelectedRoles.values })
 
@@ -159,7 +159,11 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 				time: 15_000,
 			})
 
-			const CategoryToDelete = SelectedCategory.component.label!
+			const CategoryToDelete = SelectedCategory.component.label
+
+			if (!CategoryToDelete) {
+				throw new Error("Category to Delete was not selected.")
+			}
 
 			await DeleteCategory(CategoryToDelete, i.guildId);
 
@@ -172,7 +176,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 		/** Whatever button it is, it is an existing category */
 		const SelectedCategory = PressedButton.component.label
 
-		const dbRoles: DatabaseRole[] = await RolesDatabase.get(i.guildId)
+		const dbRoles = (await RolesDatabase.get(i.guildId)) as DatabaseRole[]
 
 		/** The roles that are on the database */
 		const Roles = dbRoles.find(role => role.category.name === SelectedCategory)
@@ -224,7 +228,8 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 
 		const SuccessEmbed = new EmbedBuilder()
 			.setTitle(`✅ Los roles fueron añadidos con exito!`)
-			.setDescription(`La categoría ${SelectedCategory} ahora tiene **${UniqueRoles.length} / 25** roles!`)
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			.setDescription(`La categoría ${SelectedCategory!} ahora tiene **${UniqueRoles.length} / 25** roles!`)
 			.setColor(Colors.Blue)
 
 		return await RoleSelectInteraction.update({
@@ -251,7 +256,7 @@ async function DeleteCategory(Category: string, guildId: string) {
 	await CategoriesDatabase.set(guildId, FilteredCategories)
 	console.log(`La categoría ${Category} fue quitada de la lista exitosamente.`)
 
-	const dbRoles: DatabaseRole[] = await RolesDatabase.get(guildId)
+	const dbRoles = (await RolesDatabase.get(guildId)) as DatabaseRole[]
 
 	const FilteredRoles = dbRoles.filter(roles => roles.category.name !== Category)
 

@@ -7,12 +7,15 @@ export default {
 	name: Events.ClientReady,
 	once: true,
 	earthquakeMonitor(client: Client) {
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		setInterval(EarthquakeMonitor, 1000 * 60 * 5, client)
 	},
 	changeProfilePicture(client: Client) {
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		setInterval(ChangeProfilePicture, 1000 * 60 * 60 * 12, client)
 	},
-	async execute(client: Client) {
+	execute(client: Client) {
+		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		console.log(`${client.user?.username} is ready!`)
 
 		client.user?.setActivity({

@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import Keyv from "keyv";
 import { Category, DatabaseRole } from "../../../types/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton";
@@ -7,7 +7,7 @@ const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite"
 
 export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 
-	const { guild, member } = i;
+	const { guild } = i;
 
 	/* Get the available categories from the database and turn them into buttons */
 	const dbCategories = await CategoriesDatabase.get(i.guild.id) as Category[]
@@ -40,6 +40,7 @@ export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 
 	const dbRoles = await RolesDatabase.get(i.guild.id) as DatabaseRole[]
 
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const RolesFromCategory = dbRoles.find(role => role.category.name === iCategoria.component.label)!.roles
 
 	/* Create the dropdown to select the roles from */

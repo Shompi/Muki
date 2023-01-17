@@ -1,4 +1,3 @@
-import { Message } from "discord.js";
 import { MessageCommand } from "../types";
 
 export = {

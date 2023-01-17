@@ -13,7 +13,7 @@ interface EartquakeInfo {
 
 let oldEarthquake: EartquakeInfo;
 
-async function EarthquakeMonitor(client: Client) {
+async function EarthquakeMonitor(client: Client): Promise<void> {
 	console.log("Getting earthquakes...")
 	const newEarthquake = await getEarthquakes().catch((error) => console.error(error))
 
@@ -21,9 +21,11 @@ async function EarthquakeMonitor(client: Client) {
 
 	const channel = client.channels.cache.get("541007291718172683") as TextChannel
 
-	return await channel.send({
+	await channel.send({
 		embeds: [newEarthquake]
 	})
+
+	return
 }
 
 async function getEarthquakes() {
@@ -37,7 +39,7 @@ async function getEarthquakes() {
 
 	}
 
-	const list: EartquakeInfo[] = await request(APIURL).then((r) => r.body.json())
+	const list = await request(APIURL).then((r) => r.body.json() as Promise<EartquakeInfo[]>)
 
 	if (!list[0] || list.length === 0) return;
 

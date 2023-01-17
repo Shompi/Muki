@@ -1,10 +1,14 @@
-import { Events, type Message } from "discord.js"
+import { Events, type Message } from "discord.js";
+import { MukiClient } from "../types";
+
 export default {
 	name: Events.MessageCreate,
 	once: false,
 	async execute(msg: Message) {
 
-		if (msg.author.bot) return;
+		const client = msg.client as MukiClient
+
+		if (msg.author.bot || msg.channel.isDMBased()) return;
 
 		if (msg.content.startsWith(`<@${msg.client.user.id}>`)) {
 			const SplitContent = msg.content.split(" ").slice(1)
@@ -13,9 +17,12 @@ export default {
 
 			const CommandName = SplitContent.shift()
 			if (!CommandName) return
-			if (!msg.client.messageCommands.has(CommandName)) return
+			if (client.messageCommands.has(CommandName)) return
 
-			const Command = msg.client.messageCommands.get(CommandName)!
+			const Command = client.messageCommands.get(CommandName)
+
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+			if (!Command) return msg.reply({ content: `Hola! ${msg.client.emojis.cache.random() ?? msg.author}` })
 
 			if (Command.ownerOnly && msg.author.id !== "166263335220805634") return
 

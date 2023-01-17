@@ -3,6 +3,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 export async function KickMember(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	const args = {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		target: interaction.options.getUser('user')!,
 		reason: interaction.options.getString('razon')
 	}
