@@ -1,96 +1,66 @@
-console.log("Presence Update Event Loaded");
-
-import { type Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Snowflake } from 'discord.js'
-import { Listener } from 'discord-akairo'
+import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'discord.js'
 import keyv from 'keyv'
-import { getGameCoverByName } from '../../GameImages/'
+import { getGameCoverByName } from "./utils/gameImages/index"
 
-interface GuildStreamConfigs {
-	roleId: Snowflake
-	channelId: Snowflake
-	enabled: boolean
-}
+const StreamerRole = "912096189443350548"
+const StreamsChannel = "600159867239661578"
 
-const LIVESTREAMS_TIMESTAMPS = new keyv('sqlite://db/database.sqlite', { namespace: 'livestreams' })
-const StreamsConfigPerGuild = new keyv('sqlite://db/StreamsConfigs.sqlite', { namespace: 'streamsConfig' })
-const HOURSLIMIT = 1000 * 60 * 60 * 3
+const LivestreamTimestamps = new keyv('sqlite://db/database.sqlite', { namespace: 'livestreams' })
+const Timeout = 1000 * 60 * 60 * 3
 
-export default class PresenceUpdateListener extends Listener {
-	hasTimers: boolean
-	checkTwitchStream: (p: Presence, old: Presence) => Promise<void>
-	constructor() {
-		super('presenceUpdate', {
-			emitter: 'client',
-			event: 'presenceUpdate'
-		})
+export default {
+	name: Events.PresenceUpdate,
+	once: false,
+	hasTimers: false,
+	checkTwitchStream: async (presence: Presence) => {
 
-		this.hasTimers = false
+		// Chequear que haya una actividad siendo stremeada
+		const STREAMED_ACTIVITY = getLivestreamInfo(presence)
 
-		this.checkTwitchStream = async (presence) => {
+		if (!STREAMED_ACTIVITY) return
 
-			const checkGuildConfigs = async (guildId: Snowflake) => {
+		if (!CheckMemberStreamerRole(presence.member!)) return console.log("PresenceUpdate: Returned, member does not have the streamer role.");
 
-				const configs = await StreamsConfigPerGuild.get(guildId) as GuildStreamConfigs
+		let USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id).catch(() => null) as number
+		let NEW_USER = false
 
-				if (!configs) return false
-
-				if (!configs.enabled) return false
-
-				return true
-			}
-
-			// Chequear que haya una actividad siendo stremeada
-			const STREAMED_ACTIVITY = getLivestreamInfo(presence)
-
-			if (!STREAMED_ACTIVITY) return
-
-			if (!(await checkGuildConfigs(presence.guild!.id))) return
-			if (!(await memberHasStreamerRole(presence.member!))) return
-
-			let USER_TIMESTAMP = await LIVESTREAMS_TIMESTAMPS.get(presence.user!.id).catch(() => null) as number
-			let NEW_USER = false
-
-			if (!USER_TIMESTAMP) {
-				// Si el usuario no está lo agregamos
-				await LIVESTREAMS_TIMESTAMPS.set(presence.user!.id, Date.now())
-				USER_TIMESTAMP = await LIVESTREAMS_TIMESTAMPS.get(presence.user!.id) as number
-				NEW_USER = !NEW_USER
-			}
+		if (!USER_TIMESTAMP) {
+			// Si el usuario no está lo agregamos
+			await LivestreamTimestamps.set(presence.user!.id, Date.now())
+			USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id) as number
+			NEW_USER = !NEW_USER
+		}
 
 
-			if (NEW_USER) {
+		if (NEW_USER) {
 
+			await sendLiveStream(presence)
+
+		} else {
+			// Revisar si han pasado las horas necesarias desde que el usuario comenzó a transmitir
+			const TIMENOW = Date.now()
+
+			const TIMEDIFF = TIMENOW - USER_TIMESTAMP
+			if (TIMEDIFF >= Timeout) {
 				await sendLiveStream(presence)
-
-			} else {
-				// Revisar si han pasado las horas necesarias desde que el usuario comenzó a transmitir
-				const TIMENOW = Date.now()
-
-				const TIMEDIFF = TIMENOW - USER_TIMESTAMP
-				if (TIMEDIFF >= HOURSLIMIT) {
-					await sendLiveStream(presence)
-					// Update timestamp
-					await LIVESTREAMS_TIMESTAMPS.set(presence.user!.id, Date.now())
-				} else return
-			}
+				// Update timestamp
+				await LivestreamTimestamps.set(presence.user!.id, Date.now())
+			} else return
 		}
-	}
+	},
 
-	async exec(old: Presence, now: Presence) {
-		/*Code Here*/
+	async execute(old: Presence, now: Presence) {
 
-		/* Esto solo funcionará para exiliados */
-		if (now.guild?.id === '537484725896478733') {
-			await this.checkTwitchStream(now, old)
+		if (now.member === null) return console.log("Presence Update: Returned, member was null")
+
+		if (now.activities.find(activity => activity.type === ActivityType.Streaming)) {
+			await this.checkTwitchStream(now)
 		}
 	}
 }
 
-async function memberHasStreamerRole(member: GuildMember) {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const StreamerRoleId = await StreamsConfigPerGuild.get(member.guild.id).then((configs: GuildStreamConfigs) => configs ? configs.roleId : "0000")
-
-	return member.roles.cache.has(StreamerRoleId)
+function CheckMemberStreamerRole(member: GuildMember) {
+	return member.roles.cache.has(StreamerRole)
 }
 
 function getLivestreamInfo(presence: Presence) {
@@ -120,14 +90,10 @@ async function createEmbed(activity: Activity, member: GuildMember) {
 
 async function sendLiveStream(presence: Presence) {
 	const STREAMED_ACTIVITY = getLivestreamInfo(presence)
-	const streamChannelId = await StreamsConfigPerGuild.get(presence.guild?.id ?? "0000").then((configs: GuildStreamConfigs) => configs ? configs.channelId : "0000")
 
-	if (!streamChannelId) return
+	const STREAM_CHANNEL = presence.client.channels.cache.get(StreamsChannel) as GuildTextBasedChannel
 
-	const STREAM_CHANNEL = presence.client.channels.cache.get(streamChannelId)
-	if (STREAM_CHANNEL?.isTextBased()) {
-		await STREAM_CHANNEL.send({
-			embeds: [await createEmbed(STREAMED_ACTIVITY!, presence.member!)]
-		})
-	}
+	await STREAM_CHANNEL.send({
+		embeds: [await createEmbed(STREAMED_ACTIVITY!, presence.member!)]
+	})
 }

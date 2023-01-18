@@ -6,8 +6,6 @@ export default {
 	name: Events.InteractionCreate,
 	once: false,
 	async execute(interaction) {
-
-		console.log("interaction received");
 		const client = interaction.client as MukiClient
 		try {
 			if (interaction.inCachedGuild()) {

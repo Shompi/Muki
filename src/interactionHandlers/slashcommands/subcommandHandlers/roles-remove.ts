@@ -47,7 +47,6 @@ export async function RemoveSelfRoles(i: ChatInputCommandInteraction<"cached">) 
 
 	} catch (e) {
 		console.log(e);
-
 		return await i.followUp("La interacción ha sido cancelada.")
 
 	}

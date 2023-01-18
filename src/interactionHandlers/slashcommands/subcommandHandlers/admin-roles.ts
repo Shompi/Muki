@@ -254,14 +254,12 @@ async function DeleteCategory(Category: string, guildId: string) {
 	const FilteredCategories = dbCategories.filter(cat => cat.name !== Category)
 
 	await CategoriesDatabase.set(guildId, FilteredCategories)
-	console.log(`La categoría ${Category} fue quitada de la lista exitosamente.`)
 
 	const dbRoles = (await RolesDatabase.get(guildId)) as DatabaseRole[]
 
 	const FilteredRoles = dbRoles.filter(roles => roles.category.name !== Category)
 
 	await RolesDatabase.set(guildId, FilteredRoles)
-	console.log(`Los roles de la categoría ${Category} fueron eliminados con exito`);
 
 	return true
 }

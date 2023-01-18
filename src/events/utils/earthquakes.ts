@@ -14,7 +14,6 @@ interface EartquakeInfo {
 let oldEarthquake: EartquakeInfo;
 
 async function EarthquakeMonitor(client: Client): Promise<void> {
-	console.log("Getting earthquakes...")
 	const newEarthquake = await getEarthquakes().catch((error) => console.error(error))
 
 	if (!newEarthquake) return

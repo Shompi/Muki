@@ -63,6 +63,9 @@ async function main() {
 		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommand
 
 		Muki.commands.set(command.data.name, command)
+
+		console.log("COMMAND LOADED:", command.data.name);
+		
 	}
 
 	/** Load message commands into the client */
