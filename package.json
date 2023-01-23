@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "the og exiliados secretary",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node js/index.js",
+    "start": "tsc && node js/index.js",
     "deploy": "node deploy/deploy-commands.cjs",
     "build": "tsc",
     "lint": "npx eslint ./src"
