@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../types/index";
 
-export = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName("test")
 		.setDescription("Comando de prueba"),

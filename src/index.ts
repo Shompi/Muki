@@ -37,7 +37,7 @@ const Muki = new MukiClient()
 
 // Load event files
 async function main() {
-	const EventFiles = await readdir("src/events").then(files => files.filter(file => file.endsWith(".ts")))
+	const EventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".ts") || file.endsWith(".js")))
 
 	for (const EventFile of EventFiles) {
 		const event = (await import("./events/" + EventFile)).default as EventFile
@@ -57,7 +57,7 @@ async function main() {
 	Muki.messageCommands = new Collection();
 	// Load commands into the client
 
-	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".ts")));
+	const CommandFiles = await readdir("js/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".ts") || file.endsWith(".js")));
 
 	for (const CommandFile of CommandFiles) {
 		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommand
@@ -65,15 +65,15 @@ async function main() {
 		Muki.commands.set(command.data.name, command)
 
 		console.log("COMMAND LOADED:", command.data.name);
-		
+
 	}
 
 	/** Load message commands into the client */
 
-	const MessageCommandFiles = await readdir("src/messageCommands")
+	const MessageCommandFiles = await readdir("js/messageCommands")
 
 	for (const CommandFile of MessageCommandFiles) {
-		const command = await import(`./messageCommands/${CommandFile}`) as MessageCommand
+		const command = (await import(`./messageCommands/${CommandFile}`)).default as MessageCommand
 
 		Muki.messageCommands.set(command.name, command)
 	}

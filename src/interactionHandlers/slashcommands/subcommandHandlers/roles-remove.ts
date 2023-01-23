@@ -1,5 +1,4 @@
-import { ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "@discordjs/builders";
-import { ChatInputCommandInteraction, ComponentType } from "discord.js";
+import { ChatInputCommandInteraction, ComponentType, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 
 export async function RemoveSelfRoles(i: ChatInputCommandInteraction<"cached">) {
 

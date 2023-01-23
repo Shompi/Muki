@@ -1,6 +1,6 @@
 import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'discord.js'
 import keyv from 'keyv'
-import { getGameCoverByName } from "./utils/gameImages/index"
+import { getGameCoverByName } from "./utils/gameImages/index.js"
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"

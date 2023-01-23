@@ -1,7 +1,7 @@
 import { ActivityType, Client, Events } from "discord.js"
 import { ReadyEvent } from "../types/index"
-import { ChangeProfilePicture } from "./utils/changeProfilePic"
-import { EarthquakeMonitor } from "./utils/earthquakes"
+import { ChangeProfilePicture } from "./utils/changeProfilePic.js"
+import { EarthquakeMonitor } from "./utils/earthquakes.js"
 
 export default {
 	name: Events.ClientReady,

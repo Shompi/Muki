@@ -3,9 +3,9 @@ a los miembros opciones de subir algun emoji o distintas cosas. */
 
 import { SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../types/index";
-import { SuggestGuildEmoji } from "./subcommandHandlers/server-emojis-suggest"
+import { SuggestGuildEmoji } from "./subcommandHandlers/server-emojis-suggest.js"
 
-export = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName("server")
 		.setDescription("Multiples comandos para el servidor")

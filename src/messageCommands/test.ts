@@ -1,6 +1,6 @@
 import { MessageCommand } from "../types";
 
-export = {
+export default {
 	name: 'test',
 	ownerOnly: true,
 	async execute(msg, args) {

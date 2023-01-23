@@ -1,9 +1,9 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
 import { SlashCommand } from "../../types/index"
-import { AdminAutoRoles } from "./subcommandHandlers/admin-roles"
+import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.js"
 
 
-export = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName("admin")
 		.setDescription("Varios comandos de administrador")

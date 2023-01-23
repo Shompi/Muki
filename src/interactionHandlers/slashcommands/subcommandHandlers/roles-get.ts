@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import Keyv from "keyv";
 import { Category, DatabaseRole } from "../../../types/index";
-import { CreateButtons } from "./utils/CreateCategoriesButton";
+import { CreateButtons } from "./utils/CreateCategoriesButton.js";
 const RolesDatabase = new Keyv({ uri: "sqlite://db/roles.sqlite", namespace: "roles" })
 const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite", namespace: 'categories' })
 
