@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../types/index";
+import { SlashCommand } from "@myTypes/index";
 
 export default {
 	data: new SlashCommandBuilder()

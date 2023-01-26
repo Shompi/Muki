@@ -1,5 +1,5 @@
 import { ActivityType, Client, Events } from "discord.js"
-import { ReadyEvent } from "../types/index"
+import { ReadyEvent } from "@myTypes/index"
 import { ChangeProfilePicture } from "./utils/changeProfilePic.js"
 import { EarthquakeMonitor } from "./utils/earthquakes.js"
 

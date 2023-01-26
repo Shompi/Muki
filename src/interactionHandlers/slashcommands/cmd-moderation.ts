@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../types/index";
+import { SlashCommand } from "@myTypes/index";
 import { BanMember } from "./subcommandHandlers/mod-ban.js";
 import { KickMember } from "./subcommandHandlers/mod-kick.js";
 const OneDayInSeconds = 60 * 60 * 24

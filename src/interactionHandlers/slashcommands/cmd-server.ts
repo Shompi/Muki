@@ -2,7 +2,7 @@
 a los miembros opciones de subir algun emoji o distintas cosas. */
 
 import { SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../types/index";
+import { SlashCommand } from "@myTypes/index";
 import { SuggestGuildEmoji } from "./subcommandHandlers/server-emojis-suggest.js"
 
 export default {

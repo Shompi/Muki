@@ -5,7 +5,7 @@ import * as dotenv from "dotenv"
 dotenv.config()
 import { Client, Collection, GuildTextBasedChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
-import { EventFile, MessageCommand, SlashCommand } from "./types/index"
+import { EventFile, MessageCommand, SlashCommand } from "@myTypes/index"
 
 class MukiClient extends Client {
 	commands: Collection<string, SlashCommand>

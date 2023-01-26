@@ -1,5 +1,5 @@
 import { ButtonBuilder, ButtonStyle } from "discord.js"
-import { Category } from "../../../../types/index"
+import { Category } from "@myTypes/index"
 
 
 export function CreateButtons(categories?: Category[]) {
