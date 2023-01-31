@@ -4,6 +4,7 @@ import { SlashCommand } from "@myTypes/index";
 export default {
 	data: new SlashCommandBuilder()
 		.setName("test")
+		.setDMPermission(false)
 		.setDescription("Comando de prueba"),
 	async execute(interaction) {
 

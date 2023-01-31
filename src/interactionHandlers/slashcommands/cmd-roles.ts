@@ -5,6 +5,7 @@ import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove.js";
 export default {
 	data: new SlashCommandBuilder()
 		.setName("roles")
+		.setDMPermission(false)
 		.setDescription("Comandos para añadirte o quitarte")
 		.setDescriptionLocalization("en-US", "Commands to add or remove roles from you")
 		.addSubcommand(add =>

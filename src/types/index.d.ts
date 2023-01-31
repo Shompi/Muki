@@ -1,4 +1,4 @@
-import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
+import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
 
 export type InteractionCreateFile = {
 	name: string
@@ -7,8 +7,7 @@ export type InteractionCreateFile = {
 };
 
 export interface EventFile {
-	[K: string]: unknown
-	name: string
+	name: Events
 	once: boolean
 	execute(...e: unknown[]): Promise<unknown>
 }

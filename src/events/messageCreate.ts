@@ -1,5 +1,5 @@
 import { Events, type Message } from "discord.js";
-import { MukiClient } from "../types";
+import { EventFile, MukiClient } from "../types";
 
 export default {
 	name: Events.MessageCreate,
@@ -29,4 +29,4 @@ export default {
 			return await Command.execute(msg, SplitContent)
 		}
 	}
-}
+} as EventFile

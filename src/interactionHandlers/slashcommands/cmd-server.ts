@@ -8,6 +8,7 @@ import { SuggestGuildEmoji } from "./subcommandHandlers/server-emojis-suggest.js
 export default {
 	data: new SlashCommandBuilder()
 		.setName("server")
+		.setDMPermission(false)
 		.setDescription("Multiples comandos para el servidor")
 		.addSubcommandGroup(emojis =>
 			emojis.setName("emojis").setDescription("Comandos relacionados a emojis del servidor")

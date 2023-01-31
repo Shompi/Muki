@@ -6,6 +6,7 @@ import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.js"
 export default {
 	data: new SlashCommandBuilder()
 		.setName("admin")
+		.setDMPermission(false)
 		.setDescription("Varios comandos de administrador")
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDescriptionLocalization("en-US", "Admin commands")
