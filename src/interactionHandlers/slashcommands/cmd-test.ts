@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "@myTypes/index";
+import { SlashCommandTemplate } from "@myTypes/index";
 
-export default {
+const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("test")
 		.setDMPermission(false)
@@ -13,4 +13,6 @@ export default {
 	},
 
 
-} as SlashCommand
+}
+
+export = command

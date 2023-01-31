@@ -1,9 +1,9 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
-import { SlashCommand } from "@myTypes/index"
+import { type SlashCommandTemplate } from "@myTypes/index"
 import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.js"
 
 
-export default {
+const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("admin")
 		.setDMPermission(false)
@@ -27,4 +27,6 @@ export default {
 		}
 
 	}
-} as SlashCommand
+}
+
+export = command

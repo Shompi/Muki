@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "@myTypes/index";
+import { type SlashCommandTemplate } from "@myTypes/index";
 import { BanMember } from "./subcommandHandlers/mod-ban.js";
 import { KickMember } from "./subcommandHandlers/mod-kick.js";
 const OneDayInSeconds = 60 * 60 * 24
@@ -15,7 +15,7 @@ const DaysToDeleteMessages = {
 	seven: 604800
 }
 
-export default {
+const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("mod")
 		.setDMPermission(false)
@@ -120,4 +120,6 @@ export default {
 			})
 		}
 	},
-} as SlashCommand
+}
+
+export = command

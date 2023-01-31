@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "@myTypes/index";
+import { type SlashCommandTemplate } from "@myTypes/index";
 import { GetRoles } from "./subcommandHandlers/roles-get.js";
 import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove.js";
-export default {
+const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("roles")
 		.setDMPermission(false)
@@ -33,4 +33,6 @@ export default {
 			return await RemoveSelfRoles(i)
 
 	},
-} as SlashCommand;
+}
+
+export = command

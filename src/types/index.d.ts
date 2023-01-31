@@ -1,4 +1,4 @@
-import { BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
 
 export type InteractionCreateFile = {
 	name: string
@@ -28,10 +28,11 @@ export interface Category {
 	emoji?: string
 }
 
-export type SlashCommand = {
-	data: SlashCommandBuilder
+export interface SlashCommandTemplate {
+	data: Partial<SlashCommandBuilder> & { name: string }
 	permissions?: PermissionsBitField
-	execute(i: ChatInputCommandInteraction<"cached">): Promise<unknown>
+	declare execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<unknown>
+	declare autocomplete?: (interaction: AutocompleteInteraction) => Promise<unknown>
 }
 
 export interface MessageCommand {
@@ -40,7 +41,7 @@ export interface MessageCommand {
 	execute: (m: Message, args?: Array<string>) => Promise<unknown>
 }
 export interface MukiClient extends Client {
-	commands: Collection<string, SlashCommand>
+	commands: Collection<string, SlashCommandTemplate>
 	messageCommands: Collection<string, MessageCommand>
 	get suggestion_channel(): GuildTextBasedChannel
 }

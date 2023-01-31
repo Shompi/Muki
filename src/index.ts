@@ -5,10 +5,10 @@ import * as dotenv from "dotenv"
 dotenv.config()
 import { Client, Collection, GuildTextBasedChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
-import { EventFile, MessageCommand, SlashCommand } from "@myTypes/index"
+import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
 
 class MukiClient extends Client {
-	commands: Collection<string, SlashCommand>
+	commands: Collection<string, SlashCommandTemplate>
 	messageCommands: Collection<string, MessageCommand>
 
 	constructor() {
@@ -60,7 +60,7 @@ async function main() {
 	const CommandFiles = await readdir(__dirname + "/interactionHandlers/slashcommands").then(files => files.filter(file => file.startsWith("cmd-") && file.endsWith(".js")));
 
 	for (const CommandFile of CommandFiles) {
-		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommand
+		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommandTemplate
 
 		Muki.commands.set(command.data.name, command)
 

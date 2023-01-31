@@ -16,9 +16,7 @@ async function registerCommands() {
 
 	for (const file of commandFiles) {
 
-		const command = await import(`../js/interactionHandlers/slashcommands/${file}`);
-
-		console.log('Command loaded:', command.data.name.toUpperCase());
+		const command = require(`../js/interactionHandlers/slashcommands/${file}`);
 
 		globalCommands.push(command.data.toJSON());
 	}
