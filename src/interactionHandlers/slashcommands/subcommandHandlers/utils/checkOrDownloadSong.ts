@@ -40,15 +40,16 @@ async function Download(videoId: string) {
 		// "--audio-format opus",
 		//"--audio-quality 192K",
 		// eslint-disable-next-line no-useless-escape
-		'-o "./downloads/%\(title\)s %\(id\)s.%\(ext\)s"',
+		'-o "downloads/%\(title\)s %\(id\)s.%\(ext\)s"',
 		youtubeBaseUrl + videoId,
 		//"--simulate", // Do not download any video
 	]
 
 	return new Promise((resolve, reject) => {
 
-		console.log("Creando child youtube-dl");
-		const process = spawn("youtube-dl", ytdlArgs, { stdio: "inherit" })
+		console.log("Creando child youtube-dl")
+		// eslint-disable-next-line no-useless-escape
+		const process = spawn("youtube-dl", ["-w -x -o 'downloads/%\(title\)s %\(id\)s.%\(ext\)s'"], { stdio: "inherit" })
 
 		process.on('spawn', () => {
 			console.log("Comenzando la descarga del video");
