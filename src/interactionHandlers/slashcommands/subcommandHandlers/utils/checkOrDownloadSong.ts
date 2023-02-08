@@ -33,7 +33,7 @@ async function Download(videoId: string) {
 	const youtubeBaseUrl = "https://youtube.com/watch?v="
 
 	const ytdlArgs = [
-		"youtube-dl",
+		//"youtube-dl",
 		// "--id", // Use only ID in the file name
 		"-w", // No overwrites
 		"-x", // Extract audio only
@@ -48,7 +48,7 @@ async function Download(videoId: string) {
 	return new Promise((resolve, reject) => {
 
 		console.log("Creando child youtube-dl");
-		const process = spawn(Terminal, ytdlArgs, { stdio: "inherit" })
+		const process = spawn("youtube-dl", ytdlArgs, { stdio: "inherit" })
 
 		process.on('spawn', () => {
 			console.log("Comenzando la descarga del video");
