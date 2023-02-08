@@ -132,5 +132,6 @@ js
 # Database files
 db
 
-#
+# Other folders
 tests
+downloads

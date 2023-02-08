@@ -19,6 +19,10 @@ export default {
 				await client.commands.get(interaction.commandName)?.execute(interaction)
 			}
 
+			if (interaction.isAutocomplete()) {
+				await client.commands.get(interaction.commandName)?.autocomplete?.(interaction)
+			}
+
 			if (interaction.isButton()) {
 				switch (interaction.customId) {
 					case 'emoji-accept':

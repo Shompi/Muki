@@ -21,6 +21,7 @@ class MukiClient extends Client {
 				"GuildMessages",
 				"GuildPresences",
 				"Guilds",
+				"GuildVoiceStates"
 			]
 		})
 		/* The commands collection of this bot */
