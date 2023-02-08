@@ -40,7 +40,7 @@ async function Download(videoId: string) {
 		// "--audio-format opus",
 		//"--audio-quality 192K",
 		// eslint-disable-next-line no-useless-escape
-		"-o 'downloads/%\(title\)s %\(id\)s.%\(ext\)s'",
+		"-o \"downloads/%\(title\)s %\(id\)s.%\(ext\)s\"",
 		youtubeBaseUrl + videoId,
 		//"--simulate", // Do not download any video
 	]
