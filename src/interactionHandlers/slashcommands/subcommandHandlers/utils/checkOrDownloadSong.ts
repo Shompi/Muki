@@ -39,7 +39,8 @@ async function Download(videoId: string) {
 		"-x", // Extract audio only
 		"--audio-format opus",
 		"--audio-quality 192K",
-		"-o './downloads/%(title)s %(id)s.%(ext)s'",
+		// eslint-disable-next-line no-useless-escape
+		"-o './downloads/%\(title\)s %\(id\)s.%\(ext\)s'",
 		youtubeBaseUrl + videoId,
 		//"--simulate", // Do not download any video
 	]
