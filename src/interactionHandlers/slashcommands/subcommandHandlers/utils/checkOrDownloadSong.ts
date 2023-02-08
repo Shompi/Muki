@@ -33,14 +33,14 @@ async function Download(videoId: string) {
 	const youtubeBaseUrl = "https://youtube.com/watch?v="
 
 	const ytdlArgs = [
-		//"youtube-dl",
+		"youtube-dl",
 		// "--id", // Use only ID in the file name
 		"-w", // No overwrites
 		"-x", // Extract audio only
 		"--audio-format opus",
-		"--audio-quality 192K",
+		//"--audio-quality 192K",
 		// eslint-disable-next-line no-useless-escape
-		//'-o "./downloads/%\(title\)s %\(id\)s.%\(ext\)s"',
+		'-o "./downloads/%\(title\)s %\(id\)s.%\(ext\)s"',
 		youtubeBaseUrl + videoId,
 		//"--simulate", // Do not download any video
 	]
