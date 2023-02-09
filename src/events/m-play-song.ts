@@ -64,6 +64,10 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 
 	await entersState(connection, VoiceConnectionStatus.Ready, 20_000)
 
+	connection.on(VoiceConnectionStatus.Disconnected, () => {
+		connection.destroy()
+	})
+
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
 
 		if (guild.queue && guild.queue.songs.length === 0) {
