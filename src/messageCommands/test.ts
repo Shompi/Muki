@@ -5,8 +5,18 @@ export default {
 	ownerOnly: true,
 	async execute(msg, args) {
 
-		return await msg.reply({
-			content: 'Hey!'
-		})
+		if (msg.guild) {
+			const sticker = msg.guild.stickers.cache.random()
+
+			if (sticker) {
+
+				void await msg.reply({
+					content: 'Hey!!',
+					stickers: [sticker]
+				})
+			} else {
+				void await msg.reply({ content: 'Hey!!' })
+			}
+		}
 	}
 } as MessageCommand
