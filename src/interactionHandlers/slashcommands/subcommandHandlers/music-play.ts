@@ -28,7 +28,7 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 		// if its not a Video Id or if the file was not found we have to search for a video
 		const FoundVideos = await SearchYoutubeVideo(videoId)
 
-		if (!FoundVideos) return await interaction.editReply({ content: 'No encontré ningún video.' })
+		if (!FoundVideos || FoundVideos.length === 0) return await interaction.editReply({ content: 'No encontré ningún video.' })
 
 		if (FoundVideos.length === 1) {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -98,5 +98,6 @@ async function SearchYoutubeVideo(name: string) {
 	const Videos = await YouTube.search(name, { type: 'video', limit: 20, safeSearch: false })
 
 	if (Videos.length === 0) return null
-	return Videos.slice(0, 25)
+
+	return Videos.filter(video => video.duration <= 1_000 * 60 * 7).slice(0, 25)
 }
