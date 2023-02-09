@@ -1,12 +1,13 @@
-import { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, entersState, VoiceConnectionStatus } from "@discordjs/voice"
+import { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, entersState, VoiceConnectionStatus, AudioPlayer } from "@discordjs/voice"
 import { ChatInputCommandInteraction } from "discord.js"
 
 
 export default {
 	name: "music-play",
 	once: false,
-	async execute(interaction: ChatInputCommandInteraction<"cached">, path_to_song: string) {
+	async execute(interaction: ChatInputCommandInteraction<"cached">, path_to_song?: string) {
 
+		if (!path_to_song) return
 		const { guild } = interaction
 
 		if (!guild.queue) {
@@ -54,7 +55,6 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 	const resource = createAudioResource("downloads/" + path_to_song, { inputType: StreamType.Opus })
 
 	// Create an audio player
-
 	guild.audioPlayer = createAudioPlayer()
 
 	guild.audioPlayer.play(resource)
@@ -71,14 +71,12 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
 
 		if (guild.queue && guild.queue.songs.length === 0) {
-			console.log("No hay mas canciones en la cola, desconectando.");
 			void channel?.send({ content: 'No hay más canciones en la cola.' })
 			connection.destroy()
+			guild.audioPlayer = undefined
 		}
 
 		if (guild.queue && guild.queue.songs.length >= 1) {
-
-			console.log("Pasando a la siguiente canción...");
 
 			interaction.client.emit('music-play', interaction, guild.queue?.songs.shift())
 		}

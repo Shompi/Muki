@@ -1,6 +1,7 @@
 import { SlashCommandTemplate } from "@myTypes/*";
 import { SlashCommandBuilder } from "discord.js";
 import { readdir } from "fs/promises"
+import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play";
 
 const command: SlashCommandTemplate = {
@@ -15,6 +16,10 @@ const command: SlashCommandTemplate = {
 						.setDescription('ID del video')
 						.setAutocomplete(true)
 				)
+		)
+		.addSubcommand(pause =>
+			pause.setName('pause')
+				.setDescription('Pausa temporalmente la reproducción de audio.')
 		)
 		.addSubcommand(stop =>
 			stop.setName('stop')
@@ -33,6 +38,8 @@ const command: SlashCommandTemplate = {
 		switch (interaction.options.getSubcommand()) {
 			case 'play':
 				return await ParseVideoIdOrName(interaction)
+			case 'pause':
+				return await PauseOrUnpauseSong(interaction)
 
 			case 'stop':
 
