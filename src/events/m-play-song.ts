@@ -1,4 +1,4 @@
-import { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, entersState, VoiceConnectionStatus, AudioPlayer } from "@discordjs/voice"
+import { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, entersState, VoiceConnectionStatus } from "@discordjs/voice"
 import { ChatInputCommandInteraction } from "discord.js"
 
 
@@ -54,15 +54,22 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 	// Play the song, at this point the song should be already downloaded
 	const resource = createAudioResource("downloads/" + path_to_song, { inputType: StreamType.Opus })
 
-	// Create an audio player
-	guild.audioPlayer = createAudioPlayer()
+	// Create an audio player if there is not one
 
-	guild.audioPlayer.play(resource)
+	if (!guild.audioPlayer) {
+		guild.audioPlayer = createAudioPlayer()
+	}
 
 	// Subscribe the audio player 
 	connection.subscribe(guild.audioPlayer)
 
-	await entersState(connection, VoiceConnectionStatus.Ready, 20_000)
+	// Check if the connection is ready
+	if (connection.state.status !== VoiceConnectionStatus.Ready) {
+		await entersState(connection, VoiceConnectionStatus.Ready, 20_000)
+	}
+
+	// Start playing the resource once the connection enters the ready state
+	guild.audioPlayer.play(resource)
 
 	connection.on(VoiceConnectionStatus.Disconnected, () => {
 		connection.destroy()

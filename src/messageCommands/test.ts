@@ -4,7 +4,7 @@ export default {
 	name: 'test',
 	ownerOnly: true,
 	async execute(msg, args) {
-
+		
 		if (msg.guild) {
 			const sticker = msg.guild.stickers.cache.random()
 
