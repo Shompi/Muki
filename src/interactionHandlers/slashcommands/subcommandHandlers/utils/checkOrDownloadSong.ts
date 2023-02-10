@@ -1,7 +1,6 @@
 import { ChatInputCommandInteraction } from "discord.js"
 import { readdir } from "fs/promises"
 import { spawn } from "node:child_process"
-const Terminal = process.platform === "win32" ? "powershell" : "bash"
 
 export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId?: string): Promise<string | null> {
 

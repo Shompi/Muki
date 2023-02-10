@@ -58,6 +58,8 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 
 	if (!guild.audioPlayer) {
 		guild.audioPlayer = createAudioPlayer()
+
+		guild.audioPlayer.playable
 	}
 
 	// Subscribe the audio player 
