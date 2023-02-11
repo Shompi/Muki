@@ -75,6 +75,8 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 
 	connection.on(VoiceConnectionStatus.Disconnected, () => {
 		connection.destroy()
+		guild.audioPlayer?.stop(true)
+		guild.audioPlayer = undefined
 	})
 
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
@@ -82,6 +84,7 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 		if (guild.queue && guild.queue.songs.length === 0) {
 			void channel?.send({ content: 'No hay más canciones en la cola.' })
 			connection.destroy()
+			guild.audioPlayer?.stop()
 			guild.audioPlayer = undefined
 		}
 
