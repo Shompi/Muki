@@ -46,7 +46,7 @@ const command: SlashCommandTemplate = {
 				return await ShowQueue(interaction)
 			case 'stop':
 				return await PauseOrUnpauseSong(interaction)
-			case 'skip':
+			case 'next':
 				return await SkipCurrentSong(interaction)
 
 			default:
