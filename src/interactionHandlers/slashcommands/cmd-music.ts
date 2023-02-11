@@ -3,6 +3,8 @@ import { SlashCommandBuilder } from "discord.js";
 import { readdir } from "fs/promises"
 import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play";
+import { SkipCurrentSong } from "./subcommandHandlers/music-skip";
+import { ShowQueue } from "./subcommandHandlers/music-queue";
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
@@ -40,13 +42,13 @@ const command: SlashCommandTemplate = {
 				return await ParseVideoIdOrName(interaction)
 			case 'pause':
 				return await PauseOrUnpauseSong(interaction)
-
+			case 'queue':
+				return await ShowQueue(interaction)
 			case 'stop':
-
-				break
+				return await PauseOrUnpauseSong(interaction)
 			case 'skip':
+				return await SkipCurrentSong(interaction)
 
-				break
 			default:
 				return true
 		}
