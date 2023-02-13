@@ -1,7 +1,6 @@
 import { ActionRowBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import { YouTube } from "youtube-sr"
 import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong";
-import { readdir } from "fs/promises"
 export async function ParseVideoIdOrName(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	if (!interaction.member.voice.channelId) {
@@ -21,7 +20,7 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 	await interaction.deferReply()
 
 	if (isValidId(videoId)) {
-		return void await EmitPlay(interaction, videoId)
+		return CheckOrDownloadSong(interaction, videoId)
 
 
 	} else {
@@ -32,8 +31,9 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 
 		if (FoundVideos.length === 1) {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			return void await EmitPlay(interaction, FoundVideos[0].id!)
+			return CheckOrDownloadSong(interaction, FoundVideos[0].id)
 		}
+
 
 		// If there is more than one video
 		const VideoSelectMessage = await interaction.editReply({
@@ -74,20 +74,8 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 		await SelectVideoInteraction.update({ components: [] })
 		// This is video ID
 		const SelectedVideoId = SelectVideoInteraction.values[0]
-		return void await EmitPlay(interaction, SelectedVideoId)
+		return CheckOrDownloadSong(interaction, SelectedVideoId)
 	}
-}
-
-async function EmitPlay(interaction: ChatInputCommandInteraction<"cached">, videoId: string): Promise<unknown> {
-	const FileId = await CheckOrDownloadSong(interaction, videoId)
-
-	if (!FileId) {
-		return await interaction.editReply({ content: 'Ocurrió un error desconocido.' })
-	}
-
-	const filename = await readdir("downloads").then(files => files.find(file => file.includes(FileId)))
-
-	return interaction.client.emit('music-play', interaction, filename)
 }
 
 function isValidId(id: string) {

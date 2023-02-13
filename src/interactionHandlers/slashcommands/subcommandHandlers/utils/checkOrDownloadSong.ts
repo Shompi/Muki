@@ -1,10 +1,27 @@
 import { ChatInputCommandInteraction } from "discord.js"
 import { readdir } from "fs/promises"
 import { spawn } from "node:child_process"
+import { EventEmitter } from "node:events"
 
-export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId?: string): Promise<string | null> {
+interface DownloadRequest {
+	interaction: ChatInputCommandInteraction<'cached'>,
+	video_id: string
+}
 
-	if (!videoId) return null
+/** Holds video ids */
+const DownloadQueue: DownloadRequest[] = []
+
+enum DownloaderStates {
+	Downloading = 1,
+	Idle
+}
+
+let DownloaderState = DownloaderStates.Idle
+
+
+export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId?: string): Promise<void> {
+
+	if (!videoId) return void interaction.editReply({ content: 'No se recibio una id de video.' })
 
 	// First lets check if the file can be found inside the folder
 	const files = await readdir("./downloads")
@@ -12,22 +29,26 @@ export async function CheckOrDownloadSong(interaction: ChatInputCommandInteracti
 	if (files.length >= 0) {
 		const file = files.find(file => file.includes(videoId))
 
-		if (file) return videoId
+		if (file) {
+			// File is in the system
+			interaction.client.emit('music-play', videoId)
+			return
+		}
 
-		await interaction.editReply({ content: '⌛ Descargando video, por favor espera unos segundos...' })
+		if (DownloaderState === DownloaderStates.Downloading) {
+			void await interaction.editReply({
+				content: 'Tu canción será añadida a la cola de descargas!'
+			})
 
-		const result = await Download(videoId).catch(console.error)
+			DownloadQueue.push({ interaction, video_id: videoId })
+			return
+		}
 
-		if (!result)
-			return null
-
-		return videoId
+		Download({ video_id: videoId, interaction })
 	}
-
-	return null
 }
 
-async function Download(videoId: string) {
+function Download({ video_id, interaction }: DownloadRequest) {
 
 	const youtubeBaseUrl = "https://youtube.com/watch?v="
 
@@ -43,32 +64,36 @@ async function Download(videoId: string) {
 		"-o",
 		// eslint-disable-next-line no-useless-escape
 		"downloads/%\(title\)s-%\(id\)s.%\(ext\)s",
-		youtubeBaseUrl + videoId,
+		youtubeBaseUrl + video_id,
 		//"--simulate", // Do not download any video
 	]
+	console.log("Creando child youtube-dl")
+	// eslint-disable-next-line no-useless-escape
+	const process = spawn("youtube-dl", ytdlArgs, { stdio: "inherit" })
 
-	return new Promise((resolve, reject) => {
+	process.on('spawn', () => {
+		console.log("Comenzando la descarga del video");
+		DownloaderState = DownloaderStates.Downloading
+	})
 
-		console.log("Creando child youtube-dl")
-		// eslint-disable-next-line no-useless-escape
-		const process = spawn("youtube-dl", ytdlArgs, { stdio: "inherit" })
+	process.on('close', (code) => {
+		if (code !== 0) {
+			return void interaction.channel?.send({ content: `Ocurrió un error con la descarga del video ${video_id}` })
+		}
 
-		process.on('spawn', () => {
-			console.log("Comenzando la descarga del video");
-		})
-
-		process.on("exit", (code) => {
-			if (code !== 0)
-				reject(new Error("El programa terminó debido a un error"))
-
-			resolve(true)
-		})
-
-		process.on('close', (code) => {
-			if (code !== 0)
-				reject(new Error("El programa terminó debido a un error"))
-
-			resolve(true)
-		})
+		Downloader.emit('finish')
+		interaction.client.emit('music-play', interaction, video_id)
 	})
 }
+
+const Downloader = new EventEmitter()
+	.on('finish', () => {
+
+		// Check if there is more videos on queue
+		if (DownloadQueue.length > 0) {
+			return void Download(DownloadQueue.shift()!)
+		}
+
+		// If there is nothing else to download, we can just set the state of the downloader to idle
+		DownloaderState = DownloaderStates.Idle
+	})
