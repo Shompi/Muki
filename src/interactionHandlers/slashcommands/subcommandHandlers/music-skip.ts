@@ -10,7 +10,7 @@ export async function SkipCurrentSong(interaction: ChatInputCommandInteraction) 
 
 	// Chequear si hay una cancion en la cola
 	if (!guild.queue) {
-		guild.queue = { songs: [] }
+		guild.queue = { songs: [], channelId: interaction.channelId }
 	}
 
 	if (guild.queue.songs.length === 0) {
