@@ -1,5 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake } from "discord.js"
 import { Video } from "youtube-sr";
 
 export type InteractionCreateFile = {
@@ -53,6 +53,8 @@ interface Song extends Video {
 }
 
 interface SongQueue {
+	/** The channel where the first interaction to play music was made */
+	channelId: Snowflake
 	songs: string[]
 }
 
