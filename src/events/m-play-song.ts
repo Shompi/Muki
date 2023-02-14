@@ -11,7 +11,7 @@ export default {
 		const { guild } = interaction
 
 		if (!guild.queue) {
-			guild.queue = { songs: [] }
+			guild.queue = { songs: [], channelId: interaction.channelId }
 		}
 
 		if (guild.audioPlayer && guild.audioPlayer.state.status === AudioPlayerStatus.Playing) {
@@ -77,6 +77,7 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 		connection.destroy()
 		guild.audioPlayer?.stop(true)
 		guild.audioPlayer = undefined
+		guild.queue = undefined
 	})
 
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
@@ -86,6 +87,7 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 			connection.destroy()
 			guild.audioPlayer?.stop()
 			guild.audioPlayer = undefined
+			guild.queue = undefined
 		}
 
 		if (guild.queue && guild.queue.songs.length >= 1) {
@@ -99,12 +101,7 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 		return await channel?.send({ content: `Reproduciendo: ${path_to_song}` })
 	}
 
-	if (interaction.deferred) {
+	if (interaction.deferred && interaction.isRepliable()) {
 		return await interaction.editReply({ content: `Reproduciendo: ${path_to_song}` })
 	}
-
-	if (interaction.isRepliable()) {
-		return interaction.reply({ content: `Reproduciendo: ${path_to_song}` })
-	}
-
 }
