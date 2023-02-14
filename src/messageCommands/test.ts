@@ -1,10 +1,9 @@
 import { MessageCommand } from "../types";
 
-export default {
+const Command: MessageCommand = {
 	name: 'test',
 	ownerOnly: true,
 	async execute(msg, args) {
-		
 		if (msg.guild) {
 			const sticker = msg.guild.stickers.cache.random()
 
@@ -19,4 +18,6 @@ export default {
 			}
 		}
 	}
-} as MessageCommand
+}
+
+export default Command
