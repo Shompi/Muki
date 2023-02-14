@@ -16,17 +16,17 @@ export default {
 			if (SplitContent.length === 0) return await msg.reply({ content: 'Hola!' })
 
 			const CommandName = SplitContent.shift()
+
 			if (!CommandName) return
-			if (client.messageCommands.has(CommandName)) return
 
 			const Command = client.messageCommands.get(CommandName)
 
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			if (!Command) return msg.reply({ content: `Hola! ${msg.client.emojis.cache.random() ?? msg.author}` })
+			if (!Command) return msg.reply({ content: `Hola! ${msg.client.emojis.cache.random() ?? ""}` })
 
 			if (Command.ownerOnly && msg.author.id !== "166263335220805634") return
 
-			return await Command.execute(msg, SplitContent)
+			return void Command.execute(msg, SplitContent)
 		}
 	}
 } as EventFile
