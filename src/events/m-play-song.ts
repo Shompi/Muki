@@ -1,5 +1,5 @@
 import { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, entersState, VoiceConnectionStatus } from "@discordjs/voice"
-import { ChatInputCommandInteraction } from "discord.js"
+import { ChatInputCommandInteraction, TextChannel } from "discord.js"
 
 
 export default {
@@ -19,7 +19,8 @@ export default {
 			return await interaction.reply({ content: 'Tu canción fue añadida a la cola.' })
 		}
 		try {
-			void await playAudioOnConnection(interaction, path_to_song)
+			await interaction.reply({ content: `Reproduciendo: ${path_to_song}}` })
+			await playAudioOnConnection(interaction, path_to_song)
 		} catch (e) {
 			console.log(e);
 			console.log("La conexión al canal de voz tomó demasiado tiempo en entrar en el estado Ready.");
@@ -46,8 +47,7 @@ function createVoiceConnection(interaction: ChatInputCommandInteraction<"cached"
 }
 
 async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'cached'>, path_to_song: string) {
-	const { guild, channel } = interaction
-
+	const { guild } = interaction
 	// Check if there is already a voice connection
 	const connection = createVoiceConnection(interaction)
 
@@ -58,8 +58,6 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 
 	if (!guild.audioPlayer) {
 		guild.audioPlayer = createAudioPlayer()
-
-		guild.audioPlayer.playable
 	}
 
 	// Subscribe the audio player 
@@ -83,7 +81,9 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
 
 		if (guild.queue && guild.queue.songs.length === 0) {
-			void channel?.send({ content: 'No hay más canciones en la cola.' })
+			const channel = guild.channels.cache.get(guild.queue.channelId) as TextChannel
+
+			void channel.send({ content: 'No hay más canciones en la cola.' })
 			connection.destroy()
 			guild.audioPlayer?.stop()
 			guild.audioPlayer = undefined
@@ -95,13 +95,4 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 			interaction.client.emit('music-play', interaction, guild.queue?.songs.shift())
 		}
 	})
-
-
-	if (interaction.replied) {
-		return await channel?.send({ content: `Reproduciendo: ${path_to_song}` })
-	}
-
-	if (interaction.deferred && interaction.isRepliable()) {
-		return await interaction.editReply({ content: `Reproduciendo: ${path_to_song}` })
-	}
 }
