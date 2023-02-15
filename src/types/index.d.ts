@@ -40,7 +40,7 @@ export interface SlashCommandTemplate {
 export interface MessageCommand {
 	name: string,
 	ownerOnly?: boolean,
-	execute: (m: Message, args?: Array<string>) => Promise<unknown> | unknown
+	execute: (m: Message, args: Array<string>) => Promise<unknown> | unknown
 }
 export interface MukiClient extends Client {
 	commands: Collection<string, SlashCommandTemplate>
