@@ -8,7 +8,7 @@ export async function ShowQueue(interaction: ChatInputCommandInteraction<'cached
 		return await interaction.reply({ content: 'No hay canciones en la cola.' })
 	}
 
-	const Songs = guild.queue.songs.join('\n')
+	const Songs = guild.queue.songs.map((song, index) => `${index + 1}- ${song}`).join('\n')
 
 	const QueueEmbed = new EmbedBuilder()
 		.setTitle('Cola de canciones')
