@@ -21,7 +21,7 @@ class MukiClient extends Client {
 				"GuildMessages",
 				"GuildPresences",
 				"Guilds",
-				"GuildVoiceStates"
+				"GuildVoiceStates",
 			],
 			partials: [Partials.GuildMember, Partials.User, Partials.Channel]
 		})
