@@ -16,6 +16,7 @@
     "@discordjs/opus": "^0.8.0",
     "@discordjs/voice": "^0.14.0",
     "@keyv/sqlite": "^3.6.4",
+    "@napi-rs/canvas": "^0.1.34",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "keyv": "^4.5.2",
