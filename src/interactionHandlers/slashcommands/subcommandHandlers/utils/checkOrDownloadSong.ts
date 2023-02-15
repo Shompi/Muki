@@ -31,7 +31,7 @@ export async function CheckOrDownloadSong(interaction: ChatInputCommandInteracti
 
 		if (file) {
 			// File is in the system
-			interaction.client.emit('music-play', videoId)
+			interaction.client.emit('music-play', interaction, videoId)
 			return
 		}
 
@@ -43,7 +43,7 @@ export async function CheckOrDownloadSong(interaction: ChatInputCommandInteracti
 			DownloadQueue.push({ interaction, video_id: videoId })
 			return
 		}
-
+		void await interaction.editReply({ content: '⏳ Tu canción se está descargando, dame unos minutos...' })
 		Download({ video_id: videoId, interaction })
 	}
 }
