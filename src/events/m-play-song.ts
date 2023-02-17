@@ -18,8 +18,15 @@ export default {
 			guild.queue?.songs.push(path_to_song)
 			return await interaction.reply({ content: 'Tu canción fue añadida a la cola.' })
 		}
+
+		if (!interaction.replied)
+			void await interaction.reply({ content: `Reproduciendo: ${path_to_song}` })
+		else {
+			const interactionChannel = interaction.client.channels.cache.get(guild.queue.channelId) as TextChannel
+			void await interactionChannel.send({ content: `Reproduciendo: ${path_to_song}}` })
+		}
+
 		try {
-			await interaction.reply({ content: `Reproduciendo: ${path_to_song}}` })
 			await playAudioOnConnection(interaction, path_to_song)
 		} catch (e) {
 			console.log(e);
