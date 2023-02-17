@@ -76,8 +76,11 @@ function Download({ video_id, interaction }: DownloadRequest) {
 		DownloaderState = DownloaderStates.Downloading
 	})
 
-	process.on('close', (code) => {
+	process.on('exit', (code) => {
 		if (code !== 0) {
+			if (DownloadQueue.length >= 1) {
+				Downloader.emit('finish')
+			}
 			return void interaction.channel?.send({ content: `Ocurrió un error con la descarga del video ${video_id}` })
 		}
 
