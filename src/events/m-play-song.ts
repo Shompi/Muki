@@ -87,19 +87,18 @@ async function playAudioOnConnection(interaction: ChatInputCommandInteraction<'c
 
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
 
-		if (guild.queue && guild.queue.songs.length === 0) {
-			const channel = guild.channels.cache.get(guild.queue.channelId) as TextChannel
+		if (guild.queue && guild.queue.songs.length >= 1) {
 
-			void channel.send({ content: 'No hay más canciones en la cola.' })
+			return void interaction.client.emit('music-play', interaction, guild.queue?.songs.shift())
+		}
+
+		if (guild.queue && guild.queue.songs.length === 0) {
+
 			connection.destroy()
 			guild.audioPlayer?.stop()
 			guild.audioPlayer = undefined
 			guild.queue = undefined
-		}
-
-		if (guild.queue && guild.queue.songs.length >= 1) {
-
-			interaction.client.emit('music-play', interaction, guild.queue?.songs.shift())
+			return
 		}
 	})
 }
