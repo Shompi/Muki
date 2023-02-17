@@ -1,5 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "discord.js"
 import { Video } from "youtube-sr";
 
 export type InteractionCreateFile = {
@@ -42,12 +42,6 @@ export interface MessageCommand {
 	ownerOnly?: boolean,
 	execute: (m: Message, args: Array<string>) => Promise<unknown> | unknown
 }
-export interface MukiClient extends Client {
-	commands: Collection<string, SlashCommandTemplate>
-	messageCommands: Collection<string, MessageCommand>
-	get suggestion_channel(): GuildTextBasedChannel
-}
-
 interface Song extends Video {
 	requestedBy: string
 }
@@ -59,6 +53,12 @@ interface SongQueue {
 }
 
 declare module 'discord.js' {
+	interface BaseClient {
+		commands: Collection<string, SlashCommandTemplate>
+		messageCommands: Collection<string, MessageCommand>
+		get suggestion_channel(): GuildTextBasedChannel
+		get selfroles_channel(): TextChannel
+	}
 	interface BaseGuild {
 		queue?: SongQueue,
 		audioPlayer?: AudioPlayer

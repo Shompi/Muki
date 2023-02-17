@@ -1,4 +1,4 @@
-import { MessageCommand, MukiClient } from "@myTypes/*";
+import { MessageCommand } from "@myTypes/*";
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)
@@ -8,7 +8,7 @@ const command: MessageCommand = {
 	ownerOnly: true,
 	async execute(m, args) {
 
-		const client = m.client as MukiClient
+		const client = m.client
 		const commandName = args[0]
 		if (!commandName) return void m.reply({ content: 'No especificaste el nombre de un comando.' })
 		if (!client.messageCommands.has(args[0])) {

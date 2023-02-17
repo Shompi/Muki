@@ -1,11 +1,9 @@
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, Colors, EmbedBuilder } from "discord.js";
-import { MukiClient } from "../../../types";
 
 export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	await interaction.deferReply({ ephemeral: true })
-	const client = interaction.client as MukiClient
-
+	const client = interaction.client
 	const SuggestionsChannel = client.suggestion_channel
 
 	if (!SuggestionsChannel)

@@ -1,12 +1,12 @@
+import { EventFile } from "@myTypes/*";
 import { Events, type Message } from "discord.js";
-import { EventFile, MukiClient } from "../types";
 
 export default {
 	name: Events.MessageCreate,
 	once: false,
 	async execute(msg: Message) {
 
-		const client = msg.client as MukiClient
+		const client = msg.client
 
 		if (msg.author.bot || msg.channel.isDMBased()) return;
 

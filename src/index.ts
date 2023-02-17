@@ -3,14 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Client, Collection, GuildTextBasedChannel, Partials } from "discord.js"
+import { Client, Collection, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
 import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
-import * as path from 'node:path'
 
 class MukiClient extends Client {
-	commands: Collection<string, SlashCommandTemplate>
-	messageCommands: Collection<string, MessageCommand>
 
 	constructor() {
 		super({
@@ -31,8 +28,12 @@ class MukiClient extends Client {
 		this.messageCommands = new Collection()
 	}
 
-	get suggestion_channel(): GuildTextBasedChannel {
+	get suggestion_channel() {
 		return this.channels.cache.get("1062586957567377448") as GuildTextBasedChannel
+	}
+
+	get selfroles_channel() {
+		return this.channels.cache.get("865360481940930560") as TextChannel
 	}
 }
 

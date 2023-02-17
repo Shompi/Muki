@@ -14,7 +14,7 @@ const event: EventFile = {
 
 		return void defaultChannel.send({
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			content: `¡Bienvenido al servidor ${member}!`,
+			content: `¡Bienvenido al servidor ${member}!\nRecuerda asignarte roles en ${member.client.selfroles_channel}`,
 			files: [await GenerateWelcomeImage(member)]
 		})
 	}

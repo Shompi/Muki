@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { InteractionCreateFile, MukiClient } from "@myTypes/index";
+import { InteractionCreateFile } from "@myTypes/index";
 import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.js"
 import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.js"
 
@@ -10,7 +10,7 @@ export default {
 
 		if (!interaction.inCachedGuild()) return interaction.isRepliable() ? interaction.reply("✅") : undefined
 
-		const client = interaction.client as MukiClient
+		const client = interaction.client
 		try {
 
 			if (interaction.isChatInputCommand()) {
