@@ -35,4 +35,4 @@ const command: SlashCommandTemplate = {
 	},
 }
 
-export = command
+export default command

@@ -1,6 +1,6 @@
 import { EventFile } from "@myTypes/*";
 import { Events, GuildMember } from "discord.js";
-import { GenerateWelcomeImage } from "./utils/generate";
+import { GenerateWelcomeImage } from "./utils/generate.js";
 
 
 

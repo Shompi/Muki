@@ -6,6 +6,7 @@ dotenv.config()
 import { Client, Collection, GuildTextBasedChannel, Partials } from "discord.js"
 import { readdir } from "node:fs/promises"
 import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
+import * as path from 'node:path'
 
 class MukiClient extends Client {
 	commands: Collection<string, SlashCommandTemplate>
@@ -39,7 +40,7 @@ const Muki = new MukiClient()
 
 // Load event files
 async function main() {
-	const EventFiles = await readdir(__dirname + "/events").then(files => files.filter(file => file.endsWith(".js")))
+	const EventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
 
 	for (const EventFile of EventFiles) {
 		const event = (await import("./events/" + EventFile)).default as EventFile
@@ -59,7 +60,7 @@ async function main() {
 	Muki.messageCommands = new Collection();
 	// Load commands into the client
 
-	const CommandFiles = await readdir(__dirname + "/interactionHandlers/slashcommands").then(files => files.filter(file => file.endsWith(".js")));
+	const CommandFiles = await readdir("js/interactionHandlers/slashcommands").then(files => files.filter(file => file.endsWith(".js")));
 
 	for (const CommandFile of CommandFiles) {
 		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommandTemplate
@@ -72,7 +73,7 @@ async function main() {
 
 	/** Load message commands into the client */
 
-	const MessageCommandFiles = await readdir(__dirname + "/messageCommands")
+	const MessageCommandFiles = await readdir("js/messageCommands")
 
 	for (const CommandFile of MessageCommandFiles) {
 		const command = (await import(`./messageCommands/${CommandFile}`)).default as MessageCommand

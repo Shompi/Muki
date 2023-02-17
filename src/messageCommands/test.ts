@@ -16,6 +16,7 @@ const Command: MessageCommand = {
 			} else {
 				void await msg.reply({ content: 'Hey!!' })
 			}
+
 		}
 	}
 }

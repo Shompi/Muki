@@ -1,6 +1,5 @@
 import { MessageCommand } from "@myTypes/*";
-import * as Canvas from "@napi-rs/canvas"
-import { GenerateWelcomeImage } from "../events/utils/generate";
+import { GenerateWelcomeImage } from "../events/utils/generate.js";
 
 const command: MessageCommand = {
 	name: 'generate',

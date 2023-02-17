@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import { YouTube } from "youtube-sr"
-import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong";
+import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong.js";
 export async function ParseVideoIdOrName(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	if (!interaction.member.voice.channelId) {

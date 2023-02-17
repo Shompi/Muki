@@ -1,10 +1,10 @@
 import { SlashCommandTemplate } from "@myTypes/*";
 import { SlashCommandBuilder } from "discord.js";
 import { readdir } from "fs/promises"
-import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause";
-import { ParseVideoIdOrName } from "./subcommandHandlers/music-play";
-import { SkipCurrentSong } from "./subcommandHandlers/music-skip";
-import { ShowQueue } from "./subcommandHandlers/music-queue";
+import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.js";
+import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.js";
+import { SkipCurrentSong } from "./subcommandHandlers/music-skip.js";
+import { ShowQueue } from "./subcommandHandlers/music-queue.js";
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
@@ -73,4 +73,4 @@ const command: SlashCommandTemplate = {
 	},
 }
 
-export = command
+export default command

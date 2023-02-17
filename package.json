@@ -1,6 +1,7 @@
 {
   "name": "muki",
   "version": "1.0.0",
+	"type": "module",
   "description": "the og exiliados secretary",
   "main": "src/index.js",
   "scripts": {
