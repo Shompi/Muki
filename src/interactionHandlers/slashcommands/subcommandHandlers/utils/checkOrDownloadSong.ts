@@ -69,7 +69,7 @@ function Download({ video_id, interaction }: DownloadRequest) {
 	]
 	console.log("Creando child youtube-dl")
 	// eslint-disable-next-line no-useless-escape
-	const process = spawn("youtube-dl", ytdlArgs, { stdio: "inherit" })
+	const process = spawn("yt-dlp", ytdlArgs, { stdio: "inherit" })
 
 	process.on('spawn', () => {
 		console.log("Comenzando la descarga del video");
