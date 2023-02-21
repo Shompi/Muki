@@ -30,7 +30,7 @@ export default {
 			void await interaction.reply({ content: `Reproduciendo: ${path_to_song_or_id}` })
 		else {
 			const interactionChannel = interaction.client.channels.cache.get(guild.queue.channelId) as TextChannel
-			void await interactionChannel.send({ content: `Reproduciendo: ${path_to_song_or_id}}` })
+			void await interactionChannel.send({ content: `Reproduciendo: ${path_to_song_or_id}` })
 		}
 
 		try {
