@@ -1,23 +1,12 @@
+import { EmbedBuilder } from "discord.js";
 import { MessageCommand } from "../types";
 
 const Command: MessageCommand = {
 	name: 'test',
 	ownerOnly: true,
 	async execute(msg, args) {
-		if (msg.guild) {
-			const sticker = msg.guild.stickers.cache.random()
 
-			if (sticker) {
-
-				void await msg.reply({
-					content: 'Hey!!',
-					stickers: [sticker]
-				})
-			} else {
-				void await msg.reply({ content: 'Hey!!' })
-			}
-
-		}
+		return void await msg.reply({ embeds: [new EmbedBuilder().setDescription('\u200b').setColor('Random').setTitle('test')] })
 	}
 }
 
