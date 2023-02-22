@@ -1,55 +1,47 @@
 import { ChatInputCommandInteraction } from "discord.js"
 import { readdir } from "fs/promises"
-import { spawn } from "node:child_process"
-import { EventEmitter } from "node:events"
+import { exec } from "node:child_process"
+import { promisify } from "node:util"
+const Exec = promisify(exec)
 
-interface DownloadRequest {
-	interaction: ChatInputCommandInteraction<'cached'>,
-	video_id: string
-}
-
-/** Holds video ids */
-const DownloadQueue: DownloadRequest[] = []
-
-enum DownloaderStates {
-	Downloading = 1,
+enum DownloaderState {
+	Downloading,
 	Idle
 }
+// We initialize in an idle state.
+let DownloadState: DownloaderState = DownloaderState.Idle
+const DownloadQueue: string[] = []
 
-let DownloaderState = DownloaderStates.Idle
-
-
-export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId?: string): Promise<void> {
-
-	if (!videoId) return void interaction.editReply({ content: 'No se recibio una id de video.' })
+/** Returns the name of the downloaded file or null if there was an error with the download*/
+export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId: string): Promise<string | null> {
 
 	// First lets check if the file can be found inside the folder
 	const files = await readdir("./downloads")
 
 	if (files.length >= 0) {
-		const file = files.find(file => file.includes(videoId))
+		const file = files.find(file => file.includes(videoId) && file.endsWith('.opus'))
 
 		if (file) {
 			// File is in the system
-			interaction.client.emit('music-play', interaction, videoId)
-			return
+			return file
 		}
-
-		if (DownloaderState === DownloaderStates.Downloading) {
-			void await interaction.editReply({
-				content: 'Tu canción será añadida a la cola de descargas!'
-			})
-
-			DownloadQueue.push({ interaction, video_id: videoId })
-			return
-		}
-		void await interaction.editReply({ content: '⏳ Tu canción se está descargando, dame unos minutos...' })
-		Download({ video_id: videoId, interaction })
 	}
+
+	// Else we need to download it
+	// But first, check if we are already downloading a video.
+
+	if (DownloadState === DownloaderState.Downloading) {
+		// Add the video id to the queue
+		DownloadQueue.push(videoId)
+	}
+
+	const filepath = await Download(videoId).catch(() => null)
+
+	return filepath
 }
 
-function Download({ video_id, interaction }: DownloadRequest) {
-
+async function Download(video_id: string): Promise<string | null> {
+	DownloadState = DownloaderState.Downloading
 	const youtubeBaseUrl = "https://youtube.com/watch?v="
 
 	const ytdlArgs = [
@@ -64,39 +56,26 @@ function Download({ video_id, interaction }: DownloadRequest) {
 		"-o",
 		// eslint-disable-next-line no-useless-escape
 		"downloads/%\(title\)s-%\(id\)s.%\(ext\)s",
+		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 		youtubeBaseUrl + video_id,
 		//"--simulate", // Do not download any video
 	]
 	console.log("Creando child youtube-dl")
 	// eslint-disable-next-line no-useless-escape
-	const process = spawn("yt-dlp", ytdlArgs, { stdio: "inherit" })
+	const { stdout, stderr } = await Exec(`yt-dlp ${ytdlArgs.join(" ")}`)
 
-	process.on('spawn', () => {
-		console.log("Comenzando la descarga del video");
-		DownloaderState = DownloaderStates.Downloading
-	})
+	console.log('[DEBUG yt-dlp] stdout:', stdout);
 
-	process.on('exit', (code) => {
-		if (code !== 0) {
-			if (DownloadQueue.length >= 1) {
-				Downloader.emit('finish')
-			}
-			return void interaction.channel?.send({ content: `Ocurrió un error con la descarga del video ${video_id}` })
-		}
+	if (stderr) {
+		return null
+	}
 
-		Downloader.emit('finish')
-		interaction.client.emit('music-play', interaction, video_id)
-	})
+	// Find the file in system
+	const files = await readdir('downloads')
+	if (files.length === 0) return null
+
+	const video = files.find(file => file.includes(video_id) && file.endsWith('.opus'))
+	if (!video) return null
+
+	return video
 }
-
-const Downloader = new EventEmitter()
-	.on('finish', () => {
-
-		// Check if there is more videos on queue
-		if (DownloadQueue.length > 0) {
-			return void Download(DownloadQueue.shift()!)
-		}
-
-		// If there is nothing else to download, we can just set the state of the downloader to idle
-		DownloaderState = DownloaderStates.Idle
-	})
