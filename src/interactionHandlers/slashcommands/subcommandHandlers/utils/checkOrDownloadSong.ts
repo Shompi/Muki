@@ -10,7 +10,7 @@ enum DownloaderState {
 }
 // We initialize in an idle state.
 let DownloadState: DownloaderState = DownloaderState.Idle
-const DownloadQueue: string[] = []
+//const DownloadQueue: string[] = []
 
 /** Returns the name of the downloaded file or null if there was an error with the download*/
 export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId: string): Promise<string | null> {
@@ -30,12 +30,12 @@ export async function CheckOrDownloadSong(interaction: ChatInputCommandInteracti
 	// Else we need to download it
 	// But first, check if we are already downloading a video.
 
-	if (DownloadState === DownloaderState.Downloading) {
-		// Add the video id to the queue
-		DownloadQueue.push(videoId)
-	}
 
-	const filepath = await Download(videoId).catch(() => null)
+	await interaction.editReply({ content: 'Tu video será descargado pronto', components: [] })
+	const filepath = await Download(videoId).catch((e) => {
+		console.error(e);
+		return null
+	})
 
 	return filepath
 }
@@ -55,7 +55,9 @@ async function Download(video_id: string): Promise<string | null> {
 		"192K",
 		"-o",
 		// eslint-disable-next-line no-useless-escape
-		"downloads/%\(title\)s-%\(id\)s.%\(ext\)s",
+		"'downloads/%\(title\)s-%\(id\)s.%\(ext\)s'",
+		"-r",
+		"2.5M", // Maximum download rate of 2.5Mb
 		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 		youtubeBaseUrl + video_id,
 		//"--simulate", // Do not download any video
@@ -65,6 +67,7 @@ async function Download(video_id: string): Promise<string | null> {
 	const { stdout, stderr } = await Exec(`yt-dlp ${ytdlArgs.join(" ")}`)
 
 	console.log('[DEBUG yt-dlp] stdout:', stdout);
+	DownloadState = DownloaderState.Idle
 
 	if (stderr) {
 		return null

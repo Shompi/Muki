@@ -51,7 +51,7 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 		// If there is more than one video
 		const GetSelectedVideo = await VideoSelectMenu(interaction, FoundVideos)
 
-		if (!GetSelectedVideo) return await interaction.editReply({ content: 'No seleccionaste ningún video en el tiempo dado, la interacción ha terminado.' })
+		if (!GetSelectedVideo) return await interaction.editReply({ content: 'No seleccionaste ningún video en el tiempo dado, la interacción ha terminado.', components: [] })
 
 		const isDownloaded = await CheckOrDownloadSong(interaction, GetSelectedVideo)
 
