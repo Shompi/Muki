@@ -176,6 +176,14 @@ function StartPlayback(guild: Guild, videoname: string) {
 
 	guild.audioPlayer?.on(AudioPlayerStatus.Idle, () => {
 
+		// Check if we are still connected to the channel, otherwise just stop all playback, empty the queue.
+		const connection = getVoiceConnection(guild.id)
+
+		// Do not handle stopping the audioPlayer here
+		if (!connection) {
+			return guild.queue!.songs = []
+		}
+
 		// If there is at least 1 song on queue
 		if (guild.queue!.songs.length >= 1) {
 

@@ -67,8 +67,18 @@ declare module 'discord.js' {
 	interface BaseClient {
 		commands: Collection<string, SlashCommandTemplate>
 		messageCommands: Collection<string, MessageCommand>
+		util: {
+			emoji: {
+				sad: Emoji
+				angry: Emoji
+				question: Emoji
+				thumbsup: Emoji
+				tehe: Emoji
+			}
+		}
 		get suggestion_channel(): GuildTextBasedChannel
 		get selfroles_channel(): TextChannel
+		public loadEmojis: () => boolean
 	}
 	interface BaseGuild {
 		queue?: SongQueue,

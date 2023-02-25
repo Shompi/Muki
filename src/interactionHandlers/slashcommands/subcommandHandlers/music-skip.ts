@@ -1,25 +1,23 @@
+import { AudioPlayerStatus } from "@discordjs/voice";
 import { ChatInputCommandInteraction } from "discord.js";
 
-export async function SkipCurrentSong(interaction: ChatInputCommandInteraction) {
+export async function SkipCurrentSong(interaction: ChatInputCommandInteraction<'cached'>) {
 
 	const { guild } = interaction
+
+	if (!interaction.member.voice.channelId) {
+		return await interaction.reply({ content: 'Debes estar conectado al canal de voz para usar este comando.' })
+	}
+
+	if (!guild.members.me?.voice.channelId)
+		return await interaction.reply({ content: 'No estoy conectada a ningun canal de voz.' })
+
+	if (interaction.member.voice.channelId !== guild.members.me.voice.channelId)
+		return await interaction.reply({ content: 'Debes estar conectado al mismo canal de voz que yo.' })
+
 	// Chequear que haya algo reproduciendose
-	if (!guild?.audioPlayer) {
-		return await interaction.reply({ content: 'No hay nada reproduciendose.' })
+	if (guild.audioPlayer?.state.status === AudioPlayerStatus.Playing) {
+		guild.audioPlayer.stop(true)
+		return await interaction.reply({ content: '⏩ Saltando la canción actual...' })
 	}
-
-	// Chequear si hay una cancion en la cola
-	if (!guild.queue) {
-		guild.queue = { songs: [], channelId: interaction.channelId }
-	}
-
-	if (guild.queue.songs.length === 0) {
-		return await interaction.reply({ content: 'No hay más canciones en la cola.' })
-	}
-
-	// Si hay una canción en la cola, debemos detener la reproducción de la cancion actual
-	// esto hará que el audio player entre en el estado "idle" gatillando que la reproducción de la siguiente canción.
-	guild.audioPlayer.stop(true)
-
-	return await interaction.reply({ content: '⏩ Saltando canción...' })
 }

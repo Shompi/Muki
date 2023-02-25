@@ -12,7 +12,7 @@ module.exports = {
 		project: ["tsconfig.json"],
 	},
 	rules: {
-		
+		"@typescript-eslint/restrict-template-expressions": "off"
 	},
 	root: true,
 };

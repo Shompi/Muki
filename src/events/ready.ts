@@ -17,6 +17,9 @@ export default {
 	execute(client: Client) {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		console.log(`${client.user?.username} is ready!`)
+		console.log('Cargando emojis...');
+		client.loadEmojis()
+		console.log('Emojis cargados!');
 
 		client.user?.setActivity({
 			name: "Estoy de vuelta",

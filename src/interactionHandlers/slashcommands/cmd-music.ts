@@ -5,6 +5,7 @@ import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.js";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.js";
 import { SkipCurrentSong } from "./subcommandHandlers/music-skip.js";
 import { ShowQueue } from "./subcommandHandlers/music-queue.js";
+import { StopPlayback } from "./subcommandHandlers/music-stop.js";
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
@@ -45,7 +46,7 @@ const command: SlashCommandTemplate = {
 			case 'queue':
 				return await ShowQueue(interaction)
 			case 'stop':
-				return await PauseOrUnpauseSong(interaction)
+				return await StopPlayback(interaction)
 			case 'next':
 				return await SkipCurrentSong(interaction)
 

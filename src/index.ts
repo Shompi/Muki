@@ -26,6 +26,18 @@ class MukiClient extends Client {
 		/* The commands collection of this bot */
 		this.commands = new Collection()
 		this.messageCommands = new Collection()
+
+		this.loadEmojis = () => {
+			this.util.emoji = {
+				angry: this.emojis.cache.get('1062671810589630505')!,
+				question: this.emojis.cache.get('1079114733283704853')!,
+				sad: this.emojis.cache.get('1079115149887143936')!,
+				tehe: this.emojis.cache.get('868322845216890950')!,
+				thumbsup: this.emojis.cache.get('654467568152870922')!,
+			}
+
+			return true
+		}
 	}
 
 	get suggestion_channel() {

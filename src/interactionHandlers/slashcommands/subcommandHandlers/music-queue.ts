@@ -8,12 +8,21 @@ export async function ShowQueue(interaction: ChatInputCommandInteraction<'cached
 		return await interaction.reply({ content: 'No hay canciones en la cola.' })
 	}
 
-	const Songs = guild.queue.songs.map((song, index) => `${index + 1}- ${song}`).join('\n')
+	const SongsOnQueue = guild.queue.songs.map((song, index) => {
+		if (song.name) {
+			/** Significa que la canción fue encolada por un menú de selección, por lo que tenemos otras propiedades disponibles */
+			return `${index + 1} - ${song.name} -> ${song.requestedBy}`
+		} else {
+			return `${index + 1} - ${song.path_to_video} -> ${song.requestedBy}`
+		}
+	}).join('\n')
+
+	const SongsToDisplay = SongsOnQueue.slice(0, 10) // Solo mostrar las primeras 10 canciones para no excede limites.
 
 	const QueueEmbed = new EmbedBuilder()
 		.setTitle('Cola de canciones')
-		.setDescription(codeBlock(Songs))
+		.setDescription(codeBlock(SongsOnQueue))
 		.setColor(Colors.Blue)
 
-	return await interaction.reply({ embeds: [QueueEmbed] })
+	return await interaction.reply({ embeds: [QueueEmbed], content: '¡Estas son las siguientes canciones!' })
 }
