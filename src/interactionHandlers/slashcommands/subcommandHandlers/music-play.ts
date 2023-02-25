@@ -1,4 +1,5 @@
 import { AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnectionStatus } from "@discordjs/voice";
+import { Song } from "@myTypes/*";
 import { ActionRowBuilder, ChatInputCommandInteraction, ComponentType, Guild, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import { Video, YouTube } from "youtube-sr"
 import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong.js";
@@ -17,7 +18,7 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 	// Means it probably was autocompleted, hence we have the full file name available
 	if (videoId.endsWith('.opus')) {
 		await interaction.reply({ content: 'Tu video será añadido a la cola!' })
-		return CreateConnectionAndPlayer(videoId, interaction)
+		return CreateConnectionAndPlayer({ path_to_video: videoId, id: videoId, requestedBy: interaction.user.username }, interaction)
 	}
 
 	await interaction.deferReply()
@@ -28,7 +29,7 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 			return void interaction.editReply({ content: `Tu video ${videoId} no se ha podido descargar.` })
 
 		await interaction.editReply({ content: 'Tu video ha sido añadido a la cola!' })
-		return CreateConnectionAndPlayer(isDownloaded, interaction)
+		return CreateConnectionAndPlayer({ path_to_video: isDownloaded, id: isDownloaded, requestedBy: interaction.user.username }, interaction)
 
 	} else {
 		// if its not a Video Id or if the file was not found we have to search for a video
@@ -37,14 +38,21 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 		if (!FoundVideos || FoundVideos.length === 0) return await interaction.editReply({ content: 'No encontré ningún video.' })
 
 		if (FoundVideos.length === 1) {
-			const isDownloaded = await CheckOrDownloadSong(interaction, FoundVideos[0].id!)
+			const videoPath = await CheckOrDownloadSong(interaction, FoundVideos[0].id!)
 
-			if (!isDownloaded)
+			if (!videoPath)
 				return void interaction.editReply({ content: 'Tu video no se ha podido descargar.' })
 			else {
 
 				await interaction.editReply({ content: 'Tú video ha sido añadido a la cola!' })
-				return CreateConnectionAndPlayer(isDownloaded, interaction)
+				return CreateConnectionAndPlayer({
+					id: videoPath,
+					path_to_video: videoPath,
+					requestedBy: interaction.user.username,
+					duration: FoundVideos[0].durationFormatted,
+					name: FoundVideos[0].title,
+					uploader: FoundVideos[0].channel?.name
+				}, interaction)
 			}
 		}
 
@@ -53,11 +61,11 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 
 		if (!GetSelectedVideo) return await interaction.editReply({ content: 'No seleccionaste ningún video en el tiempo dado, la interacción ha terminado.', components: [] })
 
-		const isDownloaded = await CheckOrDownloadSong(interaction, GetSelectedVideo)
+		const isDownloaded = await CheckOrDownloadSong(interaction, GetSelectedVideo.id)
 
 		if (!isDownloaded) return await interaction.editReply({ content: 'Ocurrió un error con la descarga de este video.' })
 
-		return CreateConnectionAndPlayer(isDownloaded, interaction)
+		return CreateConnectionAndPlayer({ ...GetSelectedVideo, path_to_video: isDownloaded }, interaction)
 	}
 }
 
@@ -65,7 +73,7 @@ function isValidId(id: string) {
 	return YouTube.validate(id, "VIDEO_ID")
 }
 
-async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'>, videos: Video[]) {
+async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'>, videos: Video[]): Promise<Omit<Song, "path_to_video"> | null> {
 
 	const VideoSelectMessage = await interaction.editReply({
 		content: 'Selecciona uno de los videos que encontré',
@@ -104,7 +112,16 @@ async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'
 
 	await SelectVideoInteraction.update({ components: [] })
 	// This is video ID
-	return SelectVideoInteraction.values[0]
+
+	const SelectedVideo = videos.find(video => video.id === SelectVideoInteraction.values[0])!
+
+	return {
+		id: SelectedVideo.id!,
+		requestedBy: SelectVideoInteraction.user.username,
+		duration: SelectedVideo.durationFormatted,
+		name: SelectedVideo.title,
+		uploader: SelectedVideo.channel?.name,
+	}
 
 }
 
@@ -116,7 +133,7 @@ async function SearchYoutubeVideo(name: string) {
 	return Videos.filter(video => video.duration <= 1_000 * 60 * 7).slice(0, 25)
 }
 
-async function CreateConnectionAndPlayer(videoname: string, interaction: ChatInputCommandInteraction<'cached'>) {
+async function CreateConnectionAndPlayer(song: Song, interaction: ChatInputCommandInteraction<'cached'>) {
 
 	const { guild } = interaction
 
@@ -129,7 +146,7 @@ async function CreateConnectionAndPlayer(videoname: string, interaction: ChatInp
 		// If it does, check if the audio player is playing audio
 		if (guild.audioPlayer.state.status === AudioPlayerStatus.Playing) {
 			// If it does, add the {videoname} to the guild queue and return.
-			guild.queue.songs.push(videoname)
+			guild.queue.songs.push(song)
 			return
 		}
 	}
@@ -147,7 +164,7 @@ async function CreateConnectionAndPlayer(videoname: string, interaction: ChatInp
 	// Subscribe the player to the connection
 	connection.subscribe(guild.audioPlayer)
 
-	StartPlayback(guild, videoname)
+	StartPlayback(guild, song.path_to_video)
 	return
 }
 
@@ -162,7 +179,7 @@ function StartPlayback(guild: Guild, videoname: string) {
 		// If there is at least 1 song on queue
 		if (guild.queue!.songs.length >= 1) {
 
-			guild.audioPlayer?.play(GetNextResource(guild.queue!.songs.shift()!))
+			guild.audioPlayer?.play(GetNextResource(guild.queue!.songs.shift()!.path_to_video))
 		}
 	})
 }

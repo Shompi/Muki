@@ -42,14 +42,25 @@ export interface MessageCommand {
 	ownerOnly?: boolean,
 	execute: (m: Message, args: Array<string>) => Promise<unknown> | unknown
 }
-interface Song extends Video {
+interface Song {
+	/** El usuario que pidió esta canción */
 	requestedBy: string
+	/** id del video */
+	id: string
+	/** Nombre del video (Solo disponible cuando se usa el menú de selección) */
+	name?: string
+	/** Nombre del usuario que subió el video (Solo disponible cuando se usa el menú de selección) */
+	uploader?: string
+	/** Duración del video (Solo disponible cuando se usa el menú de selección) */
+	duration?: string
+	/** Dirección al video en el disco */
+	path_to_video: string
 }
 
 interface SongQueue {
 	/** The channel where the first interaction to play music was made */
 	channelId: Snowflake
-	songs: string[]
+	songs: Song[]
 }
 
 declare module 'discord.js' {
