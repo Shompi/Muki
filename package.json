@@ -25,6 +25,9 @@
     "sharp": "^0.31.3",
     "youtube-sr": "^4.3.4"
   },
+  "overrides": {
+    "discord-api-types": "0.37. 20"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
