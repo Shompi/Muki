@@ -18,7 +18,7 @@ export default {
 
 			const interactionChannel = guild.channels.cache.get(guild.queue?.channelId ?? "") as TextChannel | undefined
 			const SadEmoji = client.util.emoji.sad
-			connection.disconnect()
+			connection.destroy()
 
 			return void await interactionChannel?.send({ content: `<@${newState.member?.id}> me dejaste sola en el canal... ${SadEmoji ?? ""}` })
 		}
