@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Client, Collection, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
+import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
 import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
 
@@ -48,6 +48,10 @@ class MukiClient extends Client {
 
 	get selfroles_channel() {
 		return this.channels.cache.get("865360481940930560") as TextChannel
+	}
+
+	get mainGuild(): Guild {
+		return this.guilds.cache.get('537484725896478733') as Guild
 	}
 }
 
