@@ -78,6 +78,7 @@ declare module 'discord.js' {
 		}
 		get suggestion_channel(): GuildTextBasedChannel
 		get selfroles_channel(): TextChannel
+		get mainGuild(): Guild
 		public loadEmojis: () => boolean
 	}
 	interface BaseGuild {
