@@ -8,6 +8,8 @@ const event: EventFile = {
 	name: Events.GuildMemberAdd,
 	once: false,
 	async execute(member: GuildMember) {
+		if (member.guild.id !== member.client.mainGuild.id) return;
+
 		const defaultChannel = member.guild.systemChannel
 
 		if (!defaultChannel) return
