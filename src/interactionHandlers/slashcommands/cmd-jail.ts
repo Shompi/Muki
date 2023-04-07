@@ -146,18 +146,33 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 				}
 			}
 
+			pollEmbed.addFields(
+				{
+					name: 'Votos Si',
+					value: results.yes.join('\n'),
+					inline: true
+				},
+				{
+					name: 'Votos No',
+					value: results.no.join('\n'),
+					inline: true,
+				}
+			)
+
 			if (results.yes.length === results.no.length) {
 				pollEmbed.setColor(Colors.DarkButNotBlack)
 
 				return void interaction.editReply({
-					content: `La votación ha terminado en un empate, ${targetMember} esta vez te has salvado.`
+					content: `La votación ha terminado en un empate, ${targetMember} esta vez te has salvado.`,
+					embeds: [pollEmbed]
 				})
 
 			} else if (results.yes.length > results.no.length) {
 				pollEmbed.setColor(Colors.Green)
 
 				void interaction.editReply({
-					content: `La votación a finalizado.\n${targetMember} vamo a la cana ${time(Math.round(((Date.now() + 5_000) / 1000)), 'R')}`
+					content: `La votación a finalizado.\n${targetMember} vamo a la cana ${time(Math.round(((Date.now() + 5_000) / 1000)), 'R')}`,
+					embeds: [pollEmbed]
 				})
 
 				// Move the member to the jail channel
@@ -170,14 +185,14 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 				await setTimeout(60_000)
 				await targetMember.voice.setChannel(oldChannel, 'Tiempo en cana terminado.')
 				await targetMember.voice.setMute(false)
-				
+
 			} else {
 				pollEmbed.setColor(Colors.Blue)
 
 				return void interaction.editReply({
-					content: `La votación ha finalizado, ${targetMember} no irá a la cárcel.`
+					content: `La votación ha finalizado, ${targetMember} no irá a la cárcel.`,
+					embeds: [pollEmbed]
 				})
-
 			}
 
 			/* TODO update the embed with the results. */
