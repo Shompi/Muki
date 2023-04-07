@@ -33,6 +33,9 @@ export interface Category {
 export interface SlashCommandTemplate {
 	data: Partial<SlashCommandBuilder> & { name: string }
 	permissions?: PermissionsBitField
+	guildOnly?: boolean
+	guildSpecific?: boolean
+	guildId?: guildSpecific extends boolean ? string : never
 	declare execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<unknown> | unknown
 	declare autocomplete?: (interaction: AutocompleteInteraction) => Promise<unknown> | unknown
 }
