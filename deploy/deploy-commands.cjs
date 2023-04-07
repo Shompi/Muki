@@ -4,12 +4,8 @@ const { REST, Routes } = require('discord.js')
 const { clientId } = require('./config.json');
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
-
 const globalCommands = [];
 const commandFiles = readdirSync('js/interactionHandlers/slashcommands').filter(file => file.endsWith('.js') && (file.startsWith('cmd-') || file.startsWith('ctx-')));
-
-
-
 
 async function registerCommands() {
 	console.log("Registering commands...");
@@ -20,7 +16,6 @@ async function registerCommands() {
 
 		globalCommands.push(command.data.toJSON());
 	}
-
 
 	try {
 
