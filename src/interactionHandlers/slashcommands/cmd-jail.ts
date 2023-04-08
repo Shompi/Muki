@@ -148,7 +148,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 				}
 			}
 
-			pollEmbed.addFields(
+			pollEmbed.setFields(
 				{
 					name: 'Votos Si',
 					value: results.yes.join('\n'),
