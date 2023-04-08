@@ -104,7 +104,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		)
 
 	const interactionResponse = await interaction.reply({
-		content: `La votación termina \`en 1 minuto\`}`,
+		content: `La votación termina \`en 1 minuto\``,
 		embeds: [pollEmbed],
 		components: [actionRow]
 	})
@@ -166,7 +166,8 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 
 				return void interaction.editReply({
 					content: `La votación ha terminado en un empate, ${targetMember} esta vez te has salvado.`,
-					embeds: [pollEmbed]
+					embeds: [pollEmbed],
+					components: []
 				})
 
 			} else if (results.yes.length > results.no.length) {
@@ -174,7 +175,8 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 
 				void interaction.editReply({
 					content: `La votación a finalizado.\n${targetMember} vamo a la cana.\nSerás devuelto al canal en 1 minuto.`,
-					embeds: [pollEmbed]
+					embeds: [pollEmbed],
+					components: []
 				})
 
 				// Move the member to the jail channel
@@ -191,7 +193,8 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 
 				return void interaction.editReply({
 					content: `La votación ha finalizado, ${targetMember} no irá a la cárcel.`,
-					embeds: [pollEmbed]
+					embeds: [pollEmbed],
+					components: []
 				})
 			}
 
