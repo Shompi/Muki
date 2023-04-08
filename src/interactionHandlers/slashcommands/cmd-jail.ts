@@ -52,7 +52,7 @@ const Command: SlashCommandTemplate = {
 
 
 		// Environment checks
-		let jailChannel = interaction.guild.channels.cache.find(channel => channel.name === 'Carcel' && channel.type === ChannelType.GuildVoice) as VoiceChannel | undefined
+		let jailChannel = interaction.guild.channels.cache.find(channel => channel.name === 'El Manzano' && channel.type === ChannelType.GuildVoice) as VoiceChannel | undefined
 		if (!jailChannel) {
 
 			if (!interaction.guild.members.me.permissions.has('ManageChannels')) {
@@ -65,7 +65,7 @@ const Command: SlashCommandTemplate = {
 				permissionOverwrites: [
 					{
 						id: interaction.guildId,
-						deny: ["Speak"]
+						deny: ["Speak", "Connect"]
 					}
 				]
 			})
@@ -87,6 +87,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		.setTitle(`${interaction.member.displayName} quiere enviar a ${targetMember.displayName} a la cárcel`)
 		.setColor(Colors.Blue)
 		.setDescription(`**Duración**: 1 minuto\n${reason ? '**Motivo**: ' + reason : ""}`)
+		.setImage(targetMember.user.displayAvatarURL({ size: 512 }))
 
 	const actionRow = new ActionRowBuilder<ButtonBuilder>()
 		.setComponents(
@@ -103,7 +104,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		)
 
 	const interactionResponse = await interaction.reply({
-		content: `La votación termina ${time(Math.floor((Date.now() + 60_000) / 1000), "R")}`,
+		content: `La votación termina \`en 1 minuto\`}`,
 		embeds: [pollEmbed],
 		components: [actionRow]
 	})
@@ -112,7 +113,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		componentType: ComponentType.Button,
 		filter: (interaction) => {
 			if (interaction.member.id === targetMember.id) {
-				void interaction.reply({ content: 'No puedes votar en una votación donde tu eres el objetivo.', ephemeral: true })
+				void interaction.reply({ content: 'No puedes votar en una votación donde tú eres el objetivo.', ephemeral: true })
 				return false
 			}
 
@@ -172,7 +173,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 				pollEmbed.setColor(Colors.Green)
 
 				void interaction.editReply({
-					content: `La votación a finalizado.\n${targetMember} vamo a la cana ${time(Math.round(((Date.now() + 5_000) / 1000)), 'R')}`,
+					content: `La votación a finalizado.\n${targetMember} vamo a la cana.\nSerás devuelto al canal en 1 minuto.`,
 					embeds: [pollEmbed]
 				})
 
@@ -181,11 +182,9 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 
 				const oldChannel = targetMember.voice.channel
 				await targetMember.voice.setChannel(jailChannel, 'Cana')
-				await targetMember.voice.setMute(true)
 
 				await setTimeout(60_000)
 				await targetMember.voice.setChannel(oldChannel, 'Tiempo en cana terminado.')
-				await targetMember.voice.setMute(false)
 
 			} else {
 				pollEmbed.setColor(Colors.Blue)
