@@ -30,7 +30,7 @@ const Command: SlashCommandTemplate = {
 		if (activePolls.has(interaction.guildId))
 			return void interaction.reply({ content: 'No puedes iniciar una votación mientras haya otra activa.', ephemeral: true })
 
-		const targetUser = interaction.options.getUser('target', true)
+		const targetUser = interaction.options.getUser('usuario', true)
 		const targetMember = await interaction.guild.members.fetch(targetUser.id)
 
 		if (!targetMember) {
