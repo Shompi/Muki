@@ -65,7 +65,7 @@ const Command: SlashCommandTemplate = {
 				permissionOverwrites: [
 					{
 						id: interaction.guildId,
-						deny: ["Speak", "Connect"]
+						deny: ["Connect"]
 					}
 				]
 			})
@@ -78,6 +78,7 @@ const Command: SlashCommandTemplate = {
 }
 
 async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, targetMember: GuildMember, jailChannel: VoiceBasedChannel) {
+	activePolls.add(interaction.guildId)
 	const voters = new Map<string, boolean>()
 
 	const reason = interaction.options.getString('razon', false)
@@ -108,8 +109,6 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		components: [actionRow]
 	})
 
-	activePolls.add(interaction.guildId)
-
 	interactionResponse.createMessageComponentCollector({
 		componentType: ComponentType.Button,
 		filter: (interaction) => {
@@ -132,7 +131,7 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		max: interaction.member.voice.channel!.members.filter(member => member.user.bot === false).size - 1
 	})
 		.on('end', async (collected) => {
-			activePolls.delete(interaction.guildId)
+
 			const results: {
 				yes: string[],
 				no: string[]
@@ -152,12 +151,12 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 			pollEmbed.setFields(
 				{
 					name: 'Votos Si',
-					value: results.yes.join('\n') || "0",
+					value: results.yes.join('\n'),
 					inline: true
 				},
 				{
 					name: 'Votos No',
-					value: results.no.join('\n') || "0",
+					value: results.no.join('\n'),
 					inline: true,
 				}
 			)
