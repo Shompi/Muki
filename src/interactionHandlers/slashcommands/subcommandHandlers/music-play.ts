@@ -69,11 +69,11 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 	}
 }
 
-function isValidId(id: string) {
+export function isValidId(id: string) {
 	return YouTube.validate(id, "VIDEO_ID")
 }
 
-async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'>, videos: Video[]): Promise<Omit<Song, "path_to_video"> | null> {
+export async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'>, videos: Video[]): Promise<Omit<Song, "path_to_video"> | null> {
 
 	const VideoSelectMessage = await interaction.editReply({
 		content: 'Selecciona uno de los videos que encontré',
@@ -125,7 +125,7 @@ async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'cached'
 
 }
 
-async function SearchYoutubeVideo(name: string) {
+export async function SearchYoutubeVideo(name: string) {
 	const Videos = await YouTube.search(name, { type: 'video', limit: 20, safeSearch: false })
 
 	if (Videos.length === 0) return null
