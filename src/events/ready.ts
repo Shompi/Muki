@@ -8,7 +8,7 @@ export default {
 	once: true,
 	earthquakeMonitor(client: Client) {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		setInterval(EarthquakeMonitor, 1000 * 60 * 5, client)
+		setInterval(EarthquakeMonitor, 1000 * 60 * 1, client)
 	},
 	changeProfilePicture(client: Client) {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
