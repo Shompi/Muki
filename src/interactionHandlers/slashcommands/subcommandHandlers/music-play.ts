@@ -24,6 +24,12 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 	await interaction.deferReply()
 
 	if (isValidId(videoId)) {
+		if (await checkForVideoLength(videoId)) {
+			return await interaction.editReply({
+				content: 'El video que has seleccionado excede el límite de duración de 10 minutos'
+			})
+		}
+
 		const isDownloaded = await CheckOrDownloadSong(interaction, videoId)
 		if (!isDownloaded)
 			return void interaction.editReply({ content: `Tu video ${videoId} no se ha podido descargar.` })
@@ -60,6 +66,13 @@ export async function ParseVideoIdOrName(interaction: ChatInputCommandInteractio
 		const GetSelectedVideo = await VideoSelectMenu(interaction, FoundVideos)
 
 		if (!GetSelectedVideo) return await interaction.editReply({ content: 'No seleccionaste ningún video en el tiempo dado, la interacción ha terminado.', components: [] })
+
+		if (await checkForVideoLength(GetSelectedVideo.id)) {
+			return await interaction.editReply({
+				content: 'El video que has seleccionado excede el límite de duración de 10 minutos',
+				components: [],
+			})
+		}
 
 		const isDownloaded = await CheckOrDownloadSong(interaction, GetSelectedVideo.id)
 
@@ -215,4 +228,15 @@ async function ConnectToVoice(interaction: ChatInputCommandInteraction<'cached'>
 
 	// If we connected succesfully and are ready to transmit audio, then resolve with the voice connection
 	return newConnection
+}
+
+async function checkForVideoLength(videoId: string) {
+	const videoUrl = "https://youtube.com/watch?v=" + videoId
+	const video = await YouTube.getVideo(videoUrl)
+
+	if (video.duration > 60 * 10) {
+		return true
+	}
+
+	return false
 }
