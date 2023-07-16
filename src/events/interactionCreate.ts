@@ -36,12 +36,7 @@ export default {
 
 		} catch (e) {
 			console.log(e);
-			if (interaction.isRepliable()) {
-				if (interaction.deferred || interaction.replied)
-					return await interaction.editReply({ content: 'La interacción ha finalizado.' })
-
-				else await interaction.reply({ content: 'La interacción ha finalizado.' })
-			}
+			return
 		}
 	}
 } as InteractionCreateFile
