@@ -143,7 +143,7 @@ export async function SearchYoutubeVideo(name: string) {
 
 	if (Videos.length === 0) return null
 
-	return Videos.filter(video => video.duration <= 1_000 * 60 * 7).slice(0, 25)
+	return Videos.filter(video => video.duration <= 1_000 * 60 * 10).slice(0, 25)
 }
 
 async function CreateConnectionAndPlayer(song: Song, interaction: ChatInputCommandInteraction<'cached'>) {
