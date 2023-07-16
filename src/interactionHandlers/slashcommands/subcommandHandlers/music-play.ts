@@ -234,7 +234,7 @@ async function checkForVideoLength(videoId: string) {
 	const videoUrl = "https://youtube.com/watch?v=" + videoId
 	const video = await YouTube.getVideo(videoUrl)
 
-	if (video.duration > 60 * 10) {
+	if (video.duration > 1000 * 60 * 10) {
 		return true
 	}
 
