@@ -48,7 +48,7 @@ async function getEarthquakes() {
 
 	oldEarthquake = lastEarthquake;
 
-	if (parseFloat(lastEarthquake.Magnitud) >= 4.0) {
+	if (parseFloat(lastEarthquake.Magnitud) >= 5.5) {
 		const embed = new EmbedBuilder()
 			.setTitle(`Sismo de magnitud ${lastEarthquake.Magnitud} a ${lastEarthquake.RefGeografica}`)
 			.setDescription(`**El sismo se registró a una profundidad de ${lastEarthquake.Profundidad}km**\n**Fecha:** \`${lastEarthquake.Fecha}\``)
