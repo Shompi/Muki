@@ -16,7 +16,7 @@ export default {
 	},
 	sendBasicData(client) {
 		setInterval(() => {
-			fetch("http://localhost:3000/api/muki", {
+			fetch("http://localhost/api/muki", {
 				method: 'POST',
 				headers: {
 					"secret-token": "1234",
