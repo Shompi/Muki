@@ -14,6 +14,29 @@ export default {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		setInterval(ChangeProfilePicture, 1000 * 60 * 60 * 12, client)
 	},
+	sendBasicData(client) {
+		setInterval(() => {
+			fetch("http://localhost:3000/api/muki", {
+				method: 'POST',
+				headers: {
+					"secret-token": "1234",
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					username: client.user?.username,
+					uptime: client.uptime,
+					avatar: client.user?.avatarURL({ size: 512 }),
+					guilds: client.guilds.cache.map(guild => ({ name: guild.name, member_count: guild.memberCount, iconURL: guild.iconURL({ size: 512 }) })),
+					user_count: client.users.cache.size,
+				})
+			}).then((response) => {
+				return response.json()
+			}).then(data => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				console.log(data.message)
+			}).catch(() => null)
+		}, 10000)
+	},
 	execute(client: Client) {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		console.log(`${client.user?.username} is ready!`)
@@ -28,5 +51,6 @@ export default {
 
 		this.earthquakeMonitor(client)
 		this.changeProfilePicture(client)
+		this.sendBasicData(client)
 	},
 } as ReadyEvent

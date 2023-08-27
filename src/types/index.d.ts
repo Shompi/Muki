@@ -17,6 +17,7 @@ export interface EventFile {
 export interface ReadyEvent extends EventFile {
 	earthquakeMonitor: (c: Client) => unknown
 	changeProfilePicture: (c: Client) => unknown
+	sendBasicData: (c: Client) => unknown
 }
 export interface DatabaseRole {
 	category: {
