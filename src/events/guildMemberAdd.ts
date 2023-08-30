@@ -4,10 +4,10 @@ import { GenerateWelcomeImage } from "./utils/generate.js";
 
 
 
-const event: EventFile = {
+export default {
 	name: Events.GuildMemberAdd,
 	once: false,
-	async execute(member: GuildMember) {
+	async execute(member) {
 		if (member.guild.id !== member.client.mainGuild.id) return;
 
 		const defaultChannel = member.guild.systemChannel
@@ -20,6 +20,4 @@ const event: EventFile = {
 			files: [await GenerateWelcomeImage(member)]
 		})
 	}
-}
-
-export default event
+} satisfies EventFile<Events.GuildMemberAdd>

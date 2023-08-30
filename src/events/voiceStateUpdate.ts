@@ -23,4 +23,4 @@ export default {
 			return void await interactionChannel?.send({ content: `<@${newState.member?.id}> me dejaste sola en el canal... ${SadEmoji ?? ""}` })
 		}
 	}
-} as EventFile
+} satisfies EventFile<'voiceStateUpdate'>

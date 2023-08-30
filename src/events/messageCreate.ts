@@ -4,7 +4,7 @@ import { Events, type Message } from "discord.js";
 export default {
 	name: Events.MessageCreate,
 	once: false,
-	async execute(msg: Message) {
+	async execute(msg) {
 
 		const client = msg.client
 
@@ -29,4 +29,4 @@ export default {
 			return void Command.execute(msg, SplitContent)
 		}
 	}
-} as EventFile
+} satisfies EventFile<"messageCreate">

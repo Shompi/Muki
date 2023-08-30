@@ -1,5 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "discord.js"
 import { Video } from "youtube-sr";
 
 export type InteractionCreateFile = {
@@ -8,10 +8,10 @@ export type InteractionCreateFile = {
 	execute(i: BaseInteraction): Promise<unknown>
 };
 
-export interface EventFile {
+export interface EventFile<Event extends keyof ClientEvents> {
 	name: Events
 	once: boolean
-	execute(...e: unknown[]): Promise<unknown>
+	execute(...e: ClientEvents[Event]): unknown
 }
 
 export interface ReadyEvent extends EventFile {

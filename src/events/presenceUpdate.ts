@@ -1,6 +1,7 @@
 import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'discord.js'
 import keyv from 'keyv'
 import { getGameCoverByName } from "./utils/gameImages/index.js"
+import { EventFile } from '@myTypes/*'
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"
@@ -11,51 +12,50 @@ const Timeout = 1000 * 60 * 60 * 3
 export default {
 	name: Events.PresenceUpdate,
 	once: false,
-	hasTimers: false,
-	checkTwitchStream: async (presence: Presence) => {
-
-		// Chequear que haya una actividad siendo stremeada
-		const STREAMED_ACTIVITY = getLivestreamInfo(presence)
-
-		if (!STREAMED_ACTIVITY) return
-
-		if (!CheckMemberStreamerRole(presence.member!)) return console.log("PresenceUpdate: Returned, member does not have the streamer role.");
-
-		let USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id).catch(() => null) as number
-		let NEW_USER = false
-
-		if (!USER_TIMESTAMP) {
-			// Si el usuario no está lo agregamos
-			await LivestreamTimestamps.set(presence.user!.id, Date.now())
-			USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id) as number
-			NEW_USER = !NEW_USER
-		}
-
-
-		if (NEW_USER) {
-
-			await sendLiveStream(presence)
-
-		} else {
-			// Revisar si han pasado las horas necesarias desde que el usuario comenzó a transmitir
-			const TIMENOW = Date.now()
-
-			const TIMEDIFF = TIMENOW - USER_TIMESTAMP
-			if (TIMEDIFF >= Timeout) {
-				await sendLiveStream(presence)
-				// Update timestamp
-				await LivestreamTimestamps.set(presence.user!.id, Date.now())
-			} else return
-		}
-	},
-
 	async execute(old: Presence, now: Presence) {
 
 		if (now.member === null) return console.log("Presence Update: Returned, member was null")
 
 		if (now.activities.find(activity => activity.type === ActivityType.Streaming)) {
-			await this.checkTwitchStream(now)
+			await checkTwitchStream(now)
 		}
+	}
+} satisfies EventFile<'presenceUpdate'>
+
+async function checkTwitchStream(presence: Presence) {
+
+	// Chequear que haya una actividad siendo stremeada
+	const STREAMED_ACTIVITY = getLivestreamInfo(presence)
+
+	if (!STREAMED_ACTIVITY) return
+
+	if (!CheckMemberStreamerRole(presence.member!)) return console.log("PresenceUpdate: Returned, member does not have the streamer role.");
+
+	let USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id).catch(() => null) as number
+	let NEW_USER = false
+
+	if (!USER_TIMESTAMP) {
+		// Si el usuario no está lo agregamos
+		await LivestreamTimestamps.set(presence.user!.id, Date.now())
+		USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id) as number
+		NEW_USER = !NEW_USER
+	}
+
+
+	if (NEW_USER) {
+
+		await sendLiveStream(presence)
+
+	} else {
+		// Revisar si han pasado las horas necesarias desde que el usuario comenzó a transmitir
+		const TIMENOW = Date.now()
+
+		const TIMEDIFF = TIMENOW - USER_TIMESTAMP
+		if (TIMEDIFF >= Timeout) {
+			await sendLiveStream(presence)
+			// Update timestamp
+			await LivestreamTimestamps.set(presence.user!.id, Date.now())
+		} else return
 	}
 }
 

@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { InteractionCreateFile } from "@myTypes/index";
+import { EventFile } from "@myTypes/index";
 import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.js"
 import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.js"
 
@@ -39,4 +39,4 @@ export default {
 			return
 		}
 	}
-} as InteractionCreateFile
+} satisfies EventFile<Events.InteractionCreate>

@@ -62,7 +62,7 @@ async function main() {
 	const EventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
 
 	for (const EventFile of EventFiles) {
-		const event = (await import("./events/" + EventFile)).default as EventFile
+		const event = (await import("./events/" + EventFile)).default
 
 		if (event.once) {
 			//@ts-ignore
