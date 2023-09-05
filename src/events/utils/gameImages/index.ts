@@ -1,13 +1,14 @@
 import { request } from 'undici'
 import keyv from 'keyv'
+import { DatabasePaths } from 'globals/paths'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const client_id = process.env.IGDB_CLIENT_ID!
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const client_secret = process.env.IGDB_CLIENT_SECRET!
 
-const tokens = new keyv("sqlite://db/twitchtokens.sqlite", { namespace: 'twitchtokens' })
-const imagesLocalDB = new keyv("sqlite://db/gameimages.sqlite", { namespace: 'gameimages' })
+const tokens = new keyv(DatabasePaths.Twitch, { namespace: 'twitchtokens' })
+const imagesLocalDB = new keyv(DatabasePaths.GameImages, { namespace: 'gameimages' })
 const defaultCover = "https://puu.sh/F2ZUN/ea3856ca91.png"
 
 const baseURL = "https://api.igdb.com/v4"
