@@ -2,8 +2,9 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteracti
 import Keyv from "keyv";
 import type { Category, DatabaseRole } from "@myTypes/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton.js";
-const RolesDatabase = new Keyv({ uri: "sqlite://db/roles.sqlite", namespace: "roles" })
-const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite", namespace: 'categories' })
+import { DatabasePaths } from "globals/paths.js";
+const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
+const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
 /**
  * @description This is the command to **set** the roles that members are able to self add
  */

@@ -2,8 +2,9 @@ import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, Component
 import Keyv from "keyv";
 import { Category, DatabaseRole } from "@myTypes/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton.js";
-const RolesDatabase = new Keyv({ uri: "sqlite://db/roles.sqlite", namespace: "roles" })
-const CategoriesDatabase = new Keyv({ uri: "sqlite://db/roles-categories.sqlite", namespace: 'categories' })
+import { DatabasePaths } from "globals/paths.js";
+const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
+const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
 
 export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 

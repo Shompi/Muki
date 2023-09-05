@@ -2,11 +2,12 @@ import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Event
 import keyv from 'keyv'
 import { getGameCoverByName } from "./utils/gameImages/index.js"
 import { EventFile } from '@myTypes/*'
+import { DatabasePaths } from 'globals/paths.js'
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"
 
-const LivestreamTimestamps = new keyv('sqlite://db/database.sqlite', { namespace: 'livestreams' })
+const LivestreamTimestamps = new keyv(DatabasePaths.LivestreamPresences, { namespace: 'livestreams' })
 const Timeout = 1000 * 60 * 60 * 3
 
 export default {
