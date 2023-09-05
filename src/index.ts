@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Client, ClientEvents, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
+import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
-import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
+import { MessageCommand, SlashCommandTemplate } from "@myTypes/index"
 
 class MukiClient extends Client {
 
@@ -63,14 +63,17 @@ async function main() {
 
 	for (const fileName of eventFiles) {
 		//@ts-ignore
-		const event = (await import("./events/" + fileName) as EventFile<Event extends keyof ClientEvents>).default
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
+		const event = (await import("./events/" + fileName).then(mod => mod.default))
 
 
 		if (event?.once) {
 			//@ts-ignore
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
 			Muki.once(event.name, (...args) => event.execute(...args))
 		} else {
 			//@ts-ignore
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
 			Muki.on(event.name, (...args) => event.execute(...args))
 		}
 
