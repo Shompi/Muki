@@ -1,6 +1,8 @@
-require('dotenv').config();
-const { REST, Routes } = require('discord.js')
-const { clientId } = require('./config.json');
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+import { REST, Routes } from 'discord.js'
+import { clientId } from './config.json'
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
 async function registerCommands() {

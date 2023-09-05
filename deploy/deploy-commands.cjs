@@ -12,7 +12,7 @@ async function registerCommands() {
 
 	for (const file of commandFiles) {
 
-		const command = require(`../js/interactionHandlers/slashcommands/${file}`);
+		const command = await import(`../js/interactionHandlers/slashcommands/${file}`).then(m => m.default);
 
 		globalCommands.push(command.data.toJSON());
 	}
