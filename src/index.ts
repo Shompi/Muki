@@ -16,10 +16,10 @@ class MukiClient extends Client {
 				"GuildEmojisAndStickers",
 				"GuildInvites",
 				"GuildMembers",
-				"GuildMessages",
 				"GuildPresences",
 				"Guilds",
 				"GuildVoiceStates",
+				"GuildMessages"
 			],
 			partials: [Partials.GuildMember, Partials.User, Partials.Channel]
 		})
