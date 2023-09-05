@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
+import { Client, ClientEvents, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
 import { EventFile, MessageCommand, SlashCommandTemplate } from "@myTypes/index"
 
@@ -59,12 +59,14 @@ const Muki = new MukiClient()
 
 // Load event files
 async function main() {
-	const EventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
+	const eventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
 
-	for (const EventFile of EventFiles) {
-		const event = (await import("./events/" + EventFile)).default
+	for (const fileName of eventFiles) {
+		//@ts-ignore
+		const event = (await import("./events/" + fileName) as EventFile<Event extends keyof ClientEvents>).default
 
-		if (event.once) {
+
+		if (event?.once) {
 			//@ts-ignore
 			Muki.once(event.name, (...args) => event.execute(...args))
 		} else {
