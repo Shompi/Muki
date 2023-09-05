@@ -22,8 +22,8 @@ export async function ChatCompletion(message: Message) {
 		userMessages
 	)
 
-	if (response.choices[0].message?.content === null
-		|| response.choices[0].message?.content === undefined) return null
+	if (response?.choices[0].message?.content === null
+		|| response?.choices[0].message?.content === undefined) return null
 
 	await message.reply({
 		content: response.choices[0].message.content

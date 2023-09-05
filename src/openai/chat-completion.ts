@@ -21,15 +21,20 @@ export async function RequestChatCompletion(
 	conversation.push(prompt)
 	console.log("Making api request");
 
-	const response = await openai.chat.completions.create({
-		model: "gpt-3.5-turbo",
-		messages: conversation,
-		max_tokens: 250,
-		temperature: 0.30,
-		n: 1,
-	})
+	try {
+		const response = await openai.chat.completions.create({
+			model: "gpt-3.5-turbo",
+			messages: conversation,
+			max_tokens: 250,
+			temperature: 0.30,
+			n: 1,
+		})
 
-	console.log(response);
-
-	return response;
+		console.log(response);
+		return response;
+	}
+	catch (e) {
+		console.log(e);
+		return null;
+	}
 }
