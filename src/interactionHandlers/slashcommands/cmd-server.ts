@@ -3,47 +3,36 @@ a los miembros opciones de subir algun emoji o distintas cosas. */
 
 import { SlashCommandBuilder } from "discord.js";
 import { SlashCommandTemplate } from "@myTypes/index";
-import { SuggestGuildEmoji } from "./subcommandHandlers/server-emojis-suggest.js"
+import { SuggestGuildEmoji } from "./subcommandHandlers/suggest-emoji.js"
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
-		.setName("server")
+		.setName("sugerir")
 		.setDMPermission(false)
 		.setDescription("Multiples comandos para el servidor")
-		.addSubcommandGroup(emojis =>
-			emojis.setName("emojis").setDescription("Comandos relacionados a emojis del servidor")
-				.addSubcommand(add =>
-					add.setName('sugerir')
-						.setDescription('Envia un emoji como sugerencia para el servidor!')
-						.addAttachmentOption(emoji =>
-							emoji.setName("imagen")
-								.setDescription('Adjunta la imagen del emoji que quieres subir, debe ser jpg/png/gif')
-								.setRequired(true)
-						)
-						.addStringOption(name =>
-							name.setName('nombre')
-								.setDescription('Nombre del emoji, 30 caracteres maximo.')
-								.setRequired(true)
-						)
+		.addSubcommand(emojis =>
+			emojis.setName("emoji").setDescription("Sugerir un emoji para este servidor")
+				.addAttachmentOption(emoji =>
+					emoji.setName("imagen")
+						.setDescription('Adjunta la imagen del emoji que quieres subir, debe ser jpg/png/gif')
+						.setRequired(true)
+				)
+				.addStringOption(name =>
+					name.setName('nombre')
+						.setDescription('Nombre del emoji, 30 caracteres maximo.')
+						.setRequired(true)
 				)
 		),
 	async execute(i) {
 
-		const SubCommandGroup = i.options.getSubcommandGroup()
 		const SubCommand = i.options.getSubcommand()
 
-		if (SubCommandGroup) {
-
-			switch (SubCommandGroup) {
-				case 'emojis':
-					if (SubCommand === 'sugerir')
-						return await SuggestGuildEmoji(i)
-					break
-			}
+		switch (SubCommand) {
+			case 'emojis':
+				await SuggestGuildEmoji(i)
+				break
 		}
-
 	},
-
 }
 
 export default command

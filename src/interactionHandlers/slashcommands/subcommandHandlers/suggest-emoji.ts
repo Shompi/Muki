@@ -4,9 +4,9 @@ export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction
 
 	await interaction.deferReply({ ephemeral: true })
 	const client = interaction.client
-	const SuggestionsChannel = client.suggestion_channel
+	const suggestionsChannel = client.suggestion_channel
 
-	if (!SuggestionsChannel)
+	if (!suggestionsChannel)
 		return await interaction.editReply({ content: 'No hay canal de sugerencias habilitado en este servidor, por favor intentalo más tarde.' })
 
 	const AcceptButton = new ButtonBuilder()
@@ -44,9 +44,12 @@ export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction
 	if (Nombre.length > 30)
 		return await interaction.editReply({ content: 'Lo siento, el nombre del emoji excede el limite de letras.' })
 
-	const NewImage = new AttachmentBuilder(Imagen.url)
+	const NewImage = new AttachmentBuilder(Imagen.url, {
+		name: Nombre,
+		description: "El emoji"
+	})
 
-	await SuggestionsChannel.send({
+	await suggestionsChannel.send({
 		content: `${interaction.user.username} ${Nombre}`,
 		components: [Actions],
 		embeds: [

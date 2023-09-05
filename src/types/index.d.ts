@@ -1,6 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
 import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "discord.js"
-import { Video } from "youtube-sr";
 
 export type InteractionCreateFile = {
 	name: string
@@ -37,14 +36,14 @@ export interface SlashCommandTemplate {
 	guildOnly?: boolean
 	guildSpecific?: boolean
 	guildId?: guildSpecific extends boolean ? string : never
-	declare execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<unknown> | unknown
-	declare autocomplete?: (interaction: AutocompleteInteraction) => Promise<unknown> | unknown
+	execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<unknown>
+	autocomplete?: (interaction: AutocompleteInteraction) => Promise<unknown>
 }
 
 export interface MessageCommand {
 	name: string,
 	ownerOnly?: boolean,
-	execute: (m: Message, args: Array<string>) => Promise<unknown> | unknown
+	execute: (m: Message, args: Array<string>) => Promise<unknown>
 }
 interface Song {
 	/** El usuario que pidió esta canción */
@@ -83,7 +82,7 @@ declare module 'discord.js' {
 		get suggestion_channel(): GuildTextBasedChannel
 		get selfroles_channel(): TextChannel
 		get mainGuild(): Guild
-		public loadEmojis: () => boolean
+		loadEmojis: () => boolean
 	}
 	interface BaseGuild {
 		queue?: SongQueue,
