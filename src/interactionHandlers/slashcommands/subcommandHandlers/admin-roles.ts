@@ -2,7 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteracti
 import Keyv from "keyv";
 import type { Category, DatabaseRole } from "@myTypes/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton.js";
-import { DatabasePaths } from "globals/paths.js";
+import { DatabasePaths } from "../../../globals/paths.js";
 const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
 const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
 /**

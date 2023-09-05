@@ -1,6 +1,6 @@
 import { request } from 'undici'
 import keyv from 'keyv'
-import { DatabasePaths } from 'globals/paths'
+import { DatabasePaths } from '../../../globals/paths.js'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const client_id = process.env.IGDB_CLIENT_ID!

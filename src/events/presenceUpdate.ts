@@ -2,7 +2,7 @@ import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Event
 import keyv from 'keyv'
 import { getGameCoverByName } from "./utils/gameImages/index.js"
 import { EventFile } from '@myTypes/*'
-import { DatabasePaths } from 'globals/paths.js'
+import { DatabasePaths } from '../globals/paths.js'
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"
