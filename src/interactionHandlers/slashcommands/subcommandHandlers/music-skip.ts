@@ -1,5 +1,5 @@
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, Colors, EmbedBuilder } from "discord.js";
 
 export async function SkipCurrentSong(interaction: ChatInputCommandInteraction<'cached'>) {
 
@@ -18,6 +18,16 @@ export async function SkipCurrentSong(interaction: ChatInputCommandInteraction<'
 	// Chequear que haya algo reproduciendose
 	if (guild.audioPlayer?.state.status === AudioPlayerStatus.Playing) {
 		guild.audioPlayer.stop(true)
-		return await interaction.reply({ content: '⏩ Saltando la canción actual...' })
+		return await interaction.reply({
+			embeds: [
+				new EmbedBuilder()
+					.setDescription(`**${interaction.user.username}** ha saltado la canción...`)
+					.setColor(Colors.Blue)
+					.setFooter({
+						text: `⏩ Skip`,
+						iconURL: interaction.user.displayAvatarURL({ size: 128 })
+					})
+			]
+		})
 	}
 }

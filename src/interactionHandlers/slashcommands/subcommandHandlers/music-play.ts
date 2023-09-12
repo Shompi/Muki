@@ -214,8 +214,10 @@ async function ConnectToVoice(interaction: ChatInputCommandInteraction<'cached'>
 
 	const connection = getVoiceConnection(interaction.guildId)
 
-	if (connection) return connection
-
+	if (connection && interaction.guild.members.me?.voice.channelId !== null) {
+		// We have to check if the bot is connected to a voice channel
+		return connection
+	}
 	// TODO: If there is not a voice connection, we need to create one
 	const newConnection = joinVoiceChannel({
 		adapterCreator: interaction.guild.voiceAdapterCreator,

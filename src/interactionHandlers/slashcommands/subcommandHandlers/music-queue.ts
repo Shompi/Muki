@@ -17,11 +17,11 @@ export async function ShowQueue(interaction: ChatInputCommandInteraction<'cached
 		}
 	}).join('\n')
 
-	const SongsToDisplay = SongsOnQueue.slice(0, 10) // Solo mostrar las primeras 10 canciones para no excede limites.
+	const SongsToDisplay = SongsOnQueue.slice(0, 10) // Solo mostrar las primeras 10 canciones para no exceder limites.
 
 	const QueueEmbed = new EmbedBuilder()
 		.setTitle('Cola de canciones')
-		.setDescription(codeBlock(SongsOnQueue))
+		.setDescription(codeBlock(SongsToDisplay))
 		.setColor(Colors.Blue)
 
 	return await interaction.reply({ embeds: [QueueEmbed], content: '¡Estas son las siguientes canciones!' })
