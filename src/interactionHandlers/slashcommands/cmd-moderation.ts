@@ -2,6 +2,7 @@ import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { type SlashCommandTemplate } from "@myTypes/index";
 import { BanMember } from "./subcommandHandlers/mod-ban.js";
 import { KickMember } from "./subcommandHandlers/mod-kick.js";
+import { CloseChannel } from "./subcommandHandlers/mod-closeChannel.js";
 const OneDayInSeconds = 60 * 60 * 24
 
 const DaysToDeleteMessages = {
@@ -96,6 +97,9 @@ const command: SlashCommandTemplate = {
 					reason.setName('razon')
 						.setDescription('La razón de esta expulsión')
 				)
+		).addSubcommand(closeChannel =>
+			closeChannel.setName('close-channel')
+				.setDescription('Cierra el canal de texto para que los usuarios no puedan seguir enviando mensajes.')
 		),
 	async execute(interaction) {
 
@@ -108,6 +112,8 @@ const command: SlashCommandTemplate = {
 					return await BanMember(interaction)
 				case 'kick':
 					return await KickMember(interaction)
+				case 'close-channel':
+					return await CloseChannel(interaction)
 			}
 
 		} catch (e) {
