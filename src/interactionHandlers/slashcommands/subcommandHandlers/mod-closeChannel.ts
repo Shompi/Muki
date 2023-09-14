@@ -11,23 +11,20 @@ const row = new ActionRowBuilder<ButtonBuilder>()
 
 export async function CloseChannel(interaction: ChatInputCommandInteraction<'cached'>) {
 	const { channel } = interaction
-
 	if (channel) {
 		try {
-			await channel.edit({
-				permissionOverwrites: [
-					{
-						id: channel.guildId,
-						deny: ["SendMessages"]
-					}
-				]
-			})
+			if (channel.isTextBased() && !channel.isThread()) {
 
-			await interaction.reply({
-				content: 'El canal ha sido cerrado.',
-				components: [row]
-			})
+				await channel.permissionOverwrites.edit(interaction.guild.roles.everyone, {
+					SendMessages: false
+				})
 
+				await interaction.reply({
+					content: 'El canal ha sido cerrado.',
+					components: [row]
+				})
+
+			}
 		} catch (e) {
 			console.log(e);
 			await interaction.reply({
@@ -36,4 +33,5 @@ export async function CloseChannel(interaction: ChatInputCommandInteraction<'cac
 			})
 		}
 	}
+
 }
