@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Component, ComponentType, PermissionsBitField, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Component, ComponentType, PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@14.13.0";
 import { SlashCommandTemplate } from "@myTypes/index";
 PermissionsBitField.Flags.ModerateMembers
 

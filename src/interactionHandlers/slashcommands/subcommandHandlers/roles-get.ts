@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@14.13.0";
 import Keyv from "keyv";
 import { Category, DatabaseRole } from "@myTypes/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton.js";

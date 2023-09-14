@@ -1,4 +1,4 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
+import { PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@14.13.0"
 import { type SlashCommandTemplate } from "@myTypes/index"
 import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.js"
 

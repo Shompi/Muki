@@ -1,5 +1,8 @@
 {
-	"files.exclude": {
-		"": true
-	}
+  "files.exclude": {
+    "": true
+  },
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": true
 }

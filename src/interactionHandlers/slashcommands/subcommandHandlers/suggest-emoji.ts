@@ -1,4 +1,4 @@
-import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, Colors, EmbedBuilder } from "discord.js";
+import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, Colors, EmbedBuilder } from "npm:discord.js@14.13.0";
 
 export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction<'cached'>) {
 

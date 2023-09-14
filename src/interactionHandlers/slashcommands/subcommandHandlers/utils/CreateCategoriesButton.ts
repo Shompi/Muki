@@ -1,4 +1,4 @@
-import { ButtonBuilder, ButtonStyle } from "discord.js"
+import { ButtonBuilder, ButtonStyle } from "npm:discord.js@14.13.0"
 import { Category } from "@myTypes/index"
 
 

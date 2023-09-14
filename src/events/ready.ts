@@ -1,4 +1,4 @@
-import { ActivityType, ChannelType, Client, Events, TextChannel } from "discord.js"
+import { ActivityType, ChannelType, Client, Events, TextChannel } from "npm:discord.js@14.13.0"
 import { ReadyEvent } from "@myTypes/index"
 import { ChangeProfilePicture } from "./utils/changeProfilePic.js"
 import { EarthquakeMonitor } from "./utils/earthquakes.js"

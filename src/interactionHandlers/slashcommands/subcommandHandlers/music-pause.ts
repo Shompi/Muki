@@ -1,5 +1,5 @@
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0";
 
 export async function PauseOrUnpauseSong(interaction: ChatInputCommandInteraction<'cached'>) {
 

@@ -1,4 +1,4 @@
-import { Collection, Message, Snowflake } from "discord.js"
+import { Collection, Message, Snowflake } from "npm:discord.js@14.13.0"
 import { RequestChatCompletion } from "../../openai/chat-completion.js";
 import { type ChatCompletionMessage } from "openai/resources/chat/index.js";
 

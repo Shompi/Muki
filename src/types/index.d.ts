@@ -1,5 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "npm:discord.js@14.13.0"
 
 export type InteractionCreateFile = {
 	name: string

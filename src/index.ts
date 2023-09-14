@@ -1,13 +1,15 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import * as dotenv from "dotenv"
+import * as dotenv from "npm:dotenv"
 dotenv.config()
-import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
+
+import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js"
 import { readdir } from "node:fs/promises"
-import { MessageCommand, SlashCommandTemplate } from "@myTypes/index"
+import type { MessageCommand, SlashCommandTemplate } from "./types/index.d.ts"
 
 class MukiClient extends Client {
+	commands: Collection<string, SlashCommandTemplate>
+	messageCommands: Collection<string, MessageCommand>
+	loadEmojis: () => boolean
+	util: unknown
 
 	constructor() {
 		super({
@@ -62,17 +64,17 @@ async function main() {
 	const eventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
 
 	for (const fileName of eventFiles) {
-		//@ts-ignore
+		//@ts-ignore I can't seem to type this correctly.
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
 		const event = (await import("./events/" + fileName).then(mod => mod.default))
 
 
 		if (event?.once) {
-			//@ts-ignore
+			//@ts-ignore I can't type this either
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
 			Muki.once(event.name, (...args) => event.execute(...args))
 		} else {
-			//@ts-ignore
+			//@ts-ignore I can't type this but it doesnt matter
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
 			Muki.on(event.name, (...args) => event.execute(...args))
 		}
@@ -104,7 +106,7 @@ async function main() {
 
 		Muki.messageCommands.set(command.name, command)
 	}
-	await Muki.login(process.env.BOT_TOKEN)
+	await Muki.login(Deno.env.get('BOT_TOKEN'))
 }
 
 void main();

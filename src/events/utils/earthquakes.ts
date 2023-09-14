@@ -1,4 +1,4 @@
-import { Client, EmbedBuilder, Colors, TextChannel } from "discord.js"
+import { Client, EmbedBuilder, Colors, TextChannel } from "npm:discord.js@14.13.0"
 import { request } from "undici"
 
 const APIURL = "https://api.gael.cloud/general/public/sismos"

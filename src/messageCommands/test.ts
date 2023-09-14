@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder } from "npm:discord.js@14.13.0";
 import { MessageCommand } from "../types";
 
 const Command: MessageCommand = {

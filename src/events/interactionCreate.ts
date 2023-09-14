@@ -1,4 +1,4 @@
-import { Events } from "discord.js";
+import { Events } from "npm:discord.js@14.13.0";
 import { EventFile } from "@myTypes/index";
 import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.js"
 import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.js"

@@ -1,5 +1,5 @@
 import { EventFile } from "@myTypes/*";
-import { Events } from "discord.js";
+import { Events } from "npm:discord.js@14.13.0";
 import { ChatCompletion } from "./utils/chat.js";
 
 export default {

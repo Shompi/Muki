@@ -2,7 +2,7 @@ import {
 	Events,
 	Guild,
 	GuildAuditLogsEntry,
-} from "discord.js";
+} from "npm:discord.js@14.13.0";
 import { EventFile } from "@myTypes/index";
 
 export default {

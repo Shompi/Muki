@@ -1,4 +1,4 @@
-import { ButtonInteraction, Colors, EmbedBuilder } from "discord.js";
+import { ButtonInteraction, Colors, EmbedBuilder } from "npm:discord.js@14.13.0";
 
 export async function AcceptEmojiSuggestion(i: ButtonInteraction<"cached">) {
 
