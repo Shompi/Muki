@@ -1,5 +1,5 @@
 import { AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnectionStatus } from "@discordjs/voice";
-import { Song } from "@myTypes/*";
+import { Song } from "";
 import { ActionRowBuilder, ChatInputCommandInteraction, ComponentType, Guild, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@14.13.0";
 import { Video, YouTube } from "youtube-sr"
 import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong.js";

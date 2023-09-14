@@ -1,8 +1,8 @@
-import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'discord.js'
-import keyv from 'keyv'
-import { getGameCoverByName } from "./utils/gameImages/index.js"
-import { EventFile } from '@myTypes/*'
-import { DatabasePaths } from '../globals/paths.js'
+import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js'
+import keyv from 'npm:keyv'
+import { getGameCoverByName } from "./utils/gameImages/index.ts"
+import { EventFile } from '../types/index.d.ts'
+import { DatabasePaths } from '../globals/paths.ts'
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"
@@ -13,7 +13,7 @@ const Timeout = 1000 * 60 * 60 * 3
 export default {
 	name: Events.PresenceUpdate,
 	once: false,
-	async execute(old: Presence, now: Presence) {
+	async execute(old, now) {
 
 		if (now.member === null) return console.log("Presence Update: Returned, member was null")
 

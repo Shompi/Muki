@@ -1,5 +1,5 @@
-import OpenAI from "openai";
-import { ChatCompletionMessage } from "openai/resources/chat";
+import OpenAI from "npm:openai";
+import { ChatCompletionMessage } from "npm:openai/resources/chat";
 
 const openai = new OpenAI()
 const context: ChatCompletionMessage = {

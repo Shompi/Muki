@@ -1,5 +1,5 @@
-import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, SlashCommandBuilder, Snowflake, TextChannel } from "npm:discord.js@14.13.0"
+import { AudioPlayer } from "npm:@discordjs/voice";
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "npm:discord.js@14.13.0"
 
 export type InteractionCreateFile = {
 	name: string
@@ -13,7 +13,7 @@ export interface EventFile<Event extends keyof ClientEvents> {
 	execute(...e: ClientEvents[Event]): unknown
 }
 
-export interface ReadyEvent extends EventFile {
+export interface ReadyEvent extends EventFile<'ready'> {
 	earthquakeMonitor: (c: Client) => unknown
 	changeProfilePicture: (c: Client) => unknown
 	sendBasicData: (c: Client) => unknown
@@ -35,7 +35,7 @@ export interface SlashCommandTemplate {
 	permissions?: PermissionsBitField
 	guildOnly?: boolean
 	guildSpecific?: boolean
-	guildId?: guildSpecific extends boolean ? string : never
+	guildId?: Snowflake
 	execute: (interaction: ChatInputCommandInteraction<"cached">) => Promise<unknown>
 	autocomplete?: (interaction: AutocompleteInteraction) => Promise<unknown>
 }
@@ -66,7 +66,7 @@ interface SongQueue {
 	songs: Song[]
 }
 
-declare module 'discord.js' {
+declare module 'npm:discord.js' {
 	interface BaseClient {
 		commands: Collection<string, SlashCommandTemplate>
 		messageCommands: Collection<string, MessageCommand>

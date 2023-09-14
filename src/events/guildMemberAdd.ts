@@ -1,6 +1,6 @@
-import { EventFile } from "@myTypes/*";
-import { Events, GuildMember } from "npm:discord.js@14.13.0";
-import { GenerateWelcomeImage } from "./utils/generate.js";
+import { EventFile } from "../types/index.d.ts";
+import { Events } from "npm:discord.js@14.13.0";
+import { GenerateWelcomeImage } from "./utils/generate.ts";
 
 
 

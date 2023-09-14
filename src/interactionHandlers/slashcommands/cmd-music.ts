@@ -1,4 +1,4 @@
-import { SlashCommandTemplate } from "@myTypes/*";
+import { SlashCommandTemplate } from "../../types/index.d.ts";
 import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "npm:discord.js@14.13.0";
 import { readdir } from "fs/promises"
 import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.js";

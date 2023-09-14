@@ -1,8 +1,8 @@
 import { Events } from "npm:discord.js@14.13.0";
-import { EventFile } from "@myTypes/index";
-import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.js"
-import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.js"
-import { ReopenChannel } from "../interactionHandlers/buttons/channel-reopen.js";
+import { EventFile } from "../types/index.d.ts";
+import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.ts"
+import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.ts"
+import { ReopenChannel } from "../interactionHandlers/buttons/channel-reopen.ts";
 
 export default {
 	name: Events.InteractionCreate,

@@ -1,11 +1,11 @@
-import { request } from 'undici'
-import keyv from 'keyv'
-import { DatabasePaths } from '../../../globals/paths.js'
+import { request } from 'npm:undici'
+import keyv from 'npm:keyv'
+import { DatabasePaths } from '../../../globals/paths.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const client_id = process.env.IGDB_CLIENT_ID!
+const client_id = Deno.env.get("IGDB_CLIENT_ID")
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const client_secret = process.env.IGDB_CLIENT_SECRET!
+const client_secret = Deno.env.get("IGDB_CLIENT_SECRET")
 
 const tokens = new keyv(DatabasePaths.Twitch, { namespace: 'twitchtokens' })
 const imagesLocalDB = new keyv(DatabasePaths.GameImages, { namespace: 'gameimages' })

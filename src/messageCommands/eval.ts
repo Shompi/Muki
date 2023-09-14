@@ -1,6 +1,6 @@
-import { MessageCommand } from '@myTypes/*';
-import { EmbedBuilder } from 'discord.js';
-import util from "util"
+import { MessageCommand } from '../types/index.d.ts';
+import { EmbedBuilder } from 'npm:discord.js';
+import util from "node:util"
 
 const Command: MessageCommand = {
 	name: 'eval',

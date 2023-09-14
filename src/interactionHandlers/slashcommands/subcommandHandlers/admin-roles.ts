@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@14.13.0";
-import Keyv from "keyv";
+import Keyv from "npm:keyv";
 import type { Category, DatabaseRole } from "@myTypes/index";
 import { CreateButtons } from "./utils/CreateCategoriesButton.js";
 import { DatabasePaths } from "../../../globals/paths.js";

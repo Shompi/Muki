@@ -1,4 +1,6 @@
 import * as dotenv from "npm:dotenv"
+import "npm:@keyv/sqlite"
+
 dotenv.config()
 
 import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js"
@@ -6,10 +8,6 @@ import { readdir } from "node:fs/promises"
 import type { MessageCommand, SlashCommandTemplate } from "./types/index.d.ts"
 
 class MukiClient extends Client {
-	commands: Collection<string, SlashCommandTemplate>
-	messageCommands: Collection<string, MessageCommand>
-	loadEmojis: () => boolean
-	util: unknown
 
 	constructor() {
 		super({
@@ -61,12 +59,13 @@ const Muki = new MukiClient()
 
 // Load event files
 async function main() {
-	const eventFiles = await readdir("js/events").then(files => files.filter(file => file.endsWith(".js")))
+	const Files = Deno.readDir("./src/events")
 
-	for (const fileName of eventFiles) {
+	for await (const file of Files) {
+		if (file.isDirectory) continue
 		//@ts-ignore I can't seem to type this correctly.
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
-		const event = (await import("./events/" + fileName).then(mod => mod.default))
+		const event = (await import("./events/" + file.name).then(mod => mod.default))
 
 
 		if (event?.once) {
@@ -86,7 +85,7 @@ async function main() {
 	Muki.messageCommands = new Collection();
 	// Load commands into the client
 
-	const CommandFiles = await readdir("js/interactionHandlers/slashcommands").then(files => files.filter(file => file.endsWith(".js")));
+	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.endsWith(".ts")));
 
 	for (const CommandFile of CommandFiles) {
 		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommandTemplate
@@ -99,7 +98,7 @@ async function main() {
 
 	/** Load message commands into the client */
 
-	const MessageCommandFiles = await readdir("js/messageCommands")
+	const MessageCommandFiles = await readdir("src/messageCommands")
 
 	for (const CommandFile of MessageCommandFiles) {
 		const command = (await import(`./messageCommands/${CommandFile}`)).default as MessageCommand

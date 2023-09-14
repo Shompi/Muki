@@ -1,6 +1,6 @@
 import { AttachmentBuilder, GuildMember } from "npm:discord.js@14.13.0";
-import * as Canvas from "@napi-rs/canvas";
-import { request } from 'undici'
+import * as Canvas from "npm:@napi-rs/canvas";
+import { request } from 'npm:undici'
 
 Canvas.GlobalFonts.registerFromPath('./welcome/fonts/Anton-Regular.ttf', "Anton")
 

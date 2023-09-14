@@ -1,5 +1,5 @@
-import { MessageCommand } from "@myTypes/*";
-import { GenerateWelcomeImage } from "../events/utils/generate.js";
+import { MessageCommand } from "../types/index.d.ts";
+import { GenerateWelcomeImage } from "../events/utils/generate.ts";
 
 const command: MessageCommand = {
 	name: 'generate',
