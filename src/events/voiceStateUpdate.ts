@@ -1,11 +1,11 @@
-import { getVoiceConnection } from "@discordjs/voice";
+import { getVoiceConnection } from "npm:@discordjs/voice";
 import { EventFile } from "../types/index.d.ts";
 import { Events, TextChannel, VoiceState } from "npm:discord.js@14.13.0";
 
 export default {
 	name: Events.VoiceStateUpdate,
 	once: false,
-	async execute(oldState: VoiceState, newState: VoiceState) {
+	async execute(_oldState: VoiceState, newState: VoiceState) {
 
 		const { client, guild } = newState
 

@@ -1,17 +1,17 @@
 import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@14.13.0";
-import Keyv from "npm:keyv";
-import { Category, DatabaseRole } from "@myTypes/index";
-import { CreateButtons } from "./utils/CreateCategoriesButton.js";
-import { DatabasePaths } from "../../../globals/paths.js";
-const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
-const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
+import { Category, DatabaseRole } from "../../../types/index.d.ts";
+import { CreateButtons } from "./utils/CreateCategoriesButton.ts";
+import { DatabasePaths } from "../../../globals/paths.ts";
+
+const RolesDatabase = await Deno.openKv(DatabasePaths.Roles)
+const CategoriesDatabase = await Deno.openKv(DatabasePaths.RolesCategories)
 
 export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 
 	const { guild } = i;
 
 	/* Get the available categories from the database and turn them into buttons */
-	const dbCategories = await CategoriesDatabase.get(i.guild.id) as Category[]
+	const dbCategories = (await CategoriesDatabase.get([i.guildId])).value as Category[]
 
 	if (!dbCategories || dbCategories.length === 0)
 		return await i.reply({
@@ -39,7 +39,7 @@ export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 
 	/* Get the roles from that category */
 
-	const dbRoles = await RolesDatabase.get(i.guild.id) as DatabaseRole[]
+	const dbRoles = (await RolesDatabase.get([i.guildId])).value as DatabaseRole[]
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const RolesFromCategory = dbRoles.find(role => role.category.name === iCategoria.component.label)!.roles

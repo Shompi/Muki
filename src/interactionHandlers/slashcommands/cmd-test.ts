@@ -1,5 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Component, ComponentType, PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@14.13.0";
-import { SlashCommandTemplate } from "@myTypes/index";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@14.13.0";
+import { SlashCommandTemplate } from "../../types/index.d.ts";
 PermissionsBitField.Flags.ModerateMembers
 
 const command: SlashCommandTemplate = {

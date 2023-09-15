@@ -1,14 +1,11 @@
-import { request } from 'npm:undici'
-import keyv from 'npm:keyv'
 import { DatabasePaths } from '../../../globals/paths.ts'
+const tokens = await Deno.openKv(DatabasePaths.Twitch)
+const imagesLocalDB = await Deno.openKv(DatabasePaths.GameImages)
+const client_id = Deno.env.get("IGDB_CLIENT_ID")!
+const client_secret = Deno.env.get("IGDB_CLIENT_SECRET")!
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const client_id = Deno.env.get("IGDB_CLIENT_ID")
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const client_secret = Deno.env.get("IGDB_CLIENT_SECRET")
-
-const tokens = new keyv(DatabasePaths.Twitch, { namespace: 'twitchtokens' })
-const imagesLocalDB = new keyv(DatabasePaths.GameImages, { namespace: 'gameimages' })
+//const tokens = new keyv(DatabasePaths.Twitch, { namespace: 'twitchtokens' })
+//const imagesLocalDB = new keyv(DatabasePaths.GameImages, { namespace: 'gameimages' })
 const defaultCover = "https://puu.sh/F2ZUN/ea3856ca91.png"
 
 const baseURL = "https://api.igdb.com/v4"
@@ -26,7 +23,7 @@ interface TokenExchangeResponse {
 
 const getAccessToken = async () => {
 
-	const token = (await tokens.get('token')) as TokenObject
+	const token = (await tokens.get(["twitch"])).value as { expires: number, token: string }
 
 	if (token) {
 		// Chequear el tiempo de expiración
@@ -39,7 +36,7 @@ const getAccessToken = async () => {
 
 	const url = `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
 
-	const response = await request(url, { method: 'POST' }).then(response => response.body.json() as Promise<TokenExchangeResponse>).catch(() => null)
+	const response = await fetch(url, { method: 'POST' }).then(response => response.json() as Promise<TokenExchangeResponse>).catch(() => null)
 
 	if (!response) return
 
@@ -47,7 +44,7 @@ const getAccessToken = async () => {
 
 	// Actualizamos la token en nuestra base de datos
 	console.log("Se actualizó la token de IGDB")
-	await tokens.set('token', { token: access_token, expires: (expires_in * 1000) + Date.now() })
+	await tokens.set(['token'], { token: access_token, expires: (expires_in * 1000) + Date.now() })
 
 	return access_token
 }
@@ -58,7 +55,7 @@ export async function getGameCoverByName(gamename: string | null): Promise<strin
 		return defaultCover
 	// Primero chequemos que la imágen esté en la base de datos
 
-	const savedImage = (await imagesLocalDB.get(gamename).catch(() => null)) as string
+	const savedImage = (await imagesLocalDB.get([gamename]).catch(() => null))?.value as string
 
 	if (savedImage) return savedImage
 
@@ -69,15 +66,15 @@ export async function getGameCoverByName(gamename: string | null): Promise<strin
 		return null
 	}
 
-	const response = await request(baseURL + "/covers", {
+	const response = await fetch(baseURL + "/covers", {
 		headers: {
-			'accept': 'application/json',
+			accept: 'application/json',
 			'Client-ID': client_id,
 			'authorization': `Bearer ${access_token}`
 		},
 		method: 'POST',
 		body: `fields url; where game.name = "${gamename}";`
-	}).then(response => response.body.json() as Promise<{ url: string, id: number }[]>)
+	}).then(response => response.json() as Promise<{ url: string, id: number }[]>)
 
 	const cover = response[0]
 	if (!cover) return defaultCover
@@ -87,7 +84,7 @@ export async function getGameCoverByName(gamename: string | null): Promise<strin
 	const formatedUrl = `https:${cover.url.replace("t_thumb", "t_720p")}`
 
 	// Guardamos la imagen a nuestra base de datos para evitar futuras consultas a la API
-	await imagesLocalDB.set(gamename, formatedUrl)
+	await imagesLocalDB.set([gamename], formatedUrl)
 
 	return formatedUrl
 }

@@ -1,10 +1,12 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@14.13.0";
-import Keyv from "npm:keyv";
-import type { Category, DatabaseRole } from "@myTypes/index";
-import { CreateButtons } from "./utils/CreateCategoriesButton.js";
-import { DatabasePaths } from "../../../globals/paths.js";
-const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
-const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
+import type { Category, DatabaseRole } from "../../../types/index.d.ts"
+import { CreateButtons } from "./utils/CreateCategoriesButton.ts"
+import { DatabasePaths } from "../../../globals/paths.ts"
+// const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })
+// const CategoriesDatabase = new Keyv({ uri: DatabasePaths.RolesCategories, namespace: 'categories' })
+
+const RolesDatabase = await Deno.openKv(DatabasePaths.Roles)
+const CategoriesDatabase = await Deno.openKv(DatabasePaths.RolesCategories)
 /**
  * @description This is the command to **set** the roles that members are able to self add
  */
@@ -12,7 +14,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 
 	/* Prompt the user to choose a category, the category can be an existing one or a new one */
 
-	const dbCategories = (await CategoriesDatabase.get(i.guildId) ?? []) as Category[]
+	const dbCategories = ((await CategoriesDatabase.get([i.guildId])).value ?? []) as Category[]
 
 	const RoleCategoriesRow = new ActionRowBuilder<ButtonBuilder>()
 		.setComponents(
@@ -126,12 +128,12 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 				dispose: true
 			})
 
-			const dbRoles = (await RolesDatabase.get(i.guildId) ?? []) as DatabaseRole[]
+			const dbRoles = ((await RolesDatabase.get([i.guildId])).value ?? []) as DatabaseRole[]
 
 			dbRoles.push({ category: { name: CategoryName, emoji: CategoryEmoji ?? "" }, roles: SelectedRoles.values })
 
-			await RolesDatabase.set(i.guildId, dbRoles)
-			await CategoriesDatabase.set(i.guildId, [{ name: CategoryName, emoji: CategoryEmoji }])
+			await RolesDatabase.set([i.guildId], dbRoles)
+			await CategoriesDatabase.set([i.guildId], [{ name: CategoryName, emoji: CategoryEmoji }])
 
 			const RolesAddedEmbed = new EmbedBuilder()
 				.setTitle(`✅ Se creó la categoría ${CategoryName} con éxito!`)
@@ -177,7 +179,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 		/** Whatever button it is, it is an existing category */
 		const SelectedCategory = PressedButton.component.label
 
-		const dbRoles = (await RolesDatabase.get(i.guildId)) as DatabaseRole[]
+		const dbRoles = ((await RolesDatabase.get([i.guildId])).value) as DatabaseRole[]
 
 		/** The roles that are on the database */
 		const Roles = dbRoles.find(role => role.category.name === SelectedCategory)
@@ -225,7 +227,7 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 		dbRoles[index].roles = UniqueRoles
 
 		/** Save the new list in the database */
-		await RolesDatabase.set(i.guildId, dbRoles)
+		await RolesDatabase.set([i.guildId], dbRoles)
 
 		const SuccessEmbed = new EmbedBuilder()
 			.setTitle(`✅ Los roles fueron añadidos con exito!`)
@@ -250,17 +252,17 @@ export async function AdminAutoRoles(i: ChatInputCommandInteraction<'cached'>) {
 
 async function DeleteCategory(Category: string, guildId: string) {
 
-	const dbCategories = await CategoriesDatabase.get(guildId) as Category[]
+	const dbCategories = (await CategoriesDatabase.get([guildId])).value as Category[]
 
 	const FilteredCategories = dbCategories.filter(cat => cat.name !== Category)
 
-	await CategoriesDatabase.set(guildId, FilteredCategories)
+	await CategoriesDatabase.set([guildId], FilteredCategories)
 
-	const dbRoles = (await RolesDatabase.get(guildId)) as DatabaseRole[]
+	const dbRoles = ((await RolesDatabase.get([guildId])).value) as DatabaseRole[]
 
 	const FilteredRoles = dbRoles.filter(roles => roles.category.name !== Category)
 
-	await RolesDatabase.set(guildId, FilteredRoles)
+	await RolesDatabase.set([guildId], FilteredRoles)
 
 	return true
 }

@@ -1,7 +1,7 @@
-import { ActivityType, ChannelType, Client, Events, TextChannel } from "npm:discord.js@14.13.0"
-import { ReadyEvent } from "@myTypes/index"
-import { ChangeProfilePicture } from "./utils/changeProfilePic.js"
-import { EarthquakeMonitor } from "./utils/earthquakes.js"
+import { ActivityType, Client, Events } from "npm:discord.js@14.13.0"
+import { ReadyEvent } from "../types/index.d.ts"
+import { ChangeProfilePicture } from "./utils/changeProfilePic.ts"
+import { EarthquakeMonitor } from "./utils/earthquakes.ts"
 
 interface BasicDataPostRequest {
 	username: string

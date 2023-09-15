@@ -1,8 +1,8 @@
-import { AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnectionStatus } from "@discordjs/voice";
-import { Song } from "";
+import { AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnectionStatus } from "npm:@discordjs/voice";
+import { Song } from "../../../types/index.d.ts";
 import { ActionRowBuilder, ChatInputCommandInteraction, ComponentType, Guild, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@14.13.0";
-import { Video, YouTube } from "youtube-sr"
-import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong.js";
+import { Video, YouTube } from "npm:youtube-sr"
+import { CheckOrDownloadSong } from "./utils/checkOrDownloadSong.ts";
 
 export async function ParseVideoIdOrName(interaction: ChatInputCommandInteraction<'cached'>) {
 

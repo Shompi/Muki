@@ -1,19 +1,23 @@
 import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js'
-import keyv from 'npm:keyv'
 import { getGameCoverByName } from "./utils/gameImages/index.ts"
 import { EventFile } from '../types/index.d.ts'
 import { DatabasePaths } from '../globals/paths.ts'
+const LivestreamTimestamps = await Deno.openKv(DatabasePaths.LivestreamPresences)
 
 const StreamerRole = "912096189443350548"
 const StreamsChannel = "600159867239661578"
 
-const LivestreamTimestamps = new keyv(DatabasePaths.LivestreamPresences, { namespace: 'livestreams' })
+// const LivestreamTimestamps = new keyv(DatabasePaths.LivestreamPresences, { namespace: 'livestreams' })
+
+
+
+
 const Timeout = 1000 * 60 * 60 * 3
 
 export default {
 	name: Events.PresenceUpdate,
 	once: false,
-	async execute(old, now) {
+	async execute(_old, now) {
 
 		if (now.member === null) return console.log("Presence Update: Returned, member was null")
 
@@ -32,13 +36,13 @@ async function checkTwitchStream(presence: Presence) {
 
 	if (!CheckMemberStreamerRole(presence.member!)) return console.log("PresenceUpdate: Returned, member does not have the streamer role.");
 
-	let USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id).catch(() => null) as number
+	let USER_TIMESTAMP = (await LivestreamTimestamps.get(["stream", presence.userId])).value as number
 	let NEW_USER = false
 
 	if (!USER_TIMESTAMP) {
 		// Si el usuario no está lo agregamos
-		await LivestreamTimestamps.set(presence.user!.id, Date.now())
-		USER_TIMESTAMP = await LivestreamTimestamps.get(presence.user!.id) as number
+		await LivestreamTimestamps.set(["stream", presence.userId], Date.now())
+		USER_TIMESTAMP = (await LivestreamTimestamps.get(['stream', presence.userId])).value as number
 		NEW_USER = !NEW_USER
 	}
 
@@ -55,7 +59,7 @@ async function checkTwitchStream(presence: Presence) {
 		if (TIMEDIFF >= Timeout) {
 			await sendLiveStream(presence)
 			// Update timestamp
-			await LivestreamTimestamps.set(presence.user!.id, Date.now())
+			await LivestreamTimestamps.set(["stream", presence.userId], Date.now())
 		} else return
 	}
 }

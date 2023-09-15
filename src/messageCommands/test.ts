@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "npm:discord.js@14.13.0";
-import { MessageCommand } from "../types";
+import { MessageCommand } from "../types/index.d.ts";
 
 const Command: MessageCommand = {
 	name: 'test',

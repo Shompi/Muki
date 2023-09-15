@@ -1,6 +1,4 @@
 import * as dotenv from "npm:dotenv"
-import "npm:@keyv/sqlite"
-
 dotenv.config()
 
 import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js"

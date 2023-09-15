@@ -1,4 +1,4 @@
-import { AudioPlayerStatus } from "@discordjs/voice";
+import { AudioPlayerStatus } from "npm:@discordjs/voice";
 import { ChatInputCommandInteraction, Colors, EmbedBuilder } from "npm:discord.js@14.13.0";
 
 export async function SkipCurrentSong(interaction: ChatInputCommandInteraction<'cached'>) {

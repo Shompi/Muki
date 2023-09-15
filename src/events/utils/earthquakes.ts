@@ -1,5 +1,4 @@
 import { Client, EmbedBuilder, Colors, TextChannel } from "npm:discord.js@14.13.0"
-import { request } from "undici"
 
 const APIURL = "https://api.gael.cloud/general/public/sismos"
 
@@ -38,7 +37,7 @@ async function getEarthquakes() {
 
 	}
 
-	const list = await request(APIURL).then((r) => r.body.json() as Promise<EartquakeInfo[]>)
+	const list = await fetch(APIURL).then((r) => r.json() as Promise<EartquakeInfo[]>)
 
 	if (!list[0] || list.length === 0) return;
 

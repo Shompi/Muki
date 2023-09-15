@@ -1,9 +1,9 @@
-const DatabaseBasePath = "sqlite://db"
+const DatabaseBasePath = "db"
 
 export const DatabasePaths = {
-	GameImages: DatabaseBasePath + "/gameimages.sqlite",
-	LivestreamPresences: DatabaseBasePath + "/presences.sqlite",
-	RolesCategories: DatabaseBasePath + "/roles-categories.sqlite",
-	Twitch: DatabaseBasePath + "/twitchtokens.sqlite",
-	Roles: DatabaseBasePath + "/roles.sqlite",
+	GameImages: DatabaseBasePath + "/gameimages",
+	LivestreamPresences: DatabaseBasePath + "/presences",
+	RolesCategories: DatabaseBasePath + "/roles-categories",
+	Twitch: DatabaseBasePath + "/twitchtokens",
+	Roles: DatabaseBasePath + "/roles",
 }

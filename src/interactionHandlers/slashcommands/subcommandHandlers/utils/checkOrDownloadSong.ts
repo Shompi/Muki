@@ -1,5 +1,4 @@
 import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0"
-import { readdir } from "fs/promises"
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)
@@ -16,22 +15,17 @@ let DownloadState: DownloaderState = DownloaderState.Idle
 export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId: string): Promise<string | null> {
 
 	// First lets check if the file can be found inside the folder
-	const files = await readdir("./downloads")
+	const filesIterator = Deno.readDir("./downloads")
 
-	if (files.length >= 0) {
-		const file = files.find(file => file.includes(videoId) && file.endsWith('.opus'))
 
-		if (file) {
-			// File is in the system
-			return file
-		}
+	for await (const file of filesIterator) {
+		if (file.name.includes(videoId) && file.name.endsWith('.opus')) return file.name
 	}
 
 	// Else we need to download it
 	// But first, check if we are already downloading a video.
-
-
 	await interaction.editReply({ content: 'Tu video será descargado pronto', components: [] })
+
 	const filepath = await Download(videoId).catch((e) => {
 		console.error(e);
 		return null
@@ -74,11 +68,10 @@ async function Download(video_id: string): Promise<string | null> {
 	}
 
 	// Find the file in system
-	const files = await readdir('downloads')
-	if (files.length === 0) return null
+	const filesIterator = Deno.readDir('downloads')
 
-	const video = files.find(file => file.includes(video_id) && file.endsWith('.opus'))
-	if (!video) return null
-
-	return video
+	for await (const file of filesIterator) {
+		if (file.name.includes(video_id) && file.name.endsWith('.opus')) return file.name
+	}
+	return null
 }

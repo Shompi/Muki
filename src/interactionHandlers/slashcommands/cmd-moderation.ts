@@ -1,8 +1,8 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@14.13.0";
-import { type SlashCommandTemplate } from "@myTypes/index";
-import { BanMember } from "./subcommandHandlers/mod-ban.js";
-import { KickMember } from "./subcommandHandlers/mod-kick.js";
-import { CloseChannel } from "./subcommandHandlers/mod-closeChannel.js";
+import { type SlashCommandTemplate } from "../../types/index.d.ts";
+import { BanMember } from "./subcommandHandlers/mod-ban.ts";
+import { KickMember } from "./subcommandHandlers/mod-kick.ts";
+import { CloseChannel } from "./subcommandHandlers/mod-closeChannel.ts";
 const OneDayInSeconds = 60 * 60 * 24
 
 const DaysToDeleteMessages = {

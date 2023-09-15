@@ -1,12 +1,11 @@
 import { SlashCommandTemplate } from "../../types/index.d.ts";
 import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "npm:discord.js@14.13.0";
-import { readdir } from "fs/promises"
-import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.js";
-import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.js";
-import { SkipCurrentSong } from "./subcommandHandlers/music-skip.js";
-import { ShowQueue } from "./subcommandHandlers/music-queue.js";
-import { StopPlayback } from "./subcommandHandlers/music-stop.js";
-import { DownloadSong } from "./subcommandHandlers/music-download.js";
+import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.ts";
+import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.ts";
+import { SkipCurrentSong } from "./subcommandHandlers/music-skip.ts";
+import { ShowQueue } from "./subcommandHandlers/music-queue.ts";
+import { StopPlayback } from "./subcommandHandlers/music-stop.ts";
+import { DownloadSong } from "./subcommandHandlers/music-download.ts";
 
 const formatChoices: APIApplicationCommandOptionChoice<string>[] = [
 	{
@@ -113,14 +112,15 @@ const command: SlashCommandTemplate = {
 	async autocomplete(interaction) {
 		const songName = interaction.options.getFocused()
 
-		const files = await readdir("downloads").catch((e) => {
-			console.log(e);
-			return []
-		})
+		const filesIterator = await Deno.readDir("downloads")
 
 		let filteredFiles: string[] = []
 
-		filteredFiles = files.filter(file => file.toLowerCase().includes(songName.toLowerCase()))
+		for await (const file of filesIterator) {
+			if (file.name.toLocaleLowerCase().includes(songName.toLowerCase())) {
+				filteredFiles.push(file.name)
+			}
+		}
 
 		filteredFiles = filteredFiles.slice(0, 25)
 
