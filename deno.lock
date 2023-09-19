@@ -86,13 +86,16 @@
   },
   "npm": {
     "specifiers": {
+      "@discordjs/opus": "@discordjs/opus@0.9.0",
       "@discordjs/voice": "@discordjs/voice@0.16.0",
       "@napi-rs/canvas": "@napi-rs/canvas@0.1.44",
       "discord.js": "discord.js@14.13.0",
       "discord.js@14.13.0": "discord.js@14.13.0",
       "dotenv": "dotenv@16.3.1",
       "enmap": "enmap@5.9.8",
+      "libsodium-wrappers": "libsodium-wrappers@0.7.13",
       "openai": "openai@4.6.0",
+      "opusscript": "opusscript@0.1.0",
       "undici": "undici@5.22.1",
       "youtube-sr": "youtube-sr@4.3.4"
     },
@@ -117,6 +120,27 @@
         "integrity": "sha512-lE++JZK8LSSDRM5nLjhuvWhGuKiXqu+JZ/DsOR89DVVia3z9fdCJVcHF2W/1Zxgq0re7kCzmAJlCMMX3tetKpA==",
         "dependencies": {
           "discord-api-types": "discord-api-types@0.37.50"
+        }
+      },
+      "@discordjs/node-pre-gyp@0.4.5": {
+        "integrity": "sha512-YJOVVZ545x24mHzANfYoy0BJX5PDyeZlpiJjDkUBM/V/Ao7TFX9lcUvCN4nr0tbr5ubeaXxtEBILUrHtTphVeQ==",
+        "dependencies": {
+          "detect-libc": "detect-libc@2.0.2",
+          "https-proxy-agent": "https-proxy-agent@5.0.1",
+          "make-dir": "make-dir@3.1.0",
+          "node-fetch": "node-fetch@2.7.0",
+          "nopt": "nopt@5.0.0",
+          "npmlog": "npmlog@5.0.1",
+          "rimraf": "rimraf@3.0.2",
+          "semver": "semver@7.5.4",
+          "tar": "tar@6.2.0"
+        }
+      },
+      "@discordjs/opus@0.9.0": {
+        "integrity": "sha512-NEE76A96FtQ5YuoAVlOlB3ryMPrkXbUCTQICHGKb8ShtjXyubGicjRMouHtP1RpuDdm16cDa+oI3aAMo1zQRUQ==",
+        "dependencies": {
+          "@discordjs/node-pre-gyp": "@discordjs/node-pre-gyp@0.4.5",
+          "node-addon-api": "node-addon-api@5.1.0"
         }
       },
       "@discordjs/rest@2.0.1": {
@@ -609,6 +633,16 @@
           "json-buffer": "json-buffer@3.0.1"
         }
       },
+      "libsodium-wrappers@0.7.13": {
+        "integrity": "sha512-kasvDsEi/r1fMzKouIDv7B8I6vNmknXwGiYodErGuESoFTohGSKZplFtVxZqHaoQ217AynyIFgnOVRitpHs0Qw==",
+        "dependencies": {
+          "libsodium": "libsodium@0.7.13"
+        }
+      },
+      "libsodium@0.7.13": {
+        "integrity": "sha512-mK8ju0fnrKXXfleL53vtp9xiPq5hKM0zbDQtcxQIsSmxNgSxqCj6R7Hl9PkrNe2j29T4yoDaF7DJLK9/i5iWUw==",
+        "dependencies": {}
+      },
       "lodash.snakecase@4.1.1": {
         "integrity": "sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw==",
         "dependencies": {}
@@ -708,6 +742,10 @@
         "integrity": "sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==",
         "dependencies": {}
       },
+      "node-addon-api@5.1.0": {
+        "integrity": "sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==",
+        "dependencies": {}
+      },
       "node-domexception@1.0.0": {
         "integrity": "sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==",
         "dependencies": {}
@@ -759,6 +797,10 @@
           "formdata-node": "formdata-node@4.4.1",
           "node-fetch": "node-fetch@2.7.0"
         }
+      },
+      "opusscript@0.1.0": {
+        "integrity": "sha512-Jc1d2u7AutNcUCoSpshhStW4CVAZXqh8n832ZTFUwZowof+xq2JW4umsWwAUOdtczn2z0UJMkUoTYBFT8qto9g==",
+        "dependencies": {}
       },
       "path-is-absolute@1.0.1": {
         "integrity": "sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==",

@@ -112,7 +112,7 @@ const command: SlashCommandTemplate = {
 	async autocomplete(interaction) {
 		const songName = interaction.options.getFocused()
 
-		const filesIterator = await Deno.readDir("downloads")
+		const filesIterator = Deno.readDir("downloads")
 
 		let filteredFiles: string[] = []
 
@@ -125,7 +125,7 @@ const command: SlashCommandTemplate = {
 		filteredFiles = filteredFiles.slice(0, 25)
 
 		return await interaction.respond(
-			filteredFiles.map(filename => ({ name: filename, value: filename }))
+			filteredFiles.map(filename => ({ name: filename.substring(0, 40), value: filename.substring(0, 90) }))
 		)
 	},
 }

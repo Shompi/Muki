@@ -99,7 +99,7 @@ export async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'
 						.setOptions(
 							videos.map(video => {
 								return new StringSelectMenuOptionBuilder()
-									.setLabel(video.title ?? "untitled")
+									.setLabel(video.title?.substring(0, 90) ?? "untitled")
 									.setDescription(`Subido por ${video.channel?.name ?? "--"} ${video.durationFormatted}`)
 									// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 									.setValue(video.id!)

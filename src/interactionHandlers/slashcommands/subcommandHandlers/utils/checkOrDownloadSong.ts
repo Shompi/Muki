@@ -48,8 +48,7 @@ async function Download(video_id: string): Promise<string | null> {
 		"--audio-quality",
 		"192K",
 		"-o",
-		// eslint-disable-next-line no-useless-escape
-		"'downloads/%\(title\)s-%\(id\)s.%\(ext\)s'",
+		"\"downloads/%\(title\)s-%\(id\)s.%\(ext\)s\"",
 		"-r",
 		"2.5M", // Maximum download rate of 2.5Mb
 		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
