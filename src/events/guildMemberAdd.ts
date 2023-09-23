@@ -8,6 +8,7 @@ export default {
 	name: Events.GuildMemberAdd,
 	once: false,
 	async execute(member) {
+		return; // This broke
 		if (member.guild.id !== member.client.mainGuild.id) return;
 
 		const defaultChannel = member.guild.systemChannel

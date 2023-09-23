@@ -1,8 +1,8 @@
-import { AttachmentBuilder, GuildMember } from "npm:discord.js@14.13.0";
-import * as Canvas from "npm:@napi-rs/canvas";
-import { request } from 'npm:undici'
+import { AttachmentBuilder, GuildMember } from "npm:discord.js";
+import * as Canvas from "https://deno.land/x/skia_canvas@0.5.4/mod.ts";
+import { Buffer } from "https://deno.land/std@0.202.0/io/buffer.ts"
 
-Canvas.GlobalFonts.registerFromPath('./welcome/fonts/Anton-Regular.ttf', "Anton")
+Canvas.Fonts.register('./welcome/fonts/Anton-Regular.ttf')
 
 const applyText = (canvas: Canvas.Canvas, text: string, fontsize: number, font: string) => {
 	const context = canvas.getContext('2d');
@@ -24,18 +24,16 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 	let Background: Canvas.Image
 
 	if (UserBannerUrl) {
-		const bannerBuffer = await request(UserBannerUrl).then(response => response.body.arrayBuffer())
-		Background = await Canvas.loadImage(bannerBuffer)
+		Background = await Canvas.Image.load(UserBannerUrl)
 	} else {
-		Background = await Canvas.loadImage("./welcome/Banner.png")
+		Background = await Canvas.Image.load("./welcome/Banner.png")
 	}
 
 	context.filter = 'blur(4px)'
 	context.drawImage(Background, 0, 0, canvas.width, canvas.height)
 	context.filter = 'blur(0px)'
 
-	const { body } = await request(member.displayAvatarURL({ size: 256, extension: 'jpg' }))
-	const avatar = await Canvas.loadImage(await body.arrayBuffer())
+	const avatar = await Canvas.Image.load(member.displayAvatarURL({ size: 256, extension: 'jpg' }))
 
 	/** Username Text */
 	context.font = applyText(canvas, `${member.user.tag}`, 110, "Anton")
@@ -66,6 +64,9 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 	context.clip()
 
 	context.drawImage(avatar, 25, 190, 256, 256)
+	const buffer = new Buffer(canvas.encode('png'))
 
-	return new AttachmentBuilder(await canvas.encode('png'), { name: 'WelcomeBanner.png' })
+	//@ts-ignore
+	// TODO
+	return new AttachmentBuilder(buffer, { name: 'WelcomeBanner.png' })
 }

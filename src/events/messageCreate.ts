@@ -7,6 +7,8 @@ export default {
 	once: false,
 	async execute(message) {
 
+		return; // We are going to return anyway because we currently don't use this.
+
 		if (message.author.bot) return;
 
 		if (message.content.startsWith(`<@${message.client.user.id}>`)) {
