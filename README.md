@@ -1,7 +1,13 @@
-### La verdadera secretaría de Exiliados está de vuelta!
-## And this time im writting it in typescript!
+# La verdadera secretaría de Exiliados está de vuelta
+
+## Deno branch has currently some unstable features
+
+Waiting for a replacement for canvas (image generation)
+Possible solution:
+
+* Save the image on disk then read it directly using `AttachmentBuilder` since Deno Buffer doesn't seem to work on it.
 
 ## Main Dependencies
-- [discord.js v14](https://discord.js.org)
-- [keyv v4.5.2](https://https://github.com/jaredwray/keyv)
-- [dotenv v.16.0.3](https://github.com/motdotla/dotenv)
+
+* Im running this using Deno
+* [discord.js v14](https://discord.js.org)
