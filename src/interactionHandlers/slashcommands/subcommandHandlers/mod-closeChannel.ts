@@ -4,7 +4,7 @@ const reopenButton = new ButtonBuilder()
 	.setCustomId('channel-open')
 	.setEmoji("🔑")
 	.setLabel('Reabrir el canal')
-	.setStyle(ButtonStyle.Primary)
+	.setStyle(ButtonStyle.Secondary)
 
 const row = new ActionRowBuilder<ButtonBuilder>()
 	.setComponents(reopenButton)
