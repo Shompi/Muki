@@ -32,7 +32,7 @@ export default {
 					case 'emoji-reject':
 						await RejectEmojiSuggestion(interaction)
 						break
-					case 'channel-reopen':
+					case 'channel-open':
 						await ReopenChannel(interaction)
 						break
 				}
