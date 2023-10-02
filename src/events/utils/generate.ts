@@ -64,9 +64,12 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 	context.clip()
 
 	context.drawImage(avatar, 25, 190, 256, 256)
-	const buffer = new Buffer(canvas.encode('png'))
 
-	//@ts-ignore
+	const filepath = `./welcome/temp/${member.id}.png`
+
+	// We need to save the image to disk for now
+	canvas.save(filepath, "png", 90)
+
 	// TODO
-	return new AttachmentBuilder(buffer, { name: 'WelcomeBanner.png' })
+	return new AttachmentBuilder(filepath, { name: 'WelcomeBanner.jpeg' })
 }

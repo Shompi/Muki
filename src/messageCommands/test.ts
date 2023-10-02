@@ -1,4 +1,3 @@
-import { EmbedBuilder } from "npm:discord.js@14.13.0";
 import { MessageCommand } from "../types/index.d.ts";
 
 const Command: MessageCommand = {
@@ -6,7 +5,7 @@ const Command: MessageCommand = {
 	ownerOnly: true,
 	async execute(msg, args) {
 
-		return void await msg.reply({ embeds: [new EmbedBuilder().setDescription('\u200b').setColor('Random').setTitle('test')] })
+		void await msg.reply({ content: 'Test!' })
 	}
 }
 

@@ -6,7 +6,9 @@ const Command: MessageCommand = {
 	name: 'eval',
 	ownerOnly: true,
 	async execute(message, args) {
-		const code = args?.join(" ")
+		const code = args?.slice(1).join(" ")
+
+		console.log(code);
 
 		if (!code || code.length === 0) return;
 
