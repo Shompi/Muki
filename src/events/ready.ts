@@ -1,5 +1,5 @@
 import { ActivityType, Client, Events, version } from "npm:discord.js"
-import { ReadyEvent } from "../types/index.d.ts"
+import { ReadyEvent } from "../types/index.ts"
 import { ChangeProfilePicture } from "./utils/changeProfilePic.ts"
 import { EarthquakeMonitor } from "./utils/earthquakes.ts"
 
@@ -82,7 +82,7 @@ export default {
 		console.log('Cargando emojis...');
 		client.loadEmojis()
 		console.log('Emojis cargados!');
-		console.log(`El bot está sando la versión ${version} de discord.js`);
+		console.log(`Versión de Discord.js: ${version}`);
 
 
 		client.user?.setActivity({
