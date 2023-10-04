@@ -1,5 +1,5 @@
 import { Events } from "npm:discord.js@14.13.0";
-import { EventFile } from "../types/index.d.ts";
+import { EventFile } from "../types/index.ts";
 import { AcceptEmojiSuggestion } from "../interactionHandlers/buttons/emoji-accept.ts"
 import { RejectEmojiSuggestion } from "../interactionHandlers/buttons/emoji-reject.ts"
 import { ReopenChannel } from "../interactionHandlers/buttons/channel-reopen.ts";

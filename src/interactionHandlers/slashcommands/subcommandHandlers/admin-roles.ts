@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@14.13.0";
-import type { Category, DatabaseRole } from "../../../types/index.d.ts"
+import type { Category, DatabaseRole } from "../../../types/index.ts"
 import { CreateButtons } from "./utils/CreateCategoriesButton.ts"
 import { DatabasePaths } from "../../../globals/paths.ts"
 // const RolesDatabase = new Keyv({ uri: DatabasePaths.Roles, namespace: "roles" })

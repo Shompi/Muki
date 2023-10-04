@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "npm:discord.js@14.13.0";
-import { type SlashCommandTemplate } from "../../types/index.d.ts";
+import { type SlashCommandTemplate } from "../../types/index.ts";
 import { GetRoles } from "./subcommandHandlers/roles-get.ts";
 import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove.ts";
 const command: SlashCommandTemplate = {

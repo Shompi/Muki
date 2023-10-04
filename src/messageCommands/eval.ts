@@ -1,4 +1,4 @@
-import { MessageCommand } from '../types/index.d.ts';
+import { MessageCommand } from '../types/index.ts';
 import { EmbedBuilder } from 'npm:discord.js';
 import util from "node:util"
 

@@ -1,5 +1,5 @@
 import { getVoiceConnection } from "npm:@discordjs/voice";
-import { EventFile } from "../types/index.d.ts";
+import { EventFile } from "../types/index.ts";
 import { Events, TextChannel, VoiceState } from "npm:discord.js@14.13.0";
 
 export default {

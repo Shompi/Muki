@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.d.ts";
+import { MessageCommand } from "../types/index.ts";
 import { GenerateWelcomeImage } from "../events/utils/generate.ts";
 
 const command: MessageCommand = {

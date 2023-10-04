@@ -1,4 +1,4 @@
-import { SlashCommandTemplate } from "../../types/index.d.ts";
+import { SlashCommandTemplate } from "../../types/index.ts";
 import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "npm:discord.js@14.13.0";
 import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.ts";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.ts";

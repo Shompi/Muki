@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.d.ts";
+import { MessageCommand } from "../types/index.ts";
 
 const Command: MessageCommand = {
 	name: 'test',

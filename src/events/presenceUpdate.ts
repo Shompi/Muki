@@ -1,6 +1,6 @@
 import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js'
 import { getGameCoverByName } from "./utils/gameImages/index.ts"
-import { EventFile } from '../types/index.d.ts'
+import { EventFile } from '../types/index.ts'
 import { DatabasePaths } from '../globals/paths.ts'
 const LivestreamTimestamps = await Deno.openKv(DatabasePaths.LivestreamPresences)
 

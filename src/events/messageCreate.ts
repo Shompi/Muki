@@ -1,4 +1,4 @@
-import { EventFile } from "../types/index.d.ts";
+import { EventFile } from "../types/index.ts";
 import { Events } from "npm:discord.js@14.13.0";
 import { ChatCompletion } from "./utils/chat.ts";
 

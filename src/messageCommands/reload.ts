@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.d.ts";
+import { MessageCommand } from "../types/index.ts";
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)
