@@ -1,4 +1,4 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@14.13.0";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js";
 import { type SlashCommandTemplate } from "../../types/index.d.ts";
 import { BanMember } from "./subcommandHandlers/mod-ban.ts";
 import { KickMember } from "./subcommandHandlers/mod-kick.ts";
@@ -15,6 +15,12 @@ const DaysToDeleteMessages = {
 	six: OneDayInSeconds * 6,
 	seven: 604800
 }
+
+const subcommands = new Map<string, (i: ChatInputCommandInteraction<'cached'>) => void | Promise<unknown>>()
+
+subcommands.set('ban', BanMember)
+	.set('kick', KickMember)
+	.set('close-channel', CloseChannel)
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
@@ -34,10 +40,10 @@ const command: SlashCommandTemplate = {
 						.setDescriptionLocalization("en-US", "Id or Mention of the user you want to ban")
 						.setRequired(true)
 				)
-				.addIntegerOption(horas =>
-					horas.setName('horas')
+				.addIntegerOption(dias =>
+					dias.setName('dias')
 						.setNameLocalization("en-GB", "days")
-						.setDescription('Los mensajes que fueron enviados por este usuario hace estos segundos atrás serán eliminados.')
+						.setDescription('Se eliminarán los mensajes que este usuario haya enviado estos dias.')
 						.setDescriptionLocalization("en-US", "The messages that were sent by this member on these seconds prior are going to be deleted")
 						.addChoices(
 							{
@@ -103,29 +109,10 @@ const command: SlashCommandTemplate = {
 		),
 	async execute(interaction) {
 
-		const subcommand = interaction.options.getSubcommand()
+		const subcommand = subcommands.get(interaction.options.getSubcommand())
 
-		try {
-
-			switch (subcommand) {
-				case 'ban':
-					return await BanMember(interaction)
-				case 'kick':
-					return await KickMember(interaction)
-				case 'close-channel':
-					return await CloseChannel(interaction)
-			}
-
-		} catch (e) {
-
-			console.log(e)
-
-			return await interaction.reply({
-				ephemeral: true,
-				content: '❌ Ocurrió un error con esta interacción, el comando ha sido cancelado.'
-			})
-		}
-	},
+		return subcommand ? await subcommand(interaction) : await interaction.reply({ content: 'Este comando no ha sido implementado.' })
+	}
 }
 
 export default command
