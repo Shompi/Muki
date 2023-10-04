@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0";
+import { ChatInputCommandInteraction } from "npm:discord.js";
 
 export async function KickMember(interaction: ChatInputCommandInteraction<'cached'>) {
 
@@ -8,20 +8,20 @@ export async function KickMember(interaction: ChatInputCommandInteraction<'cache
 		reason: interaction.options.getString('razon')
 	}
 
-	const Member = await interaction.guild.members.fetch(args.target).catch(() => null)
+	const member = await interaction.guild.members.fetch(args.target).catch(() => null)
 
-	if (!Member) return await interaction.reply({
+	if (!member) return await interaction.reply({
 		content: 'El miembro ya no está en este servidor.',
 		ephemeral: true
 	})
 
-	if (Member.kickable) {
+	if (member.kickable) {
 		await interaction.deferReply({ ephemeral: true })
 
-		await Member.kick(args.reason ?? undefined)
+		await member.kick(args.reason ?? undefined)
 
 		return await interaction.editReply({
-			content: `✅ El miembro ${Member.user.tag} ha sido expulsado.`
+			content: `✅ El miembro ${member.user.displayName} ha sido expulsado.`
 		})
 	} else {
 

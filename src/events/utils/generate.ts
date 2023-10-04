@@ -36,13 +36,13 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 	const avatar = await Canvas.Image.load(member.displayAvatarURL({ size: 256, extension: 'jpg' }))
 
 	/** Username Text */
-	context.font = applyText(canvas, `${member.user.tag}`, 110, "Anton")
+	context.font = applyText(canvas, `${member.user.displayName}`, 110, "Anton")
 	context.fillStyle = '#eeeeee'
 	context.shadowColor = "#000000"
 	context.shadowBlur = 2
 	context.shadowOffsetX = 1
 	context.shadowOffsetY = 1
-	context.fillText(`${member.user.tag}`, 300, 340)
+	context.fillText(`${member.user.displayName}`, 300, 340)
 	/** ----- */
 
 	/** Member count text */

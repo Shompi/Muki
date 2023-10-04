@@ -30,7 +30,7 @@ export async function BanMember(interaction: ChatInputCommandInteraction<"cached
 		})
 
 		return await interaction.editReply({
-			content: `✅ El miembro ${Member.user.tag} ha sido baneado exitosamente!`
+			content: `✅ El miembro ${Member.user.displayName} ha sido baneado exitosamente!`
 		})
 	} else {
 		await interaction.reply({
