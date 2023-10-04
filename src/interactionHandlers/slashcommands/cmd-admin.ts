@@ -1,7 +1,9 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@14.13.0"
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js"
 import { type SlashCommandTemplate } from "../../types/index.ts"
 import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.ts"
 
+const subcommands = new Map<string, (i: ChatInputCommandInteraction<'cached'>) => void>()
+	.set('roles', AdminAutoRoles)
 
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
@@ -16,15 +18,11 @@ const command: SlashCommandTemplate = {
 				.setDescription("Añade los roles que los miembros pueden añadirse")
 				.setDescriptionLocalization('en-US', "Add the roles that members can add to themselves")
 		),
-	async execute(i) {
+	async execute(interaction) {
 
-		const subcommand = i.options.getSubcommand()
+		const subcommand = subcommands.get(interaction.options.getSubcommand())
 
-		switch (subcommand) {
-			case "roles":
-				await AdminAutoRoles(i)
-				break
-		}
+		return subcommand ? subcommand(interaction) : await interaction.reply({ content: 'Este comando no ha sido implementado.' })
 
 	}
 }
