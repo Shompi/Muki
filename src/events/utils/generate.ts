@@ -1,6 +1,5 @@
 import { AttachmentBuilder, GuildMember } from "npm:discord.js";
 import * as Canvas from "https://deno.land/x/skia_canvas@0.5.4/mod.ts";
-import { Buffer } from "https://deno.land/std@0.202.0/io/buffer.ts"
 
 Canvas.Fonts.register('./welcome/fonts/Anton-Regular.ttf')
 
@@ -29,9 +28,9 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 		Background = await Canvas.Image.load("./welcome/Banner.png")
 	}
 
-	context.filter = 'blur(4px)'
+	// context.filter = 'blur(4px)'
 	context.drawImage(Background, 0, 0, canvas.width, canvas.height)
-	context.filter = 'blur(0px)'
+	// context.filter = 'blur(0px)'
 
 	const avatar = await Canvas.Image.load(member.displayAvatarURL({ size: 256, extension: 'jpg' }))
 
@@ -68,7 +67,7 @@ export const GenerateWelcomeImage = async (member: GuildMember) => {
 	const filepath = `./welcome/temp/${member.id}.png`
 
 	// We need to save the image to disk for now
-	canvas.save(filepath, "png", 90)
+	canvas.save(filepath, "png", 98)
 
 	// TODO
 	return new AttachmentBuilder(filepath, { name: 'WelcomeBanner.jpeg' })
