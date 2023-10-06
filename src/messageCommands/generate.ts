@@ -3,8 +3,8 @@ import { GenerateWelcomeImage } from "../events/utils/generate.ts";
 
 const command: MessageCommand = {
 	name: 'generate',
-	ownerOnly: true,
-	async execute(message, args) {
+	ownerOnly: false,
+	async execute(message, _) {
 
 		const attachment = await GenerateWelcomeImage(message.member!)
 

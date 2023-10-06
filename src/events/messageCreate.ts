@@ -7,14 +7,20 @@ export default {
 	once: false,
 	async execute(message) {
 
-		const args = message.content.split(" ").slice(1)
-
-		return message.client.messageCommands.get(args[0])?.execute(message, args);
-
-		return; // We are going to return anyway because we currently don't use this.
-
 		if (message.author.bot) return;
+		const args = message.content.split(" ").slice(1)
+		const messageCommand = message.client.messageCommands.get(args[0])
 
+		if (messageCommand) {
+			if (!messageCommand.ownerOnly) {
+				return messageCommand.execute(message, args)
+			}
+
+			if (message.author.id === "166263335220805634")
+				return messageCommand.execute(message, args)
+		}
+
+		return;
 		if (message.content.startsWith(`<@${message.client.user.id}>`)) {
 			const answered = await ChatCompletion(message)
 
