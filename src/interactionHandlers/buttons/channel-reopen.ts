@@ -9,7 +9,7 @@ export async function ReopenChannel(interaction: ButtonInteraction<'cached'>) {
 
 			if (channel && !channel.isThread() && !channel.isDMBased()) {
 
-				await interaction.deferReply()
+				await interaction.deferUpdate()
 				await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
 					SendMessages: null
 				})
@@ -17,7 +17,7 @@ export async function ReopenChannel(interaction: ButtonInteraction<'cached'>) {
 				const button = ButtonBuilder.from(interaction.component).setDisabled(true)
 				const row = new ActionRowBuilder<ButtonBuilder>().setComponents(button)
 
-				await interaction.editReply({
+				await interaction.update({
 					content: 'El canal ha sido desbloqueado.',
 					components: [row]
 				})
