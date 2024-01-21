@@ -3,12 +3,6 @@ import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)
 
-enum DownloaderState {
-	Downloading,
-	Idle
-}
-// We initialize in an idle state.
-let DownloadState: DownloaderState = DownloaderState.Idle
 //const DownloadQueue: string[] = []
 
 /** Returns the name of the downloaded file or null if there was an error with the download*/
@@ -35,7 +29,6 @@ export async function CheckOrDownloadSong(interaction: ChatInputCommandInteracti
 }
 
 async function Download(video_id: string): Promise<string | null> {
-	DownloadState = DownloaderState.Downloading
 	const youtubeBaseUrl = "https://youtube.com/watch?v="
 
 	const ytdlArgs = [
@@ -60,8 +53,6 @@ async function Download(video_id: string): Promise<string | null> {
 	const { stdout, stderr } = await Exec(`yt-dlp ${ytdlArgs.join(" ")}`)
 
 	console.log('[DEBUG yt-dlp] stdout:', stdout);
-	DownloadState = DownloaderState.Idle
-
 	if (stderr) {
 		return null
 	}
