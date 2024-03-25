@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js"
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@latest"
 import { type SlashCommandTemplate } from "../../types/index.ts"
 import { AdminAutoRoles } from "./subcommandHandlers/admin-roles.ts"
 

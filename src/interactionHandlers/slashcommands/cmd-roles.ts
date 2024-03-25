@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "npm:discord.js@14.13.0";
+import { SlashCommandBuilder } from "npm:discord.js@latest";
 import { type SlashCommandTemplate } from "../../types/index.ts";
 import { GetRoles } from "./subcommandHandlers/roles-get.ts";
 import { RemoveSelfRoles } from "./subcommandHandlers/roles-remove.ts";

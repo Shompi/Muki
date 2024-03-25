@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction } from "npm:discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction } from "npm:discord.js@latest";
 
 export async function ReopenChannel(interaction: ButtonInteraction<'cached'>) {
 

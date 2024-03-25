@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@14.13.0";
+import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "npm:discord.js@latest";
 import { Category, DatabaseRole } from "../../../types/index.ts";
 import { CreateButtons } from "./utils/CreateCategoriesButton.ts";
 import { DatabasePaths } from "../../../globals/paths.ts";

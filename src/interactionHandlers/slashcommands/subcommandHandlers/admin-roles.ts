@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@14.13.0";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, codeBlock, Colors, ComponentType, EmbedBuilder, ModalBuilder, RoleSelectMenuBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@latest";
 import type { Category, DatabaseRole } from "../../../types/index.ts"
 import { CreateButtons } from "./utils/CreateCategoriesButton.ts"
 import { DatabasePaths } from "../../../globals/paths.ts"

@@ -1,4 +1,4 @@
-import { AttachmentBuilder, GuildMember } from "npm:discord.js";
+import { AttachmentBuilder, GuildMember } from "npm:discord.js@latest";
 import * as Canvas from "https://deno.land/x/skia_canvas@0.5.4/mod.ts";
 
 Canvas.Fonts.register('./welcome/fonts/Anton-Regular.ttf')

@@ -1,4 +1,4 @@
-import { ActivityType, Client, Events, version } from "npm:discord.js"
+import { ActivityType, Client, Events, version } from "npm:discord.js@latest"
 import { ReadyEvent } from "../types/index.ts"
 import { ChangeProfilePicture } from "./utils/changeProfilePic.ts"
 import { EarthquakeMonitor } from "./utils/earthquakes.ts"

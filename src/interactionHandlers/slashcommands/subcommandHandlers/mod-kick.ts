@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js";
+import { ChatInputCommandInteraction } from "npm:discord.js@latest";
 
 export async function KickMember(interaction: ChatInputCommandInteraction<'cached'>) {
 

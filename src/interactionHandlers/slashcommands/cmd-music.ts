@@ -1,5 +1,5 @@
 import { SlashCommandTemplate } from "../../types/index.ts";
-import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "npm:discord.js@14.13.0";
+import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "npm:discord.js@latest";
 import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.ts";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.ts";
 import { SkipCurrentSong } from "./subcommandHandlers/music-skip.ts";

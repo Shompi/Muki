@@ -1,5 +1,5 @@
 import { MessageCommand } from '../types/index.ts';
-import { EmbedBuilder } from 'npm:discord.js';
+import { EmbedBuilder } from 'npm:discord.js@latest';
 import util from "node:util"
 
 const Command: MessageCommand = {

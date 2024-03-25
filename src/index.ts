@@ -3,7 +3,7 @@ dotenv.config()
 
 import "npm:libsodium-wrappers"
 import "npm:opusscript"
-import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js"
+import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js@latest"
 import { readdir } from "node:fs/promises"
 import type { MessageCommand, SlashCommandTemplate } from "./types/index.ts"
 

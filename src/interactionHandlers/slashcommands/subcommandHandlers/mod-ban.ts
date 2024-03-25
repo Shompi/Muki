@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0";
+import { ChatInputCommandInteraction } from "npm:discord.js@latest";
 
 export async function BanMember(interaction: ChatInputCommandInteraction<"cached">) {
 

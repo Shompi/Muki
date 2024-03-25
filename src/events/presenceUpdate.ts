@@ -1,4 +1,4 @@
-import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js'
+import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js@latest'
 import { getGameCoverByName } from "./utils/gameImages/index.ts"
 import { EventFile } from '../types/index.ts'
 import { DatabasePaths } from '../globals/paths.ts'

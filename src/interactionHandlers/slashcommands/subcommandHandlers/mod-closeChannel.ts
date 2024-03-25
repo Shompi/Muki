@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction } from "npm:discord.js@14.13.0";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction } from "npm:discord.js@latest";
 
 const reopenButton = new ButtonBuilder()
 	.setCustomId('channel-open')

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0";
+import { ChatInputCommandInteraction } from "npm:discord.js@latest";
 import { promisify } from "node:util"
 import { exec } from 'node:child_process'
 import { readdir } from 'node:fs/promises'

@@ -1,5 +1,5 @@
 import { EventFile } from "../types/index.ts";
-import { Events } from "npm:discord.js@14.13.0";
+import { Events } from "npm:discord.js@latest";
 import { GenerateWelcomeImage } from "./utils/generate.ts";
 
 

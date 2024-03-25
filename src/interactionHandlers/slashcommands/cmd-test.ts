@@ -1,4 +1,4 @@
-import { PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@14.13.0";
+import { PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@latest";
 import { SlashCommandTemplate } from "../../types/index.ts";
 import { GenerateWelcomeImage } from "../../events/utils/generate.ts";
 PermissionsBitField.Flags.ModerateMembers

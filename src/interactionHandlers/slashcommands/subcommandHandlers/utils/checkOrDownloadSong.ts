@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js@14.13.0"
+import { ChatInputCommandInteraction } from "npm:discord.js@latest"
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)

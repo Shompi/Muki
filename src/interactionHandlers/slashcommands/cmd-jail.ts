@@ -1,5 +1,5 @@
 import { SlashCommandTemplate } from "../../types/index.ts"
-import { ButtonStyle, ChatInputCommandInteraction, Colors, ComponentType, GuildMember, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, time, ChannelType, VoiceBasedChannel, VoiceChannel } from "npm:discord.js@14.13.0"
+import { ButtonStyle, ChatInputCommandInteraction, Colors, ComponentType, GuildMember, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, time, ChannelType, VoiceBasedChannel, VoiceChannel } from "npm:discord.js@latest"
 import { setTimeout } from "node:timers/promises"
 
 const VOTETIME = 60_000 // 1 minute
