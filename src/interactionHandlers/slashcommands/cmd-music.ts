@@ -117,6 +117,9 @@ const command: SlashCommandTemplate = {
 		let filteredFiles: string[] = []
 
 		for await (const file of filesIterator) {
+
+			if (file.name.length > 100) continue // Just skip this file if the name is too long.
+			
 			if (file.name.toLocaleLowerCase().includes(songName.toLowerCase())) {
 				filteredFiles.push(file.name)
 			}
@@ -125,7 +128,7 @@ const command: SlashCommandTemplate = {
 		filteredFiles = filteredFiles.slice(0, 25)
 
 		return await interaction.respond(
-			filteredFiles.map(filename => ({ name: filename.substring(0, 40), value: filename.substring(0, 90) }))
+			filteredFiles.map(filename => ({ name: filename.substring(0, 80), value: filename.substring(0, 100) }))
 		)
 	},
 }
