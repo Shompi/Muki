@@ -55,10 +55,6 @@ async function Download(video_id: string): Promise<string | null> {
 
 	console.log('[DEBUG yt-dlp] stdout:', stdout);
 	console.log('[DEBUG yt-dlp] stderr:', stderr);
-	if (stderr) {
-		return null
-	}
-
 
 	console.log("yt-dlp ha terminado, esperando 2 segundos...");
 	await setTimeout(2000)
