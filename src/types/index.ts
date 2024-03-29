@@ -45,7 +45,7 @@ export interface MessageCommand {
 	ownerOnly?: boolean,
 	execute: (m: Message, args: Array<string>) => Promise<unknown>
 }
-interface Song {
+export interface Song {
 	/** El usuario que pidió esta canción */
 	requestedBy: string
 	/** id del video */

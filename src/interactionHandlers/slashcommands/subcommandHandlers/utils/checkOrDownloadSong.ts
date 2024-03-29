@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction } from "npm:discord.js@latest"
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
+import {setTimeout} from "node:timers/promises"
 const Exec = promisify(exec)
 
 //const DownloadQueue: string[] = []
@@ -53,15 +54,24 @@ async function Download(video_id: string): Promise<string | null> {
 	const { stdout, stderr } = await Exec(`yt-dlp ${ytdlArgs.join(" ")}`)
 
 	console.log('[DEBUG yt-dlp] stdout:', stdout);
+	console.log('[DEBUG yt-dlp] stderr:', stderr);
 	if (stderr) {
 		return null
 	}
 
+
+	console.log("yt-dlp ha terminado, esperando 2 segundos...");
+	await setTimeout(2000)
 	// Find the file in system
 	const filesIterator = Deno.readDir('downloads')
 
 	for await (const file of filesIterator) {
-		if (file.name.includes(video_id) && file.name.endsWith('.opus')) return file.name
+		if (file.name.includes(video_id) && file.name.endsWith('.opus')) {
+			console.log(`Archivo ${file.name} encontrado, devolviendo al reproductor.`)
+			return file.name
+		}
 	}
+
+	console.log("No se encontró el archivo en la carpeta.")
 	return null
 }

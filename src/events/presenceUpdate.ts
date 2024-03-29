@@ -33,8 +33,8 @@ async function checkTwitchStream(presence: Presence) {
 	const STREAMED_ACTIVITY = getLivestreamInfo(presence)
 
 	if (!STREAMED_ACTIVITY) return
+	if (!CheckMemberStreamerRole(presence.member!)) return
 
-	if (!CheckMemberStreamerRole(presence.member!)) return console.log("PresenceUpdate: Returned, member does not have the streamer role.");
 
 	let USER_TIMESTAMP = (await LivestreamTimestamps.get(["stream", presence.userId])).value as number
 	let NEW_USER = false
