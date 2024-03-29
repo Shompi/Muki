@@ -3,6 +3,7 @@
   "packages": {
     "specifiers": {
       "npm:@discordjs/voice": "npm:@discordjs/voice@0.16.0",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:discord.js@latest": "npm:discord.js@14.14.1",
       "npm:dotenv": "npm:dotenv@16.4.5",
       "npm:libsodium-wrappers": "npm:libsodium-wrappers@0.7.13",

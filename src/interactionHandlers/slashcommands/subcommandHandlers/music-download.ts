@@ -1,7 +1,8 @@
+import { exec } from 'node:child_process';
+import { readdir } from 'node:fs/promises';
+import { setTimeout } from "node:timers/promises";
+import { promisify } from "node:util";
 import { ChatInputCommandInteraction } from "npm:discord.js@latest";
-import { promisify } from "node:util"
-import { exec } from 'node:child_process'
-import { readdir } from 'node:fs/promises'
 import { isValidId } from "./music-play.ts";
 
 const Exec = promisify(exec)
@@ -51,12 +52,20 @@ async function Download(video_id: string): Promise<string | null> {
 		return null
 	}
 
+	console.log("yt-dlp ha terminado de descargar.")
+	await setTimeout(2000) // Lets wait to seconds for the process to exit gracefully.
+
+
 	// Find the file in system
 	const files = await readdir('downloads')
 	if (files.length === 0) return null
 
+
+	console.log("Buscando archivo en downloads...")
+
 	const video = files.find(file => file.includes(video_id) && file.endsWith('.opus'))
 	if (!video) return null
 
+	console.log(`Video encontrado en la carpeta: ${video}`)
 	return video
 }

@@ -19,8 +19,8 @@ export default {
 	once: false,
 	async execute(_old, now) {
 
-		if (now.member === null) return console.log("Presence Update: Returned, member was null")
-
+		if (now.member === null) return 
+		
 		if (now.activities.find(activity => activity.type === ActivityType.Streaming)) {
 			await checkTwitchStream(now)
 		}
