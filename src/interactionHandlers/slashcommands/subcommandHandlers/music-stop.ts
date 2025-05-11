@@ -1,5 +1,5 @@
-import { getVoiceConnection } from "npm:@discordjs/voice";
-import { ChatInputCommandInteraction } from "npm:discord.js@latest";
+import { getVoiceConnection } from "@discordjs/voice";
+import { ChatInputCommandInteraction } from "discord.js";
 
 export async function StopPlayback(interaction: ChatInputCommandInteraction<'cached'>) {
 

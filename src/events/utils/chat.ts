@@ -1,6 +1,6 @@
-import { Collection, Message, Snowflake } from "npm:discord.js@latest"
+import { Collection, Message, Snowflake } from "discord.js"
 import { RequestChatCompletion } from "../../openai/chat-completion.ts";
-import { type ChatCompletionMessage } from "npm:openai/resources/chat/index.ts";
+import { type ChatCompletionMessage } from "openai/resources/chat/index.ts";
 
 const userMessageHistory = new Collection<Snowflake, ChatCompletionMessage[]>()
 const pendingSweeps = new Set<Snowflake>()

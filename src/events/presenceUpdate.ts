@@ -1,18 +1,18 @@
-import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'npm:discord.js@latest'
+/* import { Presence, Activity, EmbedBuilder, type GuildMember, ActivityType, Events, GuildTextBasedChannel } from 'discord.js@latest'
 import { getGameCoverByName } from "./utils/gameImages/index.ts"
 import { EventFile } from '../types/index.ts'
 import { DatabasePaths } from '../globals/paths.ts'
 const LivestreamTimestamps = await Deno.openKv(DatabasePaths.LivestreamPresences)
 
 const StreamerRole = "912096189443350548"
-const StreamsChannel = "600159867239661578"
+const StreamsChannel = "600159867239661578" */
 
 // const LivestreamTimestamps = new keyv(DatabasePaths.LivestreamPresences, { namespace: 'livestreams' })
 
 
 
 
-const Timeout = 1000 * 60 * 60 * 3
+/* const Timeout = 1000 * 60 * 60 * 3
 
 export default {
 	name: Events.PresenceUpdate,
@@ -101,4 +101,4 @@ async function sendLiveStream(presence: Presence) {
 	await STREAM_CHANNEL.send({
 		embeds: [await createEmbed(STREAMED_ACTIVITY!, presence.member!)]
 	})
-}
+} */

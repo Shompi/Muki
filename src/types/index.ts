@@ -1,5 +1,5 @@
-import { AudioPlayer } from "npm:@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "npm:discord.js@latest"
+import { AudioPlayer } from "@discordjs/voice";
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "discord.js"
 
 export type InteractionCreateFile = {
 	name: string
@@ -66,7 +66,7 @@ interface SongQueue {
 	songs: Song[]
 }
 
-declare module 'npm:discord.js@latest' {
+declare module 'discord.js' {
 	interface BaseClient {
 		commands: Collection<string, SlashCommandTemplate>
 		messageCommands: Collection<string, MessageCommand>

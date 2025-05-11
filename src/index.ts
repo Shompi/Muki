@@ -1,13 +1,12 @@
-import * as dotenv from "npm:dotenv"
-dotenv.config()
-
-import "npm:libsodium-wrappers"
-import "npm:opusscript"
-import { Client, Collection, Guild, GuildTextBasedChannel, Partials, TextChannel } from "npm:discord.js@latest"
+import { Client, Collection, Guild, type GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
 import type { MessageCommand, SlashCommandTemplate } from "./types/index.ts"
 
 class MukiClient extends Client {
+	commands: Collection<string, SlashCommandTemplate>
+	messageCommands: Collection<string, MessageCommand>
+	loadEmojis: () => boolean
+	util: any
 
 	constructor() {
 		super({
@@ -28,6 +27,8 @@ class MukiClient extends Client {
 		this.messageCommands = new Collection()
 
 		this.loadEmojis = () => {
+
+
 
 			this.util = {
 				emoji: {
@@ -59,26 +60,28 @@ const Muki = new MukiClient()
 
 // Load event files
 async function main() {
-	const Files = Deno.readDir("./src/events")
+	const Files = await readdir("./src/events")
 
 	for await (const file of Files) {
-		if (file.isDirectory) continue
+		if (!file.endsWith(".ts")) continue
 		//@ts-ignore I can't seem to type this correctly.
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
-		const event = (await import("./events/" + file.name).then(mod => mod.default))
+		const event = (await import("./events/" + file).then(mod => mod.default))
 
 
-		if (event?.once) {
-			//@ts-ignore I can't type this either
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-			Muki.once(event.name, (...args) => event.execute(...args))
-		} else {
-			//@ts-ignore I can't type this but it doesnt matter
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-			Muki.on(event.name, (...args) => event.execute(...args))
+		if (event) {
+			if (event.once) {
+				//@ts-ignore I can't type this either
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+				Muki.once(event.name, (...args) => event.execute(...args))
+			} else {
+				//@ts-ignore I can't type this but it doesnt matter
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+				Muki.on(event.name, (...args) => event.execute(...args))
+			}
+			console.log("EVENT FILE LOADED:", event.name);
+
 		}
-
-		console.log("EVENT FILE LOADED:", event.name);
 	}
 
 	Muki.commands = new Collection();
@@ -105,7 +108,7 @@ async function main() {
 
 		Muki.messageCommands.set(command.name, command)
 	}
-	await Muki.login(Deno.env.get('BOT_TOKEN'))
+	await Muki.login(process.env.BOT_TOKEN)
 }
 
 void main();

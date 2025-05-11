@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@discordjs/voice": "0.16.0",
+    "@types/node": "18.16.19",
+    "discord.js": "14.14.1",
+    "libsodium-wrappers": "0.7.13",
+    "openai": "4.6.0",
+    "opusscript": "0.1.0",
+    "youtube-sr": "4.3.4"
+  },
+  "devDependencies": {
+    "discord-api-types": "0.37.61",
+    "@types/bun": "latest"
+  },
+  "name": "muki",
+  "module": "src/index.ts",
+  "scripts": {
+    "start": ""
+  },
+  "type": "module",
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

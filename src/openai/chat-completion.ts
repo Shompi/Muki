@@ -1,16 +1,15 @@
-import OpenAI from "npm:openai";
-import { ChatCompletionMessage } from "npm:openai/resources/chat";
+import OpenAI from "openai";
 
-const openai = new OpenAI()
-const context: ChatCompletionMessage = {
+const openai = new OpenAI({apiKey:""})
+const context: OpenAI.Chat.ChatCompletionMessage = {
 	role: 'system',
 	content: "Eres una asistente, tu nombre es Muki. Debes responder en Español, también puedes responder en Inglés. La estructura del chat es [username]: [message]. Tus respuestas no deben ser muy extensas."
 }
 
 export async function RequestChatCompletion(
 	username: string,
-	prompt: ChatCompletionMessage,
-	previousMessages: ChatCompletionMessage[]
+	prompt: OpenAI.Chat.ChatCompletionMessage,
+	previousMessages: OpenAI.Chat.ChatCompletionMessage[]
 ) {
 
 	const conversation = Array.from(previousMessages)
@@ -23,7 +22,7 @@ export async function RequestChatCompletion(
 
 	try {
 		const response = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo",
+			model: "gpt-4",
 			messages: conversation,
 			max_tokens: 250,
 			temperature: 0.30,

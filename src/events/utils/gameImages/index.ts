@@ -1,8 +1,8 @@
 import { DatabasePaths } from '../../../globals/paths.ts'
-const tokens = await Deno.openKv(DatabasePaths.Twitch)
-const imagesLocalDB = await Deno.openKv(DatabasePaths.GameImages)
-const client_id = Deno.env.get("IGDB_CLIENT_ID")!
-const client_secret = Deno.env.get("IGDB_CLIENT_SECRET")!
+// const tokens = await Deno.openKv(DatabasePaths.Twitch)
+// const imagesLocalDB = await Deno.openKv(DatabasePaths.GameImages)
+const client_id = process.env.IGDB_CLIENT_ID!
+const client_secret = process.env.IGDB_CLIENT_SECRET!
 
 //const tokens = new keyv(DatabasePaths.Twitch, { namespace: 'twitchtokens' })
 //const imagesLocalDB = new keyv(DatabasePaths.GameImages, { namespace: 'gameimages' })

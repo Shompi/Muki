@@ -1,6 +1,6 @@
-import { PermissionsBitField, SlashCommandBuilder } from "npm:discord.js@latest";
-import { SlashCommandTemplate } from "../../types/index.ts";
-import { GenerateWelcomeImage } from "../../events/utils/generate.ts";
+import { PermissionsBitField, SlashCommandBuilder } from "discord.js";
+import type { SlashCommandTemplate } from "../../types/index.ts";
+// import { GenerateWelcomeImage } from "../../events/utils/generate.ts";
 PermissionsBitField.Flags.ModerateMembers
 
 const command: SlashCommandTemplate = {
@@ -10,11 +10,11 @@ const command: SlashCommandTemplate = {
 		.setDescription("Comando de prueba"),
 	async execute(interaction) {
 
-		await interaction.deferReply({ ephemeral: true })
+		await interaction.reply({ ephemeral: true, content: "Comando deshabilitado" })
 
-		const attachment = await GenerateWelcomeImage(interaction.member!)
+/* 		const attachment = await GenerateWelcomeImage(interaction.member!) */
 
-		await interaction.editReply({ files: [attachment] })
+/* 		await interaction.editReply({ files: [attachment] }) */
 	}
 }
 

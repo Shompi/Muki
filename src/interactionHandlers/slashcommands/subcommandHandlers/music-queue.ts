@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, codeBlock, Colors, EmbedBuilder } from "npm:discord.js@latest";
+import { ChatInputCommandInteraction, codeBlock, Colors, EmbedBuilder } from "discord.js";
 
 export async function ShowQueue(interaction: ChatInputCommandInteraction<'cached'>) {
 

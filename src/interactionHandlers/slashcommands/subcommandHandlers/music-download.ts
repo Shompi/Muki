@@ -2,7 +2,7 @@ import { exec } from 'node:child_process';
 import { readdir } from 'node:fs/promises';
 import { setTimeout } from "node:timers/promises";
 import { promisify } from "node:util";
-import { ChatInputCommandInteraction } from "npm:discord.js@latest";
+import { ChatInputCommandInteraction } from "discord.js";
 import { isValidId } from "./music-play.ts";
 
 const Exec = promisify(exec)

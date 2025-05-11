@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonInteraction, Colors, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "npm:discord.js@latest";
+import { ActionRowBuilder, ButtonInteraction, Colors, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 
 export async function RejectEmojiSuggestion(i: ButtonInteraction<"cached">) {
 

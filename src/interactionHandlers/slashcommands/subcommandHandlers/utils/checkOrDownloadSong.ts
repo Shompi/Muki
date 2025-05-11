@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from "npm:discord.js@latest"
+import { ChatInputCommandInteraction } from "discord.js"
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 import {setTimeout} from "node:timers/promises"

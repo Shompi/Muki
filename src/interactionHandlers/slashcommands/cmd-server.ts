@@ -1,7 +1,7 @@
 /** Distintos comandos para ayudar en el servidor, tambien para darle
 a los miembros opciones de subir algun emoji o distintas cosas. */
 
-import { SlashCommandBuilder } from "npm:discord.js@latest";
+import { SlashCommandBuilder } from "discord.js";
 import { SlashCommandTemplate } from "../../types/index.ts";
 import { SuggestGuildEmoji } from "./subcommandHandlers/suggest-emoji.ts"
 

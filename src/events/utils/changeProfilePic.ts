@@ -1,4 +1,4 @@
-import { Client, Collection } from "npm:discord.js@latest";
+import { Client, Collection } from "discord.js";
 import { readdirSync } from "node:fs"
 
 const ImageFiles = readdirSync("src/resources/pictures")

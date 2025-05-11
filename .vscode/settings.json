@@ -2,7 +2,7 @@
   "files.exclude": {
     "": true
   },
-  "deno.enable": true,
+  "deno.enable": false,
   "deno.lint": true,
   "deno.unstable": true
 }

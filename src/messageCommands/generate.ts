@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.ts";
+import type { MessageCommand } from "../types/index.ts";
 import { GenerateWelcomeImage } from "../events/utils/generate.ts";
 
 const command: MessageCommand = {
@@ -6,9 +6,12 @@ const command: MessageCommand = {
 	ownerOnly: false,
 	async execute(message, _) {
 
+		message.reply({content:"Comando deshabilitado."})
+
+/* 
 		const attachment = await GenerateWelcomeImage(message.member!)
 
-		return void await message.reply({ files: [attachment] })
+		return void await message.reply({ files: [attachment] }) */
 	}
 }
 

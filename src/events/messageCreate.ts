@@ -1,5 +1,5 @@
 import { EventFile } from "../types/index.ts";
-import { Events } from "npm:discord.js@latest";
+import { Events } from "discord.js";
 import { ChatCompletion } from "./utils/chat.ts";
 
 export default {

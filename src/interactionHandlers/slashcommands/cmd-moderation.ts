@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "npm:discord.js@latest";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { type SlashCommandTemplate } from "../../types/index.ts";
 import { BanMember } from "./subcommandHandlers/mod-ban.ts";
 import { KickMember } from "./subcommandHandlers/mod-kick.ts";

@@ -1,6 +1,0 @@
-{
-  "tasks": {
-    "dev": "deno run --watch  --unstable -A ./src/index.ts",
-    "start": "deno run --unstable -A ./src/index.ts"
-  }
-}
