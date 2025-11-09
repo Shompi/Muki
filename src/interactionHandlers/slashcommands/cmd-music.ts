@@ -1,11 +1,12 @@
-import { SlashCommandTemplate } from "../../types/index.ts";
-import { APIApplicationCommandOptionChoice, SlashCommandBuilder } from "discord.js";
+import { type SlashCommandTemplate } from "../../types/index.ts";
+import { type APIApplicationCommandOptionChoice, SlashCommandBuilder } from "discord.js";
 import { PauseOrUnpauseSong } from "./subcommandHandlers/music-pause.ts";
 import { ParseVideoIdOrName } from "./subcommandHandlers/music-play.ts";
 import { SkipCurrentSong } from "./subcommandHandlers/music-skip.ts";
 import { ShowQueue } from "./subcommandHandlers/music-queue.ts";
 import { StopPlayback } from "./subcommandHandlers/music-stop.ts";
 import { DownloadSong } from "./subcommandHandlers/music-download.ts";
+import { readdir } from "fs/promises"
 
 const formatChoices: APIApplicationCommandOptionChoice<string>[] = [
 	{
@@ -86,8 +87,7 @@ const command: SlashCommandTemplate = {
 						.setChoices(...qualityChoices)
 						.setRequired(true)
 				)
-		)
-
+  ) as SlashCommandTemplate['data']
 	,
 	async execute(interaction) {
 
@@ -112,16 +112,16 @@ const command: SlashCommandTemplate = {
 	async autocomplete(interaction) {
 		const songName = interaction.options.getFocused()
 
-		const filesIterator = Deno.readDir("downloads")
+		const filesIterator = await readdir("downloads")
 
 		let filteredFiles: string[] = []
 
 		for await (const file of filesIterator) {
 
-			if (file.name.length > 100) continue // Just skip this file if the name is too long.
+			if (file.length > 100) continue // Just skip this file if the name is too long.
 			
-			if (file.name.toLocaleLowerCase().includes(songName.toLowerCase())) {
-				filteredFiles.push(file.name)
+			if (file.toLocaleLowerCase().includes(songName.toLowerCase())) {
+				filteredFiles.push(file)
 			}
 		}
 

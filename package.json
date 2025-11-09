@@ -6,16 +6,15 @@
     "libsodium-wrappers": "0.7.13",
     "openai": "4.6.0",
     "opusscript": "0.1.0",
-    "youtube-sr": "4.3.4"
+    "youtube-sr": "^4.3.12"
   },
   "devDependencies": {
-    "discord-api-types": "0.37.61",
     "@types/bun": "latest"
   },
   "name": "muki",
   "module": "src/index.ts",
   "scripts": {
-    "start": ""
+    "start": "src/index.ts"
   },
   "type": "module",
   "private": true,

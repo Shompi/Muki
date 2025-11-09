@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.ts";
+import { type MessageCommand } from "../types/index.ts";
 const Command: MessageCommand = {
 	name: 'test',
 	ownerOnly: true,

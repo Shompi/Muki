@@ -2,6 +2,7 @@ import { ChatInputCommandInteraction } from "discord.js"
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 import {setTimeout} from "node:timers/promises"
+import { readdir } from "fs/promises"
 const Exec = promisify(exec)
 
 //const DownloadQueue: string[] = []
@@ -10,11 +11,11 @@ const Exec = promisify(exec)
 export async function CheckOrDownloadSong(interaction: ChatInputCommandInteraction<'cached'>, videoId: string): Promise<string | null> {
 
 	// First lets check if the file can be found inside the folder
-	const filesIterator = Deno.readDir("./downloads")
+  const filesIterator = await readdir("./downloads")
 
 
 	for await (const file of filesIterator) {
-		if (file.name.includes(videoId) && file.name.endsWith('.opus')) return file.name
+    if (file.includes(videoId) && file.endsWith('.opus')) return file
 	}
 
 	// Else we need to download it
@@ -59,12 +60,12 @@ async function Download(video_id: string): Promise<string | null> {
 	console.log("yt-dlp ha terminado, esperando 2 segundos...");
 	await setTimeout(2000)
 	// Find the file in system
-	const filesIterator = Deno.readDir('downloads')
+  const filesIterator = await readdir('downloads')
 
 	for await (const file of filesIterator) {
-		if (file.name.includes(video_id) && file.name.endsWith('.opus')) {
-			console.log(`Archivo ${file.name} encontrado, devolviendo al reproductor.`)
-			return file.name
+    if (file.includes(video_id) && file.endsWith('.opus')) {
+      console.log(`Archivo ${file} encontrado, devolviendo al reproductor.`)
+      return file
 		}
 	}
 

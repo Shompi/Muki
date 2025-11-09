@@ -25,7 +25,7 @@ subcommands.set('ban', BanMember)
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("mod")
-		.setDMPermission(false)
+		.setDefaultMemberPermissions(0)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
 		.setDescription("Comandos de moderación")
 		.setDescriptionLocalization('en-US', "Moderation commands")
@@ -106,7 +106,7 @@ const command: SlashCommandTemplate = {
 		).addSubcommand(closeChannel =>
 			closeChannel.setName('close-channel')
 				.setDescription('Cierra el canal de texto para que los usuarios no puedan seguir enviando mensajes.')
-		),
+		) as SlashCommandTemplate['data'],
 	async execute(interaction) {
 
 		const subcommand = subcommands.get(interaction.options.getSubcommand())

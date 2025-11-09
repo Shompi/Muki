@@ -1,5 +1,5 @@
 import { AudioPlayer } from "@discordjs/voice";
-import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, ClientEvents, Collection, Events, GuildTextBasedChannel, Message, PermissionsBitField, SlashCommandBuilder, Snowflake } from "discord.js"
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Client, type ClientEvents, Collection, Events, Message, PermissionsBitField, SlashCommandBuilder, type Snowflake } from "discord.js"
 
 export type InteractionCreateFile = {
 	name: string
@@ -31,7 +31,7 @@ export interface Category {
 }
 
 export interface SlashCommandTemplate {
-	data: Partial<SlashCommandBuilder> & { name: string }
+  data: Partial<SlashCommandBuilder>
 	permissions?: PermissionsBitField
 	guildOnly?: boolean
 	guildSpecific?: boolean

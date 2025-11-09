@@ -1,4 +1,4 @@
-import { MessageCommand } from "../types/index.ts";
+import { type MessageCommand } from "../types/index.ts";
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 const Exec = promisify(exec)
@@ -11,7 +11,7 @@ const command: MessageCommand = {
 		const client = m.client
 		const commandName = args[0]
 		if (!commandName) return void m.reply({ content: 'No especificaste el nombre de un comando.' })
-		if (!client.messageCommands.has(args[0])) {
+    if (!client.messageCommands.has(args[0]!)) {
 			return void m.reply({ content: 'No tengo un comando con ese nombre.' })
 		}
 

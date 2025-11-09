@@ -1,5 +1,5 @@
-import { SlashCommandTemplate } from "../../types/index.ts"
-import { ButtonStyle, ChatInputCommandInteraction, Colors, ComponentType, GuildMember, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, time, ChannelType, VoiceBasedChannel, VoiceChannel } from "discord.js"
+import { type SlashCommandTemplate } from "../../types/index.ts"
+import { ButtonStyle, ChatInputCommandInteraction, Colors, ComponentType, GuildMember, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ChannelType, type VoiceBasedChannel, VoiceChannel } from "discord.js"
 import { setTimeout } from "node:timers/promises"
 
 const VOTETIME = 60_000 // 1 minute
@@ -9,8 +9,9 @@ const Command: SlashCommandTemplate = {
 	guildSpecific: true,
 	guildId: "941735255721787432",
 	guildOnly: true,
+  // @ts-ignore
 	data: new SlashCommandBuilder()
-		.setDMPermission(false)
+    .setDefaultMemberPermissions(0)
 		.setName('cana')
 		.setDescription('Manda a algun weta a la cana a través de una votación')
 		.addUserOption(target =>

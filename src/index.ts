@@ -1,4 +1,4 @@
-import { Client, Collection, Guild, type GuildTextBasedChannel, Partials, TextChannel } from "discord.js"
+import { Client, Collection, Guild, type GuildTextBasedChannel, Partials, SlashCommandBuilder, TextChannel } from "discord.js"
 import { readdir } from "node:fs/promises"
 import type { MessageCommand, SlashCommandTemplate } from "./types/index.ts"
 
@@ -91,12 +91,13 @@ async function main() {
 	const CommandFiles = await readdir("src/interactionHandlers/slashcommands").then(files => files.filter(file => file.endsWith(".ts")));
 
 	for (const CommandFile of CommandFiles) {
-		const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommandTemplate
+    const command = (await import(`./interactionHandlers/slashcommands/${CommandFile}`)).default as SlashCommandBuilder
 
-		Muki.commands.set(command.data.name, command)
+    //@ts-ignore
+    Muki.commands.set(command.data.name, command)
 
-		console.log("COMMAND LOADED:", command.data.name);
-
+    //@ts-ignore
+    console.log("COMMAND LOADED:", command.data.name);
 	}
 
 	/** Load message commands into the client */

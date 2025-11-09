@@ -6,7 +6,7 @@ PermissionsBitField.Flags.ModerateMembers
 const command: SlashCommandTemplate = {
 	data: new SlashCommandBuilder()
 		.setName("test")
-		.setDMPermission(false)
+		.setDefaultMemberPermissions(0)
 		.setDescription("Comando de prueba"),
 	async execute(interaction) {
 

@@ -2,13 +2,14 @@
 a los miembros opciones de subir algun emoji o distintas cosas. */
 
 import { SlashCommandBuilder } from "discord.js";
-import { SlashCommandTemplate } from "../../types/index.ts";
+import { type SlashCommandTemplate } from "../../types/index.ts";
 import { SuggestGuildEmoji } from "./subcommandHandlers/suggest-emoji.ts"
 
 const command: SlashCommandTemplate = {
+  //@ts-ignore
 	data: new SlashCommandBuilder()
 		.setName("sugerir")
-		.setDMPermission(false)
+		.setDefaultMemberPermissions(0)
 		.setDescription("Multiples comandos para el servidor")
 		.addSubcommand(emojis =>
 			emojis.setName("emoji").setDescription("Sugerir un emoji para este servidor")
