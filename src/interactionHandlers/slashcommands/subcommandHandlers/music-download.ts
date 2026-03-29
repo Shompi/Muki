@@ -12,7 +12,7 @@ export async function DownloadSong(interaction: ChatInputCommandInteraction<'cac
 	const videoNameOrId = interaction.options.getString('video', true)
 
 	if (isValidId(videoNameOrId)) {
-		await interaction.reply({ content: 'El video está siendo descargado, por favor espera unos minutos...', ephemeral: true })
+    await interaction.reply({ content: 'El video está siendo descargado, por favor espera unos minutos...', flags: ["Ephemeral"], })
 		const downloaded = await Download(videoNameOrId)
 		if (!downloaded)
 			return await interaction.editReply({ content: 'Ocurrió un error con la descarga del video. Esto puede deberse a las siguientes razones:\n- Error Interno\n- El video es demasiado pesado' })

@@ -29,7 +29,7 @@ const Command: SlashCommandTemplate = {
 
 		// Check if there is already an active poll
 		if (activePolls.has(interaction.guildId))
-			return void interaction.reply({ content: 'No puedes iniciar una votación mientras haya otra activa.', ephemeral: true })
+      return void interaction.reply({ content: 'No puedes iniciar una votación mientras haya otra activa.', flags: ["Ephemeral"], })
 
 		const targetUser = interaction.options.getUser('usuario', true)
 		const targetMember = await interaction.guild.members.fetch(targetUser.id)
@@ -40,13 +40,13 @@ const Command: SlashCommandTemplate = {
 		}
 		// Permission check for Muki
 		if (!interaction.guild.members.me?.permissions.has('MoveMembers'))
-			return await interaction.reply({ content: 'Disculpa, pero no tengo permisos para mover miembros entre canales en este Servidor.', ephemeral: true })
+      return await interaction.reply({ content: 'Disculpa, pero no tengo permisos para mover miembros entre canales en este Servidor.', flags: ["Ephemeral"], })
 
 		if (!interaction.member.voice.channel)
-			return await interaction.reply({ content: 'Debes estar conectado a un canal de voz para usar este comando.', ephemeral: true })
+      return await interaction.reply({ content: 'Debes estar conectado a un canal de voz para usar este comando.', flags: ["Ephemeral"], })
 
 		if (!targetMember.voice.channel)
-			return await interaction.reply({ content: 'No puedes usar este comando sobre un miembro que no está conectado a un canal de voz.', ephemeral: true })
+      return await interaction.reply({ content: 'No puedes usar este comando sobre un miembro que no está conectado a un canal de voz.', flags: ["Ephemeral"], })
 
 		if (targetMember.voice.channelId !== interaction.member.voice.channelId)
 			return await interaction.reply({ content: 'No puedes usar este comando sobre un miembro conectado a un canal de voz distinto del tuyo.' })
@@ -57,7 +57,7 @@ const Command: SlashCommandTemplate = {
 		if (!jailChannel) {
 
 			if (!interaction.guild.members.me.permissions.has('ManageChannels')) {
-				return void interaction.reply({ content: 'Este servidor no tiene un canal destinado como Cárcel. Por favor crea un canal de voz con el nombre `Carcel` para usar este comando, o dame permisos para administrar los canales de este servidor.', ephemeral: true })
+        return void interaction.reply({ content: 'Este servidor no tiene un canal destinado como Cárcel. Por favor crea un canal de voz con el nombre `Carcel` para usar este comando, o dame permisos para administrar los canales de este servidor.', flags: ["Ephemeral"], })
 			}
 
 			jailChannel = await interaction.guild.channels.create({
@@ -114,17 +114,17 @@ async function CreatePoll(interaction: ChatInputCommandInteraction<'cached'>, ta
 		componentType: ComponentType.Button,
 		filter: (interaction) => {
 			if (interaction.member.id === targetMember.id) {
-				void interaction.reply({ content: 'No puedes votar en una votación donde tú eres el objetivo.', ephemeral: true })
+        void interaction.reply({ content: 'No puedes votar en una votación donde tú eres el objetivo.', flags: ["Ephemeral"], })
 				return false
 			}
 
 			if (voters.has(interaction.member.id)) {
-				void interaction.reply({ content: 'No puedes votar nuevamente.', ephemeral: true })
+        void interaction.reply({ content: 'No puedes votar nuevamente.', flags: ["Ephemeral"], })
 				return false
 			}
 
 			voters.set(interaction.member.id, interaction.customId === 'jail-yes' ? true : false)
-			void interaction.reply({ content: `Tu voto ha sido registrado con éxito ${interaction.client.util.emoji.thumbsup}`, ephemeral: true })
+      void interaction.reply({ content: `Tu voto ha sido registrado con éxito ${interaction.client.util.emoji.thumbsup}`, flags: ["Ephemeral"], })
 			return true
 
 		},

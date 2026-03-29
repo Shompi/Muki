@@ -2,7 +2,7 @@ import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, ChatIn
 
 export async function SuggestGuildEmoji(interaction: ChatInputCommandInteraction<'cached'>) {
 
-	await interaction.deferReply({ ephemeral: true })
+  await interaction.deferReply({ flags: ["Ephemeral"], })
 	const client = interaction.client
 	const suggestionsChannel = client.suggestion_channel
 

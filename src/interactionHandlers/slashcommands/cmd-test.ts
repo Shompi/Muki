@@ -10,7 +10,7 @@ const command: SlashCommandTemplate = {
 		.setDescription("Comando de prueba"),
 	async execute(interaction) {
 
-		await interaction.reply({ ephemeral: true, content: "Comando deshabilitado" })
+    await interaction.reply({ flags: ["Ephemeral"], content: "Comando deshabilitado" })
 
 /* 		const attachment = await GenerateWelcomeImage(interaction.member!) */
 

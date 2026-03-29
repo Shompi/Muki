@@ -16,7 +16,7 @@ export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 	/* 	if (!dbCategories || dbCategories.length === 0)
 			return await i.reply({
 				content: "El administrador aún no ha añadido ninguna categoria a la lista de roles.",
-				ephemeral: true
+				flags: ["Ephemeral"],
 			}) */
 
 
@@ -26,7 +26,7 @@ export async function GetRoles(i: ChatInputCommandInteraction<"cached">) {
 	
 		const InitialResponse = await i.reply({
 			content: "Escoge una categoria",
-			ephemeral: true,
+			flags: ["Ephemeral"],,
 			components: [ButtonRow]
 		}) */
 

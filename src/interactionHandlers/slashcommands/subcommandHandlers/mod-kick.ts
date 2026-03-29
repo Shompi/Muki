@@ -12,11 +12,11 @@ export async function KickMember(interaction: ChatInputCommandInteraction<'cache
 
 	if (!member) return await interaction.reply({
 		content: 'El miembro ya no está en este servidor.',
-		ephemeral: true
+    flags: ["Ephemeral"],
 	})
 
 	if (member.kickable) {
-		await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: ["Ephemeral"], })
 
 		await member.kick(args.reason ?? undefined)
 
@@ -27,7 +27,7 @@ export async function KickMember(interaction: ChatInputCommandInteraction<'cache
 
 		return await interaction.reply({
 			content: '❌ Lo siento, no puedo expulsar a este miembro.',
-			ephemeral: true
+      flags: ["Ephemeral"],
 		})
 	}
 }

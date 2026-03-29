@@ -26,7 +26,7 @@ export async function ReopenChannel(interaction: ButtonInteraction<'cached'>) {
 		catch (e) {
 			console.log(e);
 			return await interaction.reply({
-				ephemeral: true,
+        flags: ["Ephemeral"],
 				content: 'Ocurrió un error con esta interacción.'
 			})
 
@@ -34,7 +34,7 @@ export async function ReopenChannel(interaction: ButtonInteraction<'cached'>) {
 	} else {
 		await interaction.reply({
 			content: 'Solo un moderador puede usar esta interacción.',
-			ephemeral: true
+      flags: ["Ephemeral"]
 		})
 	}
 }

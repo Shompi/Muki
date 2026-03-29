@@ -29,7 +29,7 @@ export async function CloseChannel(interaction: ChatInputCommandInteraction<'cac
 			console.log(e);
 			await interaction.reply({
 				content: 'Ocurrió un error con el comando, revisa en la consola.',
-				ephemeral: true
+        flags: ["Ephemeral"],
 			})
 		}
 	}

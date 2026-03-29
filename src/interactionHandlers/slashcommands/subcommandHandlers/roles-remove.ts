@@ -21,7 +21,7 @@ export async function RemoveSelfRoles(i: ChatInputCommandInteraction<"cached">) 
 
 	const InitialReply = await i.reply({
 		content: 'Selecciona los roles que quieres quitarte desde el menú de abajo',
-		ephemeral: true,
+    flags: ["Ephemeral"],,
 		components: [Row]
 	})
 	try {

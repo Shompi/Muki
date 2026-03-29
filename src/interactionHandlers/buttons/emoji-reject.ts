@@ -3,9 +3,9 @@ import { ActionRowBuilder, ButtonInteraction, Colors, EmbedBuilder, ModalBuilder
 export async function RejectEmojiSuggestion(i: ButtonInteraction<"cached">) {
 
 	if (!i.memberPermissions.has("ManageEmojisAndStickers"))
-		return await i.reply({ content: 'Lo siento, no cuentas con los permisos necesarios para realizar esta acción.', ephemeral: true })
+    return await i.reply({ content: 'Lo siento, no cuentas con los permisos necesarios para realizar esta acción.', flags: ["Ephemeral"] })
 
-	const SuggestionEmbed = EmbedBuilder.from(i.message.embeds[0])
+  const SuggestionEmbed = EmbedBuilder.from(i.message.embeds[0]!)
 		.setColor(Colors.Red)
 
 	const ReasonModal = new ModalBuilder()
@@ -36,7 +36,7 @@ export async function RejectEmojiSuggestion(i: ButtonInteraction<"cached">) {
 
 	SuggestionEmbed.setFooter({ text: `Razón: ${Reason ?? "-"}` })
 
-	await ReasonSubmission?.reply({ content: '¡Gracias!', ephemeral: true })
+  await ReasonSubmission?.reply({ content: '¡Gracias!', flags: ["Ephemeral"] })
 
 	return await i.message.edit({
 		embeds: [SuggestionEmbed],

@@ -116,7 +116,7 @@ export async function VideoSelectMenu(interaction: ChatInputCommandInteraction<'
 			if (i.user.id === interaction.user.id)
 				return true
 
-			void i.reply({ content: 'Esta interacción no es tuya!', ephemeral: true })
+      void i.reply({ content: 'Esta interacción no es tuya!', flags: ["Ephemeral"], })
 			return false
 		}
 	}).catch(() => null)

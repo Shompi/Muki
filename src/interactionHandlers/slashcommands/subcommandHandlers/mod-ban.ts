@@ -13,7 +13,7 @@ export async function BanMember(interaction: ChatInputCommandInteraction<"cached
 
 	if (!Member) {
 		// If the member is not in the guild we can assume is just a haxban, or something like that.
-		await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: ["Ephemeral"], })
 
 		await interaction.guild.bans.create(args.target, { deleteMessageSeconds: args.secondsToDeleteMessages, reason: args.reason })
 
@@ -23,7 +23,7 @@ export async function BanMember(interaction: ChatInputCommandInteraction<"cached
 	}
 
 	if (Member.bannable) {
-		await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: ["Ephemeral"], })
 		await Member.ban({
 			deleteMessageSeconds: args.secondsToDeleteMessages,
 			reason: args.reason
@@ -34,7 +34,7 @@ export async function BanMember(interaction: ChatInputCommandInteraction<"cached
 		})
 	} else {
 		await interaction.reply({
-			ephemeral: true,
+      flags: ["Ephemeral"],
 			content: '❌ Lo siento, este miembro no puede ser baneado por mi.'
 		})
 	}

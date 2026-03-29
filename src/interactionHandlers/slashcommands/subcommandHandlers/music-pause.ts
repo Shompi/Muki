@@ -17,6 +17,6 @@ export async function PauseOrUnpauseSong(interaction: ChatInputCommandInteractio
 		}
 
 	} else {
-		void await interaction.reply({ content: 'Esta guild no tiene un reproductor de audio creado. ', ephemeral: true })
+    void await interaction.reply({ content: 'Esta guild no tiene un reproductor de audio creado. ', flags: ["Ephemeral"], })
 	}
 }
