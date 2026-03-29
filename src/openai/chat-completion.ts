@@ -1,39 +1,42 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({apiKey:""})
+const openai = new OpenAI({ apiKey: process.env["OPENAI_API_KEY"] })
 const context: OpenAI.Chat.ChatCompletionMessage = {
-	role: 'system',
-	content: "Eres una asistente, tu nombre es Muki. Debes responder en Español, también puedes responder en Inglés. La estructura del chat es [username]: [message]. Tus respuestas no deben ser muy extensas."
+  role: 'assistant',
+  content: "Eres una asistente, tu nombre es Muki. Debes responder en Español, también puedes responder en Inglés. La estructura del chat es [username]: [message]. Tus respuestas no deben ser muy extensas.",
+  refusal: "Lo siento, no puedo ayudarte con eso. Si tienes alguna otra pregunta o necesitas ayuda con algo más, estaré encantada de asistirte."
 }
 
-export async function RequestChatCompletion(
-	username: string,
-	prompt: OpenAI.Chat.ChatCompletionMessage,
-	previousMessages: OpenAI.Chat.ChatCompletionMessage[]
-) {
+type ChatCompletionParams = {
+  username: string,
+  prompt: OpenAI.Chat.ChatCompletionMessage,
+  previousMessages: OpenAI.Chat.ChatCompletionMessage[]
+}
 
-	const conversation = Array.from(previousMessages)
+export async function RequestChatCompletion({ prompt, previousMessages }: ChatCompletionParams) {
 
-	console.log("Prompt generated:", prompt);
+  const conversation = Array.from(previousMessages)
 
-	conversation.unshift(context)
-	conversation.push(prompt)
-	console.log("Making api request");
+  console.log("Prompt generated:", prompt);
 
-	try {
-		const response = await openai.chat.completions.create({
-			model: "gpt-4",
-			messages: conversation,
-			max_tokens: 250,
-			temperature: 0.30,
-			n: 1,
-		})
+  conversation.unshift(context)
+  conversation.push(prompt)
+  console.log("Making api request");
 
-		console.log(response);
-		return response;
-	}
-	catch (e) {
-		console.log(e);
-		return null;
-	}
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-5.1",
+      messages: conversation,
+      max_completion_tokens: 1000,
+      temperature: 0.35,
+      n: 1,
+    })
+
+    console.log(response);
+    return response;
+  }
+  catch (e) {
+    console.log(e);
+    return null;
+  }
 }
